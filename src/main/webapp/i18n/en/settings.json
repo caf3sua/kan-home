@@ -1,0 +1,48 @@
+{
+    "settings": {
+        "title": "User settings for [<b>{{username}}</b>]",
+        "form": {
+        	"gender": "Gender",
+        	"gender.placeholder": "Your gender",
+        	"gender.male": "Male",
+        	"gender.female": "Female",
+        	"address": "Address",
+            "address.placeholder": "Your address",
+        	"fullname": "Full Name",
+            "fullname.placeholder": "Your full name",
+            "phonenumber": "Phone number",
+            "phonenumber.placeholder": "Your phone number",
+            "firstname": "First Name",
+            "firstname.placeholder": "Your first name",
+            "lastname": "Last Name",
+            "lastname.placeholder": "Your last name",
+            "language": "Language",
+            "button": "Save"
+        },
+        "messages": {
+            "error": {
+                "fail": "<strong>An error has occurred!</strong> Settings could not be saved.",
+                "emailexists": "<strong>Email is already in use!</strong> Please choose another one."
+            },
+            "success": "<strong>Settings saved!</strong>",
+            "validate": {
+            	"phonenumber": {
+                    "required": "Your phonenumber is required.",
+                    "minlength": "Your phonenumber is required to be at least 9 character",
+                    "maxlength": "Your phonenumber cannot be longer than 13 characters",
+                    "maxlength": "Your phonenumber can only contains digits"
+                },
+                "firstname": {
+                    "required": "Your first name is required.",
+                    "minlength": "Your first name is required to be at least 1 character",
+                    "maxlength": "Your first name cannot be longer than 50 characters"
+                },
+                "lastname": {
+                    "required": "Your last name is required.",
+                    "minlength": "Your last name is required to be at least 1 character",
+                    "maxlength": "Your last name cannot be longer than 50 characters"
+                }
+            }
+        }
+    }
+}

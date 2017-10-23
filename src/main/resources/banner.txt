@@ -1,0 +1,9 @@
+    __ __ ___    _   __            __  ______  __  _________
+   / //_//   |  / | / /           / / / / __ \/  |/  / ____/
+  / ,<  / /| | /  |/ /  ______   / /_/ / / / / /|_/ / __/   
+ / /| |/ ___ |/ /|  /  /_____/  / __  / /_/ / /  / / /___   
+/_/ |_/_/  |_/_/ |_/           /_/ /_/\____/_/  /_/_____/   
+                                                            
+
+${AnsiColor.BRIGHT_BLUE}:: JHipster 🤓  :: Running Spring Boot ${spring-boot.version} ::
+:: http://jhipster.github.io ::${AnsiColor.DEFAULT}

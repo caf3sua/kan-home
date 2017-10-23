@@ -1,0 +1,53 @@
+{
+    "userManagement": {
+        "home": {
+            "title": "Tài khoản",
+            "createLabel": "Tạo tài khoản mới",
+            "createOrEditLabel": "Tạo hoặc sửa tài khoản",
+			"searchLabel": "Tìm kiếm nâng cao"
+        },
+        "placeholder-username": "Tên tài khoản",
+        "placeholder-email": "Email",
+        "placeholder-phonenumber": "Số điện thoại",
+        "created": "Một tài khoản mới đã được tạo với định danh {{ param }}",
+        "updated": "Một tài khoản đã được cập nhật với định danh {{ param }}",
+        "deleted": "Một tài khoản đã bị xóa với định danh {{ param }}",
+        "deleteds": "Các tài khoản đã bị xóa với định danh {{ param }}",
+        "delete": {
+            "question": "Bạn có chắc chắn muốn xóa tài khoản {{ login }}?"
+        },
+        "device": {
+            "title": "Xác nhận thêm/xóa thiết bị",
+            "question": "Bạn muốn thêm hay xóa thiết bị của người dùng {{ login }}?"
+        },
+        "reset-pass": {
+            "title": "Xác nhận tạo mới mật khẩu",
+            "question": "Nhập mật khẩu mới"
+        },
+        "detail": {
+            "title": "Tài khoản"
+        },
+        "login": "Tên đăng nhập",
+        "username": "Tên đăng nhập",
+        "firstName": "Tên",
+        "lastName": "Họ",
+        "email": "Email",
+        "activated": "Kích hoạt",
+        "status": "Trạng thái",
+        "deactivated": "Khóa",
+        "profiles": "Các quyền",
+        "langKey": "Ngôn ngữ",
+        "devices": "Thiết bị",
+        "createdBy": "Người tạo",
+        "createdDate": "Ngày tạo",
+        "lastModifiedBy": "Người sửa",
+        "lastModifiedDate": "Ngày sửa",
+        "fullname" : "Họ tên",
+        "phonenumber" : "Số điện thoại",
+        "address" : "Địa chỉ",
+        "gender" : "Giới tính",
+        "user-device" : "Thiết bị người dùng",
+        "stt" : "STT"
+    }
+}
+

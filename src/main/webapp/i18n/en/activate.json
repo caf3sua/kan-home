@@ -1,0 +1,9 @@
+{
+    "activate": {
+        "title": "Activation",
+        "messages": {
+            "success": "<strong>Your user account has been activated.</strong> Please <a class=\"alert-link\" ui-sref=\"signin\">sign in</a>.",
+            "error": "<strong>Your user could not be activated.</strong> Please use the registration form to sign up."
+        }
+    }
+}

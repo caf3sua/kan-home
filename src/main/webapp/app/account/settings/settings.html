@@ -1,0 +1,106 @@
+<div class="container">
+	<div class="well">
+		<div>
+		    <div class="row">
+		        <div class="col-md-8 col-md-offset-2">
+		            <h2 data-translate="settings.title" translate-values="{username: '{{vm.settingsAccount.username}}'}">User settings for [<b>{{vm.settingsAccount.username}}</b>]</h2>
+		
+		            <div class="alert alert-success" ng-show="vm.success" data-translate="settings.messages.success">
+		                <strong>Settings saved!</strong>
+		            </div>
+		
+		           <jhi-alert-error></jhi-alert-error>
+		
+		            <form name="form" role="form" novalidate ng-submit="vm.save()" show-validation>
+		
+		                <div class="form-group form-group-settings">
+		                    <label class="control-label" for="fullname" data-translate="settings.form.fullname">Full Name</label>
+		                    <input type="text" class="form-control" id="fullname" name="fullname" placeholder="{{'settings.form.fullname.placeholder' | translate}}"
+		                           ng-model="vm.settingsAccount.fullname" ng-minlength=1 ng-maxlength=50 required maxlength="50">
+		                    <div ng-show="form.fullname.$dirty && form.fullname.$invalid">
+		                        <p class="help-block"
+		                               ng-show="form.fullname.$error.required" data-translate="settings.messages.validate.fullname.required">
+		                            Your full name is required.
+		                        </p>
+		                        <p class="help-block"
+		                               ng-show="form.fullname.$error.minlength" data-translate="settings.messages.validate.fullname.minlength">
+		                            Your full name is required to be at least 1 character.
+		                        </p>
+		                        <p class="help-block"
+		                               ng-show="form.fullname.$error.maxlength" data-translate="settings.messages.validate.fullname.maxlength">
+		                            Your full name cannot be longer than 50 characters.
+		                        </p>
+		                    </div>
+		                </div>
+		                <div class="form-group form-group-settings">
+		                    <label class="control-label" for="email" data-translate="global.form.email">Email</label>
+		                    <input type="email" class="form-control" id="email" name="email" placeholder="{{'global.form.email.placeholder' | translate}}"
+		                           ng-model="vm.settingsAccount.email" ng-minlength=5 ng-maxlength=100 required maxlength="100">
+		                    <div ng-show="form.email.$dirty && form.email.$invalid">
+		                        <p class="help-block"
+		                               ng-show="form.email.$error.required" data-translate="global.messages.validate.email.required">
+		                            Your email is required.
+		                        </p>
+		                        <p class="help-block"
+		                               ng-show="form.email.$error.email" data-translate="global.messages.validate.email.invalid">
+		                            Your email is invalid.
+		                        </p>
+		                        <p class="help-block"
+		                               ng-show="form.email.$error.minlength" data-translate="global.messages.validate.email.minlength">
+		                            Your email is required to be at least 5 characters.
+		                        </p>
+		                        <p class="help-block"
+		                               ng-show="form.email.$error.maxlength" data-translate="global.messages.validate.email.maxlength">
+		                            Your email cannot be longer than 100 characters.
+		                        </p>
+		                    </div>
+		                </div>
+		                <div class="form-group form-group-settings">
+		                    <label class="control-label" for="phonenumber" data-translate="settings.form.phonenumber">Phone number</label>
+		                    <input type="text" class="form-control" id="phonenumber" name="phonenumber" placeholder="{{'settings.form.phonenumber.placeholder' | translate}}"
+		                           ng-model="vm.settingsAccount.phonenumber" ng-minlength=9 ng-maxlength=13 required ng-pattern="/^[_'.@0-9]*$/">
+		                    <div ng-show="form.phonenumber.$dirty && form.phonenumber.$invalid">
+		                        <p class="help-block"
+		                               ng-show="form.phonenumber.$error.required" data-translate="global.messages.validate.phonenumber.required">
+		                            Your phonenumber is required.
+		                        </p>
+		                        <p class="help-block"
+		                               ng-show="form.phonenumber.$error.minlength" data-translate="global.messages.validate.phonenumber.minlength">
+		                            Your phonenumber is required to be at least 9 characters.
+		                        </p>
+		                        <p class="help-block"
+		                               ng-show="form.phonenumber.$error.maxlength" data-translate="global.messages.validate.phonenumber.maxlength">
+		                            Your phonenumber cannot be longer than 13 characters.
+		                        </p>
+		                        <p class="help-block"
+	                               ng-show="form.phonenumber.$error.pattern" data-translate="global.messages.validate.phonenumber.pattern">
+	                            	Your phonenumber can only contain digits.
+		                    </div>
+		                </div>
+		                <div class="form-group form-group-settings">
+		                    <label class="control-label" for="address" data-translate="settings.form.address">Address</label>
+		                    <input type="text" class="form-control" id="address" name="address" placeholder="{{'settings.form.address.placeholder' | translate}}"
+		                           ng-model="vm.settingsAccount.address">
+		                </div>
+		                <div class="form-group form-group-settings">
+		                    <label for="gender" data-translate="settings.form.gender">Gender</label>
+		                    <select id="gender" name="gender" class="form-control m-t-8-r" ng-model="vm.settingsAccount.gender" ng-options="gender.id as gender.name for gender in vm.genders">
+		                    	<option value="" selected>{{'settings.form.gender.placeholder' | translate}}</option>
+		                    </select>
+		                </div>
+		                <div class="form-group form-group-settings">
+		                    <label for="langKey" data-translate="settings.form.language">Language</label>
+		                    <select id="langKey" name="langKey" class="form-control m-t-8-r" ng-model="vm.settingsAccount.langKey" ng-controller="JhiLanguageController as languageVm" ng-options="code as (code | findLanguageFromKey) for code in languageVm.languages"></select>
+		                </div>
+		
+		                <button type="submit" ng-disabled="form.$invalid" class="btn btn-primary" data-translate="settings.form.button">Save</button>
+		            </form>
+		        </div>
+		    </div>
+		
+		</div>
+	</div>
+	<div class="footer" ng-cloak>
+        <div ng-include="'view/partial/footer.html'"></div>
+    </div>
+</div>

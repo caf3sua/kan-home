@@ -1,0 +1,51 @@
+{
+    "kanHomeApp": {
+        "device" : {
+            "home": {
+                "title": "Thiết bị",
+                "createLabel": "Thêm mới một Thiết bị",
+                "createOrEditLabel": "Thêm mới hoặc cập nhật Thiết bị",
+                "searchLabel" : "Tìm kiếm nâng cao"
+            },
+            "created": "Một Device mới được tạo với định danh {{ param }}",
+            "updated": "Một Device cập nhật với định danh {{ param }}",
+            "deleted": "Một Device đã xóa với định danh {{ param }}",
+            "deleteds": "Các thiết bị đã xóa với định danh: {{ param }}",
+            "delete": {
+                "question": "Bạn có chắc là muốn xóa Device {{ id }}?"
+            },
+            "detail": {
+                "title": "Device"
+            },
+            "device-status" : {
+            	"NO-STATUS" : "Không trạng thái",
+            	"BLUE" : "Hoạt động",
+            	"RED" : "Hỏng",
+            	"YELLOW" : "Không tốt",
+            	"GRAY" : "Dừng"
+            },
+            "image": "Ảnh",
+            "stt": "STT",
+            "name": "Tên",
+            "abbrName": "Abbr Name",
+            "model": "Model",
+            "user": "Người dùng",
+            "status": "Trạng thái",
+            "firmware": "Firmware",
+            "passcode": "Passcode",
+            "countryCode": "Mã quốc gia",
+            "cityCode": "City Code",
+            "wardCode": "Ward Code",
+            "zipCode": "Zip Code",
+            "gpsX": "Gps X",
+            "gpsY": "Gps Y",
+            "srvName": "Srv Name",
+            "srvPort": "Srv Port",
+            "repotIntv": "Repot Intv",
+            "saveIntv": "Save Intv",
+            "keepalive": "Keepalive",
+            "distCode": "Dist Code",
+            "cfgNum": "Cfg Num"
+        }
+    }
+}

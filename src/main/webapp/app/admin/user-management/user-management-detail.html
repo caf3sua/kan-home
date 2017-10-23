@@ -1,0 +1,59 @@
+<div>
+    <h2>
+        <span data-translate="userManagement.detail.title">User</span> [<b>{{vm.user.username}}</b>]
+    </h2>
+    
+    <button type="submit"
+            ui-sref="user-management"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+    
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="userManagement.username">Login</span></dt>
+        <dd>
+            <span>{{vm.user.username}}</span>
+            <span class="label label-danger" ng-show="!vm.user.activated"
+                  data-translate="userManagement.deactivated">Deactivated</span>
+            <span class="label label-success" ng-show="vm.user.activated"
+                  data-translate="userManagement.activated">Activated</span>
+        </dd>
+        <dt><span data-translate="userManagement.email">Email</span></dt>
+        <dd>{{vm.user.email}}</dd>
+        <dt><span data-translate="userManagement.fullname">Full Name</span></dt>
+        <dd>{{vm.user.fullname}}</dd>
+        <dt><span data-translate="userManagement.phonenumber">Phone number</span></dt>
+        <dd>{{vm.user.phonenumber}}</dd>
+        <dt><span data-translate="userManagement.address">address</span></dt>
+        <dd>{{vm.user.address}}</dd>
+        <dt><span data-translate="userManagement.langKey">Lang Key</span></dt>
+        <dd>{{vm.user.langKey}}</dd>
+        <dt><span data-translate="userManagement.createdBy">Created By</span></dt>
+        <dd>{{vm.user.createdBy}}</dd>
+        <dt><span data-translate="userManagement.createdDate">Created Date</span></dt>
+        <dd>{{vm.user.createdDate | date:'dd/MM/yy HH:mm' }}</dd>
+        <dt><span data-translate="userManagement.lastModifiedBy">Last Modified By</span></dt>
+        <dd>{{vm.user.lastModifiedBy}}</dd>
+        <dt><span data-translate="userManagement.lastModifiedDate">Last Modified Date</span></dt>
+        <dd>{{vm.user.lastModifiedDate | date:'dd/MM/yy HH:mm'}}</dd>
+        <dt><span data-translate="userManagement.profiles">Profiles</span></dt>
+        <dd>
+            <ul class="list-unstyled">
+                <li ng-repeat="authority in vm.user.authorities">
+                    <span class="label label-info">{{authority}}</span>
+                </li>
+            </ul>
+        </dd>
+        <dt><span data-translate="userManagement.user-device">User device</span></dt>
+        <dd>
+            <ul class="list-unstyled">
+                <li ng-repeat="device in vm.user.userDevices">
+                    <span class="label label-info">{{device.name}}</span>
+                </li>
+            </ul>
+        </dd>
+    </dl>
+    <!-- <button type="button" class="btn btn-info" ng-click="vm.goBack()">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button> -->
+</div>

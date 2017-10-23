@@ -1,0 +1,82 @@
+{
+    "fluentMethods": true,
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "abbrName",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "model",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "firmware",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "passcode",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "countryCode",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "cityCode",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "wardCode",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "zipCode",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "gpsX",
+            "fieldType": "Double"
+        },
+        {
+            "fieldName": "gpsY",
+            "fieldType": "Double"
+        },
+        {
+            "fieldName": "srvName",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "srvPort",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "repotIntv",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "saveIntv",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "keepalive",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "distCode",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "cfgNum",
+            "fieldType": "Long"
+        }
+    ],
+    "dto": "mapstruct",
+    "service": "serviceImpl",
+    "entityTableName": "device",
+    "pagination": "pager"
+}

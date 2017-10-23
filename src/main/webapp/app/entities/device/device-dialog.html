@@ -1,0 +1,131 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myDeviceLabel" data-translate="kanHomeApp.device.home.createOrEditLabel">Create or edit a Device</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="false">
+            <label for="id" data-translate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.device.id" readonly />
+        </div>
+        <div class="form-group form-group-settings">
+            <label class="control-label" data-translate="kanHomeApp.device.name" for="field_name">Name</label>
+            <input type="text" class="form-control" name="name" id="field_name" ng-model="vm.device.name" ng-readonly="vm.device.name != null"/>
+        </div>
+        <div class="form-group" ng-show="false">
+            <label class="control-label" data-translate="kanHomeApp.device.abbrName" for="field_abbrName">Abbr Name</label>
+            <input type="text" class="form-control" name="abbrName" id="field_abbrName"
+                    ng-model="vm.device.abbrName"
+                    />
+        </div>
+        <div class="form-group" ng-show="false">
+            <label class="control-label" data-translate="kanHomeApp.device.model" for="field_model">Model</label>
+            <input type="text" class="form-control" name="model" id="field_model"
+                    ng-model="vm.device.model"
+                    />
+        </div>
+        <div class="form-group" ng-show="false">
+            <label class="control-label" data-translate="kanHomeApp.device.firmware" for="field_firmware">Firmware</label>
+            <input type="text" class="form-control" name="firmware" id="field_firmware"
+                    ng-model="vm.device.firmware"
+                    />
+        </div>
+        <div class="form-group" ng-show="false">
+            <label class="control-label" data-translate="kanHomeApp.device.passcode" for="field_passcode">Passcode</label>
+            <input type="text" class="form-control" name="passcode" id="field_passcode"
+                    ng-model="vm.device.passcode"
+                    />
+        </div>
+        <div class="form-group form-group-settings">
+            <label class="control-label" data-translate="kanHomeApp.device.countryCode" for="field_countryCode">Country Code</label>
+            <select id="field_countryCode" name="country" class="form-control" ng-model="vm.device.countryCode" ng-options="country.countryCode as country.name for country in vm.countries">
+           	</select>
+        </div>
+        <div class="form-group form-group-settings">
+            <label class="control-label" data-translate="kanHomeApp.device.cityCode" for="field_cityCode">City Code</label>
+            <input type="number" class="form-control" name="cityCode" id="field_cityCode"
+                    ng-model="vm.device.cityCode"
+                    />
+        </div>
+        <div class="form-group form-group-settings">
+            <label class="control-label" data-translate="kanHomeApp.device.wardCode" for="field_wardCode">Ward Code</label>
+            <input type="number" class="form-control" name="wardCode" id="field_wardCode"
+                    ng-model="vm.device.wardCode"
+                    />
+        </div>
+        <div class="form-group form-group-settings">
+            <label class="control-label" data-translate="kanHomeApp.device.zipCode" for="field_zipCode">Zip Code</label>
+            <input type="number" class="form-control" name="zipCode" id="field_zipCode"
+                    ng-model="vm.device.zipCode"
+                    />
+        </div>
+        <div class="form-group form-group-settings">
+            <label class="control-label" data-translate="kanHomeApp.device.gpsX" for="field_gpsX">Gps X</label>
+            <input type="number" class="form-control" name="gpsX" id="field_gpsX"
+                    ng-model="vm.device.gpsX"
+                    />
+        </div>
+        <div class="form-group form-group-settings">
+            <label class="control-label" data-translate="kanHomeApp.device.gpsY" for="field_gpsY">Gps Y</label>
+            <input type="number" class="form-control" name="gpsY" id="field_gpsY"
+                    ng-model="vm.device.gpsY"
+                    />
+        </div>
+        <div class="form-group" ng-show="false">
+            <label class="control-label" data-translate="kanHomeApp.device.srvName" for="field_srvName">Srv Name</label>
+            <input type="text" class="form-control" name="srvName" id="field_srvName"
+                    ng-model="vm.device.srvName"
+                    />
+        </div>
+        <div class="form-group" ng-show="false">
+            <label class="control-label" data-translate="kanHomeApp.device.srvPort" for="field_srvPort">Srv Port</label>
+            <input type="number" class="form-control" name="srvPort" id="field_srvPort"
+                    ng-model="vm.device.srvPort"
+                    />
+        </div>
+        <div class="form-group" ng-show="false">
+            <label class="control-label" data-translate="kanHomeApp.device.repotIntv" for="field_repotIntv">Repot Intv</label>
+            <input type="number" class="form-control" name="repotIntv" id="field_repotIntv"
+                    ng-model="vm.device.repotIntv"
+                    />
+        </div>
+        <div class="form-group" ng-show="false">
+            <label class="control-label" data-translate="kanHomeApp.device.saveIntv" for="field_saveIntv">Save Intv</label>
+            <input type="number" class="form-control" name="saveIntv" id="field_saveIntv"
+                    ng-model="vm.device.saveIntv"
+                    />
+        </div>
+        <div class="form-group" ng-show="false">
+            <label class="control-label" data-translate="kanHomeApp.device.keepalive" for="field_keepalive">Keepalive</label>
+            <input type="number" class="form-control" name="keepalive" id="field_keepalive"
+                    ng-model="vm.device.keepalive"
+                    />
+        </div>
+        <div class="form-group form-group-settings">
+            <label class="control-label" data-translate="kanHomeApp.device.distCode" for="field_distCode">Dist Code</label>
+            <input type="number" class="form-control" name="distCode" id="field_distCode"
+                    ng-model="vm.device.distCode"
+                    />
+        </div>
+        <div class="form-group" ng-show="false">
+            <label class="control-label" data-translate="kanHomeApp.device.cfgNum" for="field_cfgNum">Cfg Num</label>
+            <input type="number" class="form-control" name="cfgNum" id="field_cfgNum"
+                    ng-model="vm.device.cfgNum"
+                    />
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

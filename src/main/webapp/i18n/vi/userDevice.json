@@ -1,0 +1,36 @@
+{
+    "kanHomeApp": {
+        "userDevice" : {
+            "home": {
+                "title": "Device on map",
+                "createLabel": "Create a new Topic",
+                "createOrEditLabel": "Create or edit a Topic"
+            },
+            "searchBtn" : "Tìm kiếm",
+            "cleanBtn" : "Xóa",
+            "deviceBtn" : "Thiết bị",
+            "found-device" : "Tìm thấy {{number}} thiết bị để hiển thị trên bản đồ",
+            "image": "Image",
+            "name": "Name",
+            "abbrName": "Abbr Name",
+            "model": "Model",
+            "user": "User",
+            "status": "Status",
+            "firmware": "Firmware",
+            "passcode": "Passcode",
+            "countryCode": "Country Code",
+            "cityCode": "City Code",
+            "wardCode": "Ward Code",
+            "zipCode": "Zip Code",
+            "gpsX": "Gps X",
+            "gpsY": "Gps Y",
+            "srvName": "Srv Name",
+            "srvPort": "Srv Port",
+            "repotIntv": "Repot Intv",
+            "saveIntv": "Save Intv",
+            "keepalive": "Keepalive",
+            "distCode": "Dist Code",
+            "cfgNum": "Cfg Num"
+        }
+    }
+}

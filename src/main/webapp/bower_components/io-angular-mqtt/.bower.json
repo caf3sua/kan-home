@@ -1,0 +1,32 @@
+{
+  "name": "angular-mqtt",
+  "main": "angular-mqtt.js",
+  "authors": [
+    "Julien Ledun <j.ledun@iosystems.fr>"
+  ],
+  "description": "an angular v1.5.8 wrapper for mqtt.js",
+  "keywords": [
+    "angular",
+    "angularjs",
+    "mqtt"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/jledun/angular-mqtt",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "version": "0.0.1",
+  "_release": "0.0.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.0.1",
+    "commit": "7ae48689e0aa580c817c81f03c1b9a084ce821bd"
+  },
+  "_source": "https://github.com/jledun/angular-mqtt.git",
+  "_target": "*",
+  "_originalSource": "io-angular-mqtt"
+}

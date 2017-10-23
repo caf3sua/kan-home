@@ -1,0 +1,51 @@
+{
+    "kanHomeApp": {
+        "device" : {
+            "home": {
+                "title": "Devices",
+                "createLabel": "Create a new Device",
+                "createOrEditLabel": "Create or edit a Device",
+                "searchLabel" : "Advance search"
+            },
+            "created": "A new Device is created with identifier {{ param }}",
+            "updated": "A Device is updated with identifier {{ param }}",
+            "deleted": "A Device is deleted with identifier {{ param }}",
+            "deleteds": "These devices are deleted with identifier: {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Device {{ id }}?"
+            },
+            "detail": {
+                "title": "Device"
+            },
+            "device-status" : {
+            	"NO-STATUS" : "No status",
+            	"BLUE" : "Active",
+            	"RED" : "Corrupt",
+            	"YELLOW" : "Need repair",
+            	"GRAY" : "Inactive"
+            },
+            "image": "Image",
+            "stt": "Index",
+            "name": "Name",
+            "abbrName": "Abbr Name",
+            "model": "Model",
+            "user": "User",
+            "status": "Status",
+            "firmware": "Firmware",
+            "passcode": "Passcode",
+            "countryCode": "Country Code",
+            "cityCode": "City Code",
+            "wardCode": "Ward Code",
+            "zipCode": "Zip Code",
+            "gpsX": "Gps X",
+            "gpsY": "Gps Y",
+            "srvName": "Srv Name",
+            "srvPort": "Srv Port",
+            "repotIntv": "Repot Intv",
+            "saveIntv": "Save Intv",
+            "keepalive": "Keepalive",
+            "distCode": "Dist Code",
+            "cfgNum": "Cfg Num"
+        }
+    }
+}

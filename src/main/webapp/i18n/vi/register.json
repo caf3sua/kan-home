@@ -1,0 +1,29 @@
+{
+    "register": {
+        "title": "Đăng ký",
+        "form": {
+            "button": "Đăng ký",
+            "have-account": "Bạn có tài khoản?",
+            "login-lbl": "Đăng nhập",
+            "term1": "Bằng cách đăng ký, bạn đồng ý với",
+            "term2": "Điều khoản và Chính sách quyền riêng tư của chúng tôi.",
+            "register-description" : "Đăng ký để kết nối với thiết bị trong nhà bạn."
+        },
+        "messages": {
+            "validate": {
+                "login": {
+                    "required": "Bạn phải nhập tên tài khoản.",
+                    "minlength": "Tên tài khoản phải có ít nhất 1 ký tự.",
+                    "maxlength": "Tên tài khoản không được vượt quá 50 ký tự.",
+                    "pattern": "Tên tài khoản chỉ có thể chứa các ký tự in thường và số."
+                }
+            },
+            "success": "<strong>Đăng ký thành công!</strong> Bạn vui lòng kiểm tra hộp thư để xác nhận tài khoản.",
+            "error": {
+                "fail": "<strong>Đăng ký thất bại!</strong> Vui lòng thử lại sau.",
+                "userexists": "<strong>Tên tài khoản này đã được sử dụng!</strong> Bạn vui lòng chọn tên tài khoản khác.",
+                "emailexists": "<strong>Email này đã được sử dụng!</strong> Bạn vui lòng nhập email khác."
+            }
+        }
+    }
+}

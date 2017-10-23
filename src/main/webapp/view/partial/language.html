@@ -1,0 +1,22 @@
+<div ng-cloak="" class="fabSpeedDialdemoBasicUsage" ng-controller="JhiLanguageController as languageVm">
+  <md-content class="md-padding" layout="column" style="background-color: transparent;">
+    <div>
+      <md-fab-speed-dial md-open="vm.isOpen" md-direction="down" class="md-fling">
+        <md-fab-trigger>
+        	<md-button class="md-warn md-raised md-hue-2 md-main-language-btn">
+        		<img ng-src="content/icon/flag/flag-{{languageVm.currentLang()}}.png" width="27px;">
+        		<!-- {{languageVm.currentLang() | findLanguageFromKey}} -->
+        	</md-button>
+        </md-fab-trigger>
+
+        <md-fab-actions>
+          <md-button aria-label="{{language}}"
+          		ng-click="languageVm.changeLanguage(language)" 
+          		class="md-mini md-btn-language" ng-repeat="language in languageVm.languages">
+			<img ng-src="content/icon/flag/flag-{{language}}.png" width="22px;">
+          </md-button>
+        </md-fab-actions>
+      </md-fab-speed-dial>
+    </div>
+  </md-content>
+</div>

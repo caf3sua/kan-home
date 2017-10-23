@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title th:text="#{email.sms.title}">Kanhome sms code</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link rel="shortcut icon" href="${baseUrl}/favicon.ico" />
+    </head>
+    <body>
+        <p th:text="#{email.sms.greeting(${user.username})}">
+            Dear
+        </p>
+        <p th:text="#{email.sms.text1(${user.activationCode})}">
+            For your KanHome account a sms code was requested to resend, new code : {0}
+        </p>
+        <p>
+            <span th:text="#{email.reset.text2}">Regards, </span>
+            <br/>
+            <em th:text="#{email.signature}">KanHome Team.</em>
+        </p>
+    </body>
+</html>

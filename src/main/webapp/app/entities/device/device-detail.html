@@ -1,0 +1,130 @@
+
+<div>
+    <h2><span data-translate="kanHomeApp.device.detail.title">Device</span> {{vm.device.abbrName}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="device-detail.edit({id:vm.device.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    </button>
+    
+    <dl class="dl-horizontal jh-entity-details">
+    	<dt><span data-translate="kanHomeApp.device.image">Image</span></dt>
+        <dd>
+            <span><img ng-src="{{vm.device.modelObj.imageUrl}}" width="200px;" /></span>
+        </dd>
+        <dt><span data-translate="kanHomeApp.device.name">Name</span></dt>
+        <dd>
+            <span>{{vm.device.name}}</span>
+        </dd>
+        <dt><span data-translate="kanHomeApp.device.abbrName">Abbr Name</span></dt>
+        <dd>
+            <span>{{vm.device.abbrName}}</span>
+        </dd>
+        <dt><span data-translate="kanHomeApp.device.model">Model</span></dt>
+        <dd>
+            <span>{{vm.device.model}}</span>
+        </dd>
+        <dt><span data-translate="kanHomeApp.device.firmware">Firmware</span></dt>
+        <dd>
+            <span>{{vm.device.firmware}}</span>
+        </dd>
+        <!-- <dt><span data-translate="kanHomeApp.device.passcode">Passcode</span></dt>
+        <dd>
+            <span>{{vm.device.passcode}}</span>
+        </dd> -->
+        <dt><span data-translate="kanHomeApp.device.countryCode">Country Code</span></dt>
+        <dd>
+            <span><img ng-src="/content/icon/flag-{{vm.device.cityCode}}.png"> {{vm.device.countryCode}} - {{vm.device.countryCodeObj.name}}</span>
+        </dd>
+        <dt><span data-translate="kanHomeApp.device.cityCode">City Code</span></dt>
+        <dd>
+            <span>{{vm.device.cityCode}} - {{vm.device.cityObj.name}}</span>
+        </dd>
+        <dt><span data-translate="kanHomeApp.device.wardCode">Ward Code</span></dt>
+        <dd>
+            <span>{{vm.device.wardCode}}</span>
+        </dd>
+        <dt><span data-translate="kanHomeApp.device.distCode">Dist Code</span></dt>
+        <dd>
+            <span>{{vm.device.distCode}}</span>
+        </dd>
+        <dt><span data-translate="kanHomeApp.device.zipCode">Zip Code</span></dt>
+        <dd>
+            <span>{{vm.device.zipCode}}</span>
+        </dd>
+        <dt><span data-translate="kanHomeApp.device.gpsX">Gps X</span></dt>
+        <dd>
+            <span>{{vm.device.gpsX}}</span>
+        </dd>
+        <dt><span data-translate="kanHomeApp.device.gpsY">Gps Y</span></dt>
+        <dd>
+            <span>{{vm.device.gpsY}}</span>
+        </dd>
+        <!-- <dt><span data-translate="kanHomeApp.device.srvName">Srv Name</span></dt>
+        <dd>
+            <span>{{vm.device.srvName}}</span>
+        </dd>
+        <dt><span data-translate="kanHomeApp.device.srvPort">Srv Port</span></dt>
+        <dd>
+            <span>{{vm.device.srvPort}}</span>
+        </dd> -->
+        <dt><span data-translate="kanHomeApp.device.repotIntv">Repot Intv</span></dt>
+        <dd>
+            <span>{{vm.device.repotIntv}}</span>
+        </dd>
+        <dt><span data-translate="kanHomeApp.device.saveIntv">Save Intv</span></dt>
+        <dd>
+            <span>{{vm.device.saveIntv}}</span>
+        </dd>
+        <dt><span data-translate="kanHomeApp.device.keepalive">Keepalive</span></dt>
+        <dd>
+            <span>{{vm.device.keepalive}}</span>
+        </dd>
+    </dl>
+    <dl class="dl-horizontal jh-entity-details">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr>
+                    <th><span>Name</span></th>
+                    <th><span>Unit</span></th>
+                    <th><span>Format</span></th>
+                    <th><span>AlmEn</span></th>
+                    <th><span>AlmType</span></th>
+                    <th><span>NormIntv</span></th>
+                    <th><span>AlmIntv</span></th>
+                    <th><span>RedMax</span></th>
+                    <th><span>YelwMax</span></th>
+                    <th><span>yelwMin</span></th>
+                    <th><span>RedMin</span></th>
+                    <th><span>ErrShow</span></th>
+                    <th><span>ErrSave</span></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="param in vm.device.para">
+                    <td>{{param.name}}</td>
+                    <td>{{param.unit}}</td>
+                    <td>{{param.format}}</td>
+                    <td>{{param.almEn}}</td>
+                    <td>{{param.almTyp}}</td>
+                    <td>{{param.normIntv}}</td>
+                    <td>{{param.almIntv}}</td>
+                    <td>{{param.redMax}}</td>
+                    <td>{{param.yelwMax}}</td>
+                    <td>{{param.yelwMin}}</td>
+                    <td>{{param.redMin}}</td>
+                    <td>{{param.errShow}}</td>
+                    <td>{{param.errSave}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </dl>
+</div>

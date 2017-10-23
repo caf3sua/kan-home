@@ -1,0 +1,35 @@
+{
+    "home": {
+        "title": "Chào mừng bạn đến với Kan Home!",
+        "subtitle": "Đây là trang chủ của bạn",
+        "logged": {
+            "message": "Bạn đang đăng nhập bằng tài khoản \"{{username}}\"."
+        },
+        "question": "Vui lòng truy cập các chức năng KanHome:",
+        "link": {
+            "homepage": "Trang chủ KanHome",
+            "user": "Quản lý người dùng",
+            "device": "Quản lý thiết bị",
+            "deviceOnMap": "Bản đồ thiết bị",
+            "notification": "Thông báo",
+            "homepage": "Quản lý người dùng",
+            "stackoverflow": "KanHome trên Stack Overflow",
+            "bugtracker": "Theo dõi các lỗi KanHome",
+            "chat": "Phòng chat công cộng KanHome",
+            "follow": "Theo dõi @java_hipster trên Twitter",
+            "user-device": "Trạng thái thiết bị của người dùng"
+        },
+        "like": "Cảm ơn bạn đã sủ dụng KanHome",
+        "github": "GitHub",
+        "user-label": "Người dùng",
+        "admin-label": "Quản trị",
+        "technical-label": "Kỹ thuật",
+        "supportor-label": "Hỗ trợ khách hàng",
+        "user-summary": "Tổng kết người dùng",
+        "device-summary": "Trạng thái thiết bị",
+        "blue-status": "Hoạt động",
+        "red-status": "Hỏng",
+        "yellow-status": "Sửa chữa",
+        "gray-status": "Không hoạt động"
+    }
+}

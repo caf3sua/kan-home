@@ -1,0 +1,24 @@
+{
+    "kanHomeApp": {
+        "modelDevice" : {
+            "home": {
+                "title": "Model Devices",
+                "createLabel": "Create a new Model Device",
+                "createOrEditLabel": "Create or edit a Model Device"
+            },
+            "created": "A new Model Device is created with identifier {{ param }}",
+            "updated": "A Model Device is updated with identifier {{ param }}",
+            "deleted": "A Model Device is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Model Device {{ id }}?"
+            },
+            "detail": {
+                "title": "Model Device"
+            },
+            "name": "Name",
+            "model": "Model",
+            "waranty": "Waranty",
+            "imageUrl": "Image Url"
+        }
+    }
+}

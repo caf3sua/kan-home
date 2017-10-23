@@ -1,0 +1,100 @@
+<div class="container">
+	<div class="row m-t-30">
+		<div class="center-block" style="max-width: 350px">
+		    <div class="card card-container center-block">
+		        <img id="profile-img" class="profile-img-card" src="content/images/kanhome-banner.png"/>
+		        <form ng-show="!vm.success" name="form" role="form" ng-submit="vm.login()" show-validation class="form-signin">
+	                <div class="form-group">
+	                    <input type="text" class="form-control form-group-kanhome" id="username" name="username" placeholder="{{'global.form.username.placeholder' | translate}}"
+	                           ng-model="vm.username" ng-minlength=1 ng-maxlength=50 ng-pattern="/^[_'.@A-Za-z0-9-]*$/" required>
+	                    <div ng-show="form.username.$dirty && form.username.$invalid">
+	                        <p class="help-block"
+	                               ng-show="form.username.$error.required" novalidate data-translate="global.messages.validate.username.required">
+	                            Your username is required.
+	                        </p>
+	                        <!-- <p class="help-block"
+	                               ng-show="form.username.$error.minlength" data-translate="global.messages.validate.username.minlength">
+	                            Your username is required to be at least 1 character.
+	                        </p> -->
+	                        <p class="help-block"
+	                               ng-show="form.username.$error.maxlength" data-translate="global.messages.validate.username.maxlength">
+	                            Your username cannot be longer than 50 characters.
+	                        </p>
+	                        <p class="help-block"
+	                               ng-show="form.username.$error.pattern" data-translate="global.messages.validate.username.pattern">
+	                            Your username can only contain lower-case letters and digits.
+	                    </p>
+	                    </div>
+	                </div>
+	                <div class="form-group">
+	                    <input type="password" class="form-control form-group-kanhome" id="password" name="password" placeholder="{{'global.form.password.placeholder' | translate}}"
+	                           ng-model="vm.password" ng-minlength=1 ng-maxlength=50 required>
+	                    <div ng-show="form.password.$dirty && form.password.$invalid">
+	                        <p class="help-block"
+	                               ng-show="form.password.$error.required" data-translate="global.messages.validate.newpassword.required">
+	                            Your password is required.
+	                        </p>
+	                        <!-- <p class="help-block"
+	                               ng-show="form.password.$error.minlength" data-translate="global.messages.validate.newpassword.minlength">
+	                            Your password is required to be at least 4 characters.
+	                        </p> -->
+	                        <p class="help-block"
+	                               ng-show="form.password.$error.maxlength" data-translate="global.messages.validate.newpassword.maxlength">
+	                            Your password cannot be longer than 50 characters.
+	                        </p>
+	                    </div>
+	                </div>
+					
+					<button class="btn btn-lg btn-primary btn-block btn-signin" type="submit" ng-disabled="form.$invalid" >
+		            	<span data-translate="signin.button">log in</span>
+		            </button>
+				</form>
+		        <div class="forgot-pass-area">
+			        <a ui-sref="requestReset" class="forgot-password">
+			            <span data-translate="signin.form.forgot-lbl">Forgot the password?</span>
+			        </a>
+		        </div>
+		    </div><!-- /card-container -->
+	    </div>
+    </div>
+    
+    <div class="row">
+		<div class="center-block" style="max-width: 350px">
+		    <div class="card card-container center-block">
+		        <div class="forgot-pass-area">
+		        	<span data-translate="signin.form.no-account">Không có tài khoản?</span>
+			        <a ng-click="vm.register()" class="forgot-password">
+			        	<span data-translate="signin.form.register-lbl">Đăng ký</span>
+			        </a>
+		        </div>
+		    </div><!-- /card-container -->
+	    </div>
+    </div>
+    
+    <div class="row">
+		<div class="center-block" style="max-width: 350px">
+		    <div class="card card-container center-block no-background-download">
+		        <div class="forgot-pass-area">
+		        		<span data-translate="signin.form.download-lbl">Tải ứng dụng</span>
+		        </div>
+		        <div class="row">
+		        	<div class="col-xs-6 download-area">
+		        		<a href="#">
+		        			<img id="download-ios" class="download-img-card" src="content/images/ios-download.png"/>
+		        		</a>
+		        	</div>
+		        	<div class="col-xs-6 download-area">
+		        		<a href="#">
+		        			<img id="download-android" class="download-img-card" src="content/images/android-download.png"/>
+		        		</a>
+		        	</div>
+		        </div>
+		    </div><!-- /card-container -->
+	    </div>
+    </div>
+</div><!-- /container -->
+
+<div ng-include="'view/partial/language.html'"></div>
+<div class="footer" ng-cloak>
+    <div ng-include="'view/partial/footer.html'"></div>
+</div>

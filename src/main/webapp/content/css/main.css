@@ -1,0 +1,737 @@
+body {
+    background: #fafafa;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #333;
+}
+
+/* ==========================================================================
+Hide ng-cloak on page load, https://docs.angularjs.org/api/ng/directive/ngCloak
+========================================================================== */
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+    display: none !important;
+}
+
+/* ==========================================================================
+Development Ribbon
+========================================================================== */
+.ribbon {
+    background-color: #a00;
+    box-shadow: 0 0 10px #888;
+    left: -3.5em;
+    moz-box-shadow: 0 0 10px #888;
+    moz-transform: rotate(-45deg);
+    ms-transform: rotate(-45deg);
+    o-transform: rotate(-45deg);
+    overflow: hidden;
+    position: absolute;
+    top: 40px;
+    transform: rotate(-45deg);
+    webkit-box-shadow: 0 0 10px #888;
+    webkit-transform: rotate(-45deg);
+    white-space: nowrap;
+    width: 15em;
+    z-index: 9999;
+    pointer-events: none;
+}
+
+.ribbon a {
+    border: 1px solid #faa;
+    color: #fff;
+    display: block;
+    font: bold 81.25% 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    margin: 1px 0;
+    padding: 10px 50px;
+    text-align: center;
+    text-decoration: none;
+    text-shadow: 0 0 5px #444;
+    pointer-events: none;
+}
+
+/* ==========================================================================
+Version number in navbar
+========================================================================== */
+.navbar-version {
+    font-size: 10px;
+    color: #ccc
+}
+
+/* ==========================================================================
+Browser Upgrade Prompt
+========================================================================== */
+.browserupgrade {
+    margin: 0.2em 0;
+    background: #ccc;
+    color: #000;
+    padding: 0.2em 0;
+}
+
+/* ==========================================================================
+Logo styles
+========================================================================== */
+.navbar-brand.logo {
+    padding: 5px 15px;
+}
+
+.logo .logo-img {
+    height: 45px;
+    display: inline-block;
+}
+
+/* ==========================================================================
+Main page styles
+========================================================================== */
+.hero-unit {
+    margin: 50px auto 0 auto;
+    width: 300px;
+    font-size: 18px;
+    font-weight: 200;
+    line-height: 30px;
+    background-color: #eee;
+    border-radius: 6px;
+    padding: 60px;
+}
+
+.hero-unit h1 {
+    font-size: 60px;
+    line-height: 1;
+    letter-spacing: -1px;
+}
+
+.hipster {
+    display: inline-block;
+    width: 347px;
+    height: 200px;
+    background: url("../images/kanhome.png") no-repeat center top;
+    background-size: contain;
+}
+
+/* wait autoprefixer update to allow simple generation of high pixel density media query */
+@media
+only screen and (-webkit-min-device-pixel-ratio: 2),
+only screen and (   min--moz-device-pixel-ratio: 2),
+only screen and (     -o-min-device-pixel-ratio: 2/1),
+only screen and (        min-device-pixel-ratio: 2),
+only screen and (                min-resolution: 192dpi),
+only screen and (                min-resolution: 2dppx) {
+    .hipster {
+        background: url("../images/hipster2x.png") no-repeat center top;
+        background-size: contain;
+    }
+}
+
+/* ==========================================================================
+Generic styles
+========================================================================== */
+.error {
+    color: white;
+    background-color: red;
+}
+
+.pad {
+    padding: 10px;
+}
+
+.break {
+    white-space: normal;
+    word-break:break-all;
+}
+
+.voffset  { margin-top: 2px; }
+.voffset1 { margin-top: 5px; }
+.voffset2 { margin-top: 10px; }
+.voffset3 { margin-top: 15px; }
+.voffset4 { margin-top: 30px; }
+.voffset5 { margin-top: 40px; }
+.voffset6 { margin-top: 60px; }
+.voffset7 { margin-top: 80px; }
+.voffset8 { margin-top: 100px; }
+.voffset9 { margin-top: 150px; }
+
+.readonly {
+    background-color: #eee;
+    opacity: 1;
+}
+
+/* ==========================================================================
+make sure browsers use the pointer cursor for anchors, even with no href
+========================================================================== */
+a:hover, .hand, [jh-sort-by] {
+    cursor: pointer;
+}
+
+/* ==========================================================================
+Metrics and Health styles
+========================================================================== */
+#threadDump .popover, #healthCheck .popover {
+    top: inherit;
+    display: block;
+    font-size: 10px;
+    max-width: 1024px;
+}
+
+#healthCheck .popover {
+    margin-left: -50px;
+}
+
+.health-details {
+    min-width: 400px;
+}
+
+/* ==========================================================================
+start Password strength bar style
+========================================================================== */
+ul#strengthBar {
+    display:inline;
+    list-style:none;
+    margin:0;
+    margin-left:15px;
+    padding:0;
+    vertical-align:2px;
+}
+
+.point:last {
+    margin:0 !important;
+}
+.point {
+    background:#DDD;
+    border-radius:2px;
+    display:inline-block;
+    height:5px;
+    margin-right:1px;
+    width:20px;
+}
+
+/* ==========================================================================
+Custom alerts for notification
+========================================================================== */
+.alerts .alert{
+    text-overflow: ellipsis;
+}
+.alert pre{
+    background: none;
+    border: none;
+    font: inherit;
+    color: inherit;
+    padding: 0;
+    margin: 0;
+}
+
+.alert .popover pre {
+    font-size: 10px;
+}
+
+.alerts .toast {
+    position: fixed;
+    width: 100%;
+}
+
+.alerts .toast.left {
+    left: 5px;
+}
+
+.alerts .toast.right {
+    right: 5px;
+}
+
+.alerts .toast.top {
+    top: 55px;
+}
+
+.alerts .toast.bottom {
+    bottom: 55px;
+}
+
+@media screen and (min-width: 480px) {
+    .alerts .toast {
+        width: 50%;
+    }
+}
+
+/* ==========================================================================
+entity tables helpers
+========================================================================== */
+/* Remove Bootstrap padding from the element
+   http://stackoverflow.com/questions/19562903/remove-padding-from-columns-in-bootstrap-3 */
+.no-padding-left { padding-left: 0 !important; }
+.no-padding-right { padding-right: 0 !important; }
+.no-padding-top { padding-top: 0 !important; }
+.no-padding-bottom { padding-bottom: 0 !important; }
+.no-padding { padding: 0 !important; }
+
+/* bootstrap 3 input-group 100% width
+   http://stackoverflow.com/questions/23436430/bootstrap-3-input-group-100-width */
+.width-min { width: 1% !important; }
+
+/* Makes toolbar not wrap on smaller screens
+ http://www.sketchingwithcss.com/samplechapter/cheatsheet.html#right */
+.flex-btn-group-container {
+   display: -webkit-flex;
+   display: flex;
+   -webkit-flex-direction: row;
+   flex-direction: row;
+   -webkit-justify-content: flex-end;
+   justify-content: flex-end;
+}
+
+.jh-table > tbody > tr > td {
+    /* Align text in td vertically (top aligned by Bootstrap) */
+    vertical-align: middle;
+}
+
+.jh-table > thead > tr > th > .glyphicon-sort, .jh-table > thead > tr > th > .glyphicon-sort-by-attributes, .jh-table > thead > tr > th > .glyphicon-sort-by-attributes-alt {
+    /* less visible sorting icons */
+    opacity: 0.5;
+}
+
+.jh-table > thead > tr > th > .glyphicon-sort:hover, .jh-table > thead > tr > th > .glyphicon-sort-by-attributes:hover, .jh-table > thead > tr > th > .glyphicon-sort-by-attributes-alt:hover {
+    /* full visible sorting icons and pointer when mouse is over them */
+    opacity: 1;
+    cursor: pointer;
+}
+
+/* ==========================================================================
+entity detail page css
+========================================================================== */
+.dl-horizontal.jh-entity-details > dd {
+    margin-bottom: 15px;
+}
+
+@media screen and (min-width: 768px) {
+    .dl-horizontal.jh-entity-details > dt {
+        margin-bottom: 15px;
+    }
+
+    .dl-horizontal.jh-entity-details > dd {
+        border-bottom: 1px solid #eee;
+        padding-left: 180px;
+        margin-left: 0;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .dl-horizontal.device-details > dt {
+        margin-bottom: 15px;
+        width: 100px !important;
+    }
+
+    .dl-horizontal.device-details > dd {
+        border-bottom: 1px solid #eee;
+        padding-left: 120px;
+        margin-left: 0;
+    }
+}
+
+/* ==========================================================================
+ui bootstrap tweaks
+========================================================================== */
+.nav, .pagination, .carousel, .panel-title a {
+    cursor: pointer;
+}
+
+.datetime-picker-dropdown > li.date-picker-menu div > table .btn-default,
+.uib-datepicker-popup  > li > div.uib-datepicker > table .btn-default {
+    border: 0;
+}
+
+.datetime-picker-dropdown > li.date-picker-menu div > table:focus,
+.uib-datepicker-popup  > li > div.uib-datepicker > table:focus {
+    outline: none;
+}
+
+
+/* ==========================================================================
+Social Buttons
+========================================================================== */
+.jh-btn-social {
+    margin-bottom: 5px;
+}
+
+.jh-btn-google {
+    background-color: #dd4b39;
+    border-color: rgba(0, 0, 0, 0.2);
+    color: #fff;
+}
+
+.jh-btn-google:hover, .jh-btn-google:focus, .jh-btn-google:active, .jh-btn-google.active, .open > .dropdown-toggle.jh-btn-google {
+    background-color: #c23321;
+    border-color: rgba(0, 0, 0, 0.2);
+    color: #fff;
+}
+
+.jh-btn-facebook {
+    background-color: #3b5998;
+    border-color: rgba(0, 0, 0, 0.2);
+    color: #fff;
+}
+
+.jh-btn-facebook:hover, .jh-btn-facebook:focus, .jh-btn-facebook:active, .jh-btn-facebook.active, .open > .dropdown-toggle.jh-btn-facebook {
+    background-color: #2d4373;
+    border-color: rgba(0, 0, 0, 0.2);
+    color: #fff;
+}
+
+.jh-btn-twitter {
+    background-color: #55acee;
+    border-color: rgba(0, 0, 0, 0.2);
+    color: #fff;
+}
+
+.jh-btn-twitter:hover, .jh-btn-twitter:focus, .jh-btn-twitter:active, .jh-btn-twitter.active, .open > .dropdown-toggle.jh-btn-twitter {
+    background-color: #2795e9;
+    border-color: rgba(0, 0, 0, 0.2);
+    color: #fff;
+}
+
+/* ==========================================================================
+Fix error field display
+========================================================================== */
+.form-group .help-block {
+    position: static;
+    color: red !important;
+}
+
+/* jhipster-needle-css-add-main JHipster will add new css style */
+
+.truncate {
+  width: 250px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.truncate-row {
+  	display: block;
+    height: 40px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.angular-google-map-container { height: 620px; }
+
+
+.tex-GRAY {
+  color: gray;
+}
+.text-YELLOW {
+  color: yellow;
+}
+.text-RED {
+  color: red;
+}
+.text-BLUE {
+  color: blue;
+}
+
+.search-layout {
+	border : 1px solid #009688;
+}
+
+.search-container {
+	padding: 10px;
+	margin-top: -40px;
+}
+
+.search-container-user {
+	padding: 10px;
+}
+
+.search-item {
+	padding-right: 20px;
+	padding-left: 20px;
+}
+
+.search-btn-layout {
+	margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    margin-top: -10px;
+}
+
+md-tooltip .md-content {
+    height: auto !important;
+    max-width: 200px !important;
+    font-size: 13px !important;
+}
+
+md-tooltip {
+    height: auto !important;
+    max-width: 200px !important;
+    font-size: 13px !important;
+    overflow: visible !important;
+    white-space: normal !important;
+}
+
+md-tooltip ._md-content {
+    height: auto !important;
+    max-width: 200px !important;
+    font-size: 13px !important;
+}
+.map-container {
+	margin-top: -20px;
+}
+
+.map-container-sidebar {
+	position: absolute;
+    top: 0px;
+    height: 100%;
+    width: 100%;
+}
+
+
+/* Sidebar*/
+.sidebar-container-body {
+    height: 100%;
+}
+.sidebar-container-footer {
+    height: 60px;
+    z-index: 99;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    left: 0;
+    text-align: center;
+}
+.sidebar-container {
+    text-align: center;
+    min-height: 100%;
+    position: relative;
+    left: 0;
+}
+
+.m-b-5 {
+	margin-bottom: 5px;
+}
+.m-t-10 {
+	margin-top: 10px;
+}
+.m-t-5 {
+	margin-top: 5px;
+}
+.m-r-10 {
+	margin-right: 10px;
+}
+#header-sidebar {
+	position: fixed;
+	top: 0;
+	height: 65px;
+	width: 100%;
+}
+#footer-sidebar {
+	position: fixed;
+	bottom: 0;
+	height: 45px;
+	width: 100%;
+}
+#content-sidebar {
+	position: absolute;
+	top: 65px;
+	bottom: 50px;
+	width: 100%;
+	overflow: auto;
+}
+
+.color-primary {
+	color: #009688 !important;
+}
+
+.bg-input-map {
+	background-color: white !important;
+}
+
+.bg-primary {
+	background-color: #5bc0de !important;
+}
+
+.table-kanhome td {
+	padding-top: 0px !important;
+	padding-bottom: 0px !important;
+}
+
+.btn-map {
+    width: 35px !important;
+    height: 32px !important;
+    line-height: 38px !important;
+    color: white;
+    background-color: #009688 !important;
+}
+
+.input-map {
+	height: 25px;
+    padding-top: 2px;
+    padding-left: 5px;
+    font-size: 14px;
+	
+}
+
+.side-bar-map {
+	width: 380px !important;
+}
+
+md-card .card-header {
+	text-align: center;
+    padding-top: 5px;
+}
+md-card .card-content-all {
+	padding-top: 5px !important;
+	text-align: center;
+	padding-bottom: 3px;
+}
+
+md-card .card-content-working {
+	font-weight: bold;
+}
+
+md-card .card-content-value {
+	font-size: 38px;
+    margin-top: 10px;
+}
+
+md-card .card-content-unit {
+    margin-bottom: 0px;
+}
+
+md-card .card-content-time {
+    font-size: 9px;
+    margin-top: 6px;
+    float: right;
+}
+
+.md-card-filter {
+	width: 180px;
+	float: left;
+}
+
+.btn-sidebar {
+	position: fixed;
+    right: -10px;
+    top: 9px;
+    line-height: 31px;
+    font-size: 24px;
+}
+.sidebar-fullscreen {
+	min-width: 100%;
+}
+
+/* footer */
+.footer {
+	/*font-family: "Times New Roman", Georgia, Serif !important;*/
+	font-family: Arial, Helvetica, sans-serif !important;
+	text-transform: uppercase;
+    margin-bottom: 10px;
+    color: #385185 !important;
+    /* font-weight: bold; */
+    /* position: fixed;
+    bottom: 0;
+    width: 100%;
+    left: 20px; */
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+}
+
+.footer a {
+	color: #003569 !important;
+	opacity: .8;
+}
+
+.footer .footer-left span {
+    margin-left: 10px;
+    margin-right: 15px;
+}
+
+.footer .footer-right span {
+	float: right;
+    margin-right: 0px;
+}
+
+
+.btn:disabled {
+	background-color: #62aef9 !important;
+}
+
+.or-separator {
+  display:flex;
+  justify-content:center;
+  align-items: center;
+  color:grey;
+}
+
+.or-separator:after,
+.or-separator:before {
+    content: "";
+    display: block;
+    background: grey;
+    width: 40%;
+    height:1px;
+    margin: 0 10px;
+}
+
+.register-description {
+	text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+    color: gray;
+}
+
+.copy-right {
+	color: #999;
+}
+
+.m-t-30 {
+	    margin-top: 30px;
+}
+
+.form-group-kanhome {
+	padding-left: 5px;
+	font-size: 15px !important;
+}
+
+.form-group-settings {
+	padding-bottom: 0px !important;
+    margin: -5px 0 0 0 !important;
+}
+
+.m-t-8-r {
+    margin-top: -10px;
+}
+
+.fabSpeedDialdemoBasicUsage {
+	background-color: transparent;
+	position: fixed;
+	top: 0;
+	right: 0;
+}
+
+.fabSpeedDialdemoBasicUsage .text-capitalize {
+  text-transform: capitalize; }
+
+.fabSpeedDialdemoBasicUsage .md-fab:hover, .fabSpeedDialdemoBasicUsage .md-fab.md-focused {
+  background-color: #000 !important; }
+
+.fabSpeedDialdemoBasicUsage p.note {
+  font-size: 1.2rem; }
+
+.fabSpeedDialdemoBasicUsage .lock-size {
+  min-width: 300px;
+  min-height: 300px;
+  width: 300px;
+  height: 300px;
+  margin-left: auto;
+  margin-right: auto; }
+  
+.md-btn-language {
+	margin-top: 0px;
+	min-height: 25px;
+	border-radius: 25% !important;
+	line-height: 23px !important;
+    min-width: 33px !important;
+    height: 29px !important;
+}
+
+.md-main-language-btn {
+    border-radius: 10px;
+    border: 1px solid;
+    background-color: white !important;
+    /* color: blue !important; */
+    min-width: 50px;
+}

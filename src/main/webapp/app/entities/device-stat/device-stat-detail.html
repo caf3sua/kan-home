@@ -1,0 +1,39 @@
+
+<div>
+    <h2><span data-translate="kanHomeApp.deviceStat.detail.title">Device Stat</span> {{vm.deviceStat.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="kanHomeApp.deviceStat.type">Type</span></dt>
+        <dd>
+            <span>{{vm.deviceStat.type}}</span>
+        </dd>
+        <dt><span data-translate="kanHomeApp.deviceStat.clientid">Clientid</span></dt>
+        <dd>
+            <span>{{vm.deviceStat.clientid}}</span>
+        </dd>
+        <dt><span data-translate="kanHomeApp.deviceStat.time">Time</span></dt>
+        <dd>
+            <span>{{vm.deviceStat.time}}</span>
+        </dd>
+        <dt><span data-translate="kanHomeApp.deviceStat.u">U</span></dt>
+        <dd>
+            <span>{{vm.deviceStat.u}}</span>
+        </dd>
+        <dt><span data-translate="kanHomeApp.deviceStat.wQ">W Q</span></dt>
+        <dd>
+            <span>{{vm.deviceStat.wQ}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="device-stat-detail.edit({id:vm.deviceStat.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

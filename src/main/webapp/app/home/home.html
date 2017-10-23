@@ -1,0 +1,70 @@
+<div class="container">
+	<div class="well">
+		<div ng-cloak>
+		    <div class="row">
+		        <div class="col-md-4">
+		            <span class="hipster img-responsive img-rounded"></span>
+		        </div>
+		        <div class="col-md-8">
+		            <h1 data-translate="home.title">Welcome, Java Hipster!</h1>
+		            <p class="lead" data-translate="home.subtitle">This is your homepage</p>
+		
+		            <div ng-switch="vm.isAuthenticated()">
+		                <div class="alert alert-success" ng-switch-when="true" data-translate="home.logged.message" translate-values="{username: '{{vm.account.username}}'}">
+		                    You are logged in as user "{{vm.account.username}}".
+		                </div>
+		
+						<div class="alert alert-info" ng-switch-when="false" data-translate="global.messages.info.login" translate-compile>
+		                    You don't have an account yet? <a class="alert-link" ui-sref="register">Register a new account</a>
+		                </div>
+		                
+		                <div class="alert alert-warning" ng-switch-when="false" data-translate="global.messages.info.register" translate-compile>
+		                    You don't have an account yet? <a class="alert-link" ui-sref="register">Register a new account</a>
+		                </div>
+		            </div>
+		        </div>
+		    </div>
+		    
+		    <div class="row" ng-show="vm.isAuthenticated()">
+		    	<div class="col-md-4">
+		    		<p data-translate="home.question">
+		                Please use these functions of KanHome:
+		            </p>
+		
+		            <ul has-authority="ROLE_ADMIN">
+		                <li><a ui-sref="user-management" data-translate="home.link.user">JHipster homepage</a></li>
+		                <li><a ui-sref="device" data-translate="home.link.device">JHipster on Stack Overflow</a></li>
+		                <li><a ui-sref="map" data-translate="home.link.deviceOnMap">JHipster bug tracker</a></li>
+		                <li><a ui-sref="notification" data-translate="home.link.notification">JHipster public chat room</a></li>
+		            </ul>
+		            <!-- <ul>
+		                <li><a ui-sref="user-device" data-translate="home.link.user-device"></a></li>
+		            </ul> -->
+		            
+		            <p>
+		             <span data-translate="home.like">Thanks for use KanHome</span>
+		            </p>
+		    	</div>
+		    	<div class="col-md-4">
+		    		<div style="padding: 20px;">
+						<canvas id="doughnut1" class="chart chart-doughnut" chart-data="vm.userData" chart-labels="vm.userLabels" chart-options="vm.userOptions">
+						</canvas>
+					</div> 
+		    	</div>
+		    	<div class="col-md-4">
+		    		<div style="padding: 20px;">
+						<canvas id="bar" class="chart chart-bar" chart-colors="vm.colors" chart-data="vm.deviceData" chart-labels="vm.deviceLabels" chart-options="vm.deviceOptions">
+						</canvas>
+					</div>
+		    	</div>
+		    </div>
+		    
+		    <div class="row">
+		    </div>
+		</div>
+    </div>
+
+    <div class="footer" ng-cloak>
+        <div ng-include="'view/partial/footer.html'"></div>
+    </div>
+</div>

@@ -1,0 +1,54 @@
+{
+    "kanHomeApp": {
+        "map" : {
+            "home": {
+                "title": "Device on map",
+                "createLabel": "Create a new Topic",
+                "createOrEditLabel": "Create or edit a Topic"
+            },
+            "searchBtn" : "Search",
+            "cleanBtn" : "Clean",
+            "deviceBtn" : "Device",
+            "found-device" : "Found {{number}} devices to display",
+            "image": "Image",
+            "name": "Name",
+            "abbrName": "Abbr Name",
+            "model": "Model",
+            "user": "User",
+            "status": "Status",
+            "firmware": "Firmware",
+            "passcode": "Passcode",
+            "countryCode": "Country Code",
+            "cityCode": "City Code",
+            "wardCode": "Ward Code",
+            "zipCode": "Zip Code",
+            "gpsX": "Gps X",
+            "gpsY": "Gps Y",
+            "srvName": "Srv Name",
+            "srvPort": "Srv Port",
+            "repotIntv": "Repot Intv",
+            "saveIntv": "Save Intv",
+            "keepalive": "Keepalive",
+            "distCode": "Dist Code",
+            "cfgNum": "Cfg Num",
+            "filter" : {
+            	"time-label" : "Time working",
+            	"time-unit-Hour" : "Hour",
+            	"time-unit-OnOff" : "OnOff",
+            	"DRT" : "DRT",
+            	"PRT" : "PRT",
+            	"PST" : "PST",
+            	"F1" : "Lõi lọc số 1",
+            	"F2" : "Lõi lọc số 2",
+            	"F3" : "Lõi lọc số 3",
+            	"F4" : "Lõi lọc số 4",
+            	"F5" : "Lõi lọc số 5",
+            	"F6" : "Lõi lọc số 6",
+            	"F7" : "Lõi lọc số 7",
+            	"F8" : "Lõi lọc số 8",
+            	"F9" : "Lõi lọc số 9",
+            	"RO" : "Màng lọc RO"
+            }
+        }
+    }
+}

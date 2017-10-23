@@ -1,0 +1,13 @@
+{
+    "signin": {
+        "button": "Đăng nhập",
+        "form": {
+            "username-placeholder": "Tên người dùng"
+            , "password-placeholder": "Mật khẩu"
+            , "forgot-lbl": "Quên mật khẩu"
+            , "no-account": "Bạn không có tài khoản?"
+            , "register-lbl": "Đăng ký"
+            , "download-lbl": "Tải ứng dụng"
+        }
+    }
+}

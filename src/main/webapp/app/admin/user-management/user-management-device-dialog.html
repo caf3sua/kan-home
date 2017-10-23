@@ -1,0 +1,29 @@
+<form name="deleteForm" ng-submit="vm.confirmUpdateDevice()">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" data-translate="userManagement.device.title">Add/Remove device operator</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <p data-translate="userManagement.device.question" translate-values="{login: '{{vm.user.username}}'}">Are you sure you want to delete this User?</p>
+        
+        <div class="form-group">
+          	<ui-select ng-model="vm.selectedDevices" multiple theme="selectize" title="Choose a device">
+	            <ui-select-match placeholder="Select or search a device in the list...">{{$item.abbrName}}</ui-select-match>
+	            <ui-select-choices repeat="item in vm.devices | filter: $select.search">
+	              	<div ng-bind-html="item.abbrName | highlight: $select.search"></div>
+	              	<!-- <small ng-bind-html="item.abbrName | highlight: $select.search"></small> -->
+	            </ui-select-choices>
+          	</ui-select>
+      	</div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" class="btn btn-info" ng-disabled="vm.disableBtn">
+            <span class="glyphicon glyphicon-ok"></span>&nbsp;<span data-translate="entity.action.update">Cập nhật</span>
+        </button>
+    </div>
+</form>

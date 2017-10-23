@@ -1,0 +1,13 @@
+{
+    "signin": {
+        "button": "Log in",
+        "form": {
+            "username-placeholder": "Username"
+            , "password-placeholder": "Password"
+            , "forgot-lbl": "Forgot password?"
+            , "no-account": "Don't have an account?"
+            , "register-lbl": "Sign up"
+            , "download-lbl": "Get the app"
+        }
+    }
+}

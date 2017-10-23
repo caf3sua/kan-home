@@ -1,0 +1,34 @@
+{
+    "home": {
+        "title": "Welcome, Kan Home!",
+        "subtitle": "This is your homepage",
+        "logged": {
+            "message": "You are logged in as user \"{{username}}\"."
+        },
+        "question": "Please use these functions of KanHome:",
+        "link": {
+            "homepage": "KanHome homepage",
+            "user": "User management",
+            "device": "Device management",
+            "deviceOnMap": "Devices on Map",
+            "notification": "Notification",
+            "stackoverflow": "KanHome on Stack Overflow",
+            "bugtracker": "KanHome bug tracker",
+            "chat": "KanHome public chat room",
+            "follow": "follow @java_hipster on Twitter",
+            "user-device": "Device status of user"
+        },
+        "like": "Thank you for use KanHome",
+        "github": "GitHub",
+        "user-label": "User",
+        "admin-label": "Administrator",
+        "technical-label": "Technical",
+        "supportor-label": "Supportor",
+        "user-summary": "User summary",
+        "device-summary": "Device summary",
+        "blue-status": "Active",
+        "red-status": "Corrupt",
+        "yellow-status": "Repair",
+        "gray-status": "Inactive"
+    }
+}

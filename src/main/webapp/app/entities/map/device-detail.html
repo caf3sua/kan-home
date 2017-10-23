@@ -1,0 +1,142 @@
+<div class="row">
+        <md-sidenav
+      class="md-sidenav-right side-bar-map"
+      id="sidenav-right"
+      md-component-id="right"
+      md-whiteframe="4">
+      	
+      	<div id="header-sidebar">
+			<md-toolbar class="md-theme-indigo">
+	   	    	<h1 class="md-toolbar-tools">Thông tin thiết bị</h1>
+	   	    	<md-button class="btn-sidebar" aria-label="Full screen" ng-click="vm.toogleFullscreen()">
+        				<span class="glyphicon glyphicon-fullscreen"></span>
+   				</md-button>
+	     	</md-toolbar>
+		</div>
+		<div id="content-sidebar">
+			<md-tabs md-dynamic-height md-border-bottom>
+			      <md-tab>
+			      		<md-tab-label>
+							<span class="glyphicon glyphicon-home"></span>
+						</md-tab-label>
+						<md-tab-body>
+							<md-content class="md-padding">
+								<img ng-src="{{vm.selectedDevice.models.imageUrl}}" width="100%;" />
+					    		<dl class="dl-horizontal device-details">
+						        <!-- <dt><span>ID</span></dt>
+						        <dd>
+						            <span>{{ vm.selectedDevice.id }}</span>
+						        </dd> -->
+						        <dt><span data-translate="kanHomeApp.map.name">Name</span></dt>
+						        <dd>
+						            <span>{{vm.selectedDevice.name}}</span>
+						        </dd>
+						        <dt><span data-translate="kanHomeApp.map.abbrName">Abbr Name</span></dt>
+						        <dd>
+						            <span>{{vm.selectedDevice.abbrName}}</span>
+						        </dd>
+						        <dt><span data-translate="kanHomeApp.map.model">Model</span></dt>
+						        <dd>
+						            <span>{{vm.selectedDevice.model}}</span>
+						        </dd>
+						        <dt><span data-translate="kanHomeApp.map.firmware">Firmware</span></dt>
+						        <dd>
+						            <span>{{vm.selectedDevice.firmware}}</span>
+						        </dd>
+						        <dt><span data-translate="kanHomeApp.map.passcode">Passcode</span></dt>
+						        <dd>
+						            <span>{{vm.selectedDevice.passcode}}</span>
+						        </dd>
+						        <dt><span data-translate="kanHomeApp.map.countryCode">Country Code</span></dt>
+						        <dd>
+						            <span><img ng-src="/content/icon/flag-{{vm.selectedDevice.cityCode}}.png"> {{vm.selectedDevice.countryCode}} - {{vm.selectedDevice.countryCodeObj.name}}</span>
+						        </dd>
+						        <dt><span data-translate="kanHomeApp.map.cityCode">City Code</span></dt>
+						        <dd>
+						            <span>{{vm.selectedDevice.cityCode}} - {{vm.selectedDevice.cityObj.name}}</span>
+						        </dd>
+						        <dt><span data-translate="kanHomeApp.map.wardCode">Ward Code</span></dt>
+						        <dd>
+						            <span>{{vm.selectedDevice.wardCode}}</span>
+						        </dd>
+						        <dt><span data-translate="kanHomeApp.map.zipCode">Zip Code</span></dt>
+						        <dd>
+						            <span>{{vm.selectedDevice.zipCode}}</span>
+						        </dd>
+						        <dt><span data-translate="kanHomeApp.map.gpsX">Gps X</span></dt>
+						        <dd>
+						            <span>{{vm.selectedDevice.gpsX}}</span>
+						        </dd>
+						        <dt><span data-translate="kanHomeApp.map.gpsY">Gps Y</span></dt>
+						        <dd>
+						            <span>{{vm.selectedDevice.gpsY}}</span>
+						        </dd>
+						        <dt><span data-translate="kanHomeApp.map.srvName">Srv Name</span></dt>
+						        <dd>
+						            <span>{{vm.selectedDevice.srvName}}</span>
+						        </dd>
+						        <dt><span data-translate="kanHomeApp.map.srvPort">Srv Port</span></dt>
+						        <dd>
+						            <span>{{vm.selectedDevice.srvPort}}</span>
+						        </dd>
+						        <dt><span data-translate="kanHomeApp.map.repotIntv">Repot Intv</span></dt>
+						        <dd>
+						            <span>{{vm.selectedDevice.repotIntv}}</span>
+						        </dd>
+						        <dt><span data-translate="kanHomeApp.map.saveIntv">Save Intv</span></dt>
+						        <dd>
+						            <span>{{vm.selectedDevice.saveIntv}}</span>
+						        </dd>
+						        <dt><span data-translate="kanHomeApp.map.keepalive">Keepalive</span></dt>
+						        <dd>
+						            <span>{{vm.selectedDevice.keepalive}}</span>
+						        </dd>
+						        <dt><span data-translate="kanHomeApp.map.distCode">Dist Code</span></dt>
+						        <dd>
+						            <span>{{vm.selectedDevice.distCode}}</span>
+						        </dd>
+						    </dl>
+			        		</md-content>
+						</md-tab-body>
+			      </md-tab>
+			      <md-tab>
+			      		<md-tab-label>
+							<img src="content/icon/water-pump.png" width="20px;">
+						</md-tab-label>
+						<md-tab-body>
+							<md-content class="md-padding">
+								<div class="row">
+									<div class="no-padding md-card-filter" ng-repeat="para in vm.selectedDevice.mqttParam">
+										<md-card>
+									        <md-card-header class="no-padding">
+									          	<md-card-header-text>
+									            	<span class="md-title card-header" data-translate="kanHomeApp.map.filter.{{para.name}}">{{para.name}}<span>
+									          	</md-card-header-text>
+									        </md-card-header>
+									        <md-card-content class="card-content-all">
+									        	<span class="card-content-working" data-translate="kanHomeApp.map.filter.time-label">Thời gian sử dụng</span>
+									        	<p class="card-content-value">{{para.value}}</p>
+									        	<p class="card-content-unit" data-translate="kanHomeApp.map.filter.time-unit-{{para.unit}}">{{para.unit}}</p>
+									        	<span class="card-content-time">{{para.time | date:'yyyy-MM-dd HH:mm:ss'}}</span>
+									        </md-card-content>
+									        <!-- <md-card-actions layout="column" layout-align="start" class="layout-align-start-stretch layout-column">
+						          				<button class="md-button md-ink-ripple" type="button" ng-transclude=""><span class="ng-scope">Action 1</span></button>
+						          				<button class="md-button md-ink-ripple" type="button" ng-transclude=""><span class="ng-scope">Action 2</span></button>
+						        			</md-card-actions> -->
+										</md-card>									
+									</div>
+								</div>
+			        		</md-content>
+						</md-tab-body>
+			      </md-tab>
+		    </md-tabs>
+		</div>
+		<div id="footer-sidebar">
+	       <div style="margin-left: auto;margin-right: auto;text-align: center;">
+	              <button class="btn btn-primary" ng-click="vm.tooggleSelectedDevice()" >
+	                  <span class="glyphicon glyphicon-remove"></span>
+	              </button>
+	             </div>
+		</div>
+  </md-sidenav>
+</div>

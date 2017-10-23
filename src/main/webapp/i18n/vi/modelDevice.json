@@ -1,0 +1,24 @@
+{
+    "kanHomeApp": {
+        "modelDevice" : {
+            "home": {
+                "title": "Model Devices",
+                "createLabel": "Thêm mới một Model Device",
+                "createOrEditLabel": "Thêm mới hoặc cập nhật Model Device"
+            },
+            "created": "Một Model Device mới được tạo với định danh {{ param }}",
+            "updated": "Một Model Device cập nhật với định danh {{ param }}",
+            "deleted": "Một Model Device đã xóa với định danh {{ param }}",
+            "delete": {
+                "question": "Bạn có chắc là muốn xóa Model Device {{ id }}?"
+            },
+            "detail": {
+                "title": "Model Device"
+            },
+            "name": "Name",
+            "model": "Model",
+            "waranty": "Waranty",
+            "imageUrl": "Image Url"
+        }
+    }
+}

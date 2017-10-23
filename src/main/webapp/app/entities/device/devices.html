@@ -1,0 +1,188 @@
+<div class="container"  ng-keyup="$event.keyCode == 13 && vm.searchAll()" >
+	<div class="well">
+		<div>
+		    <h2 data-translate="kanHomeApp.device.home.title">Devices</h2>
+		    <jhi-alert></jhi-alert>
+		    <div class="container-fluid">
+		        <div class="row">
+		            <div class="col-xs-4 no-padding-left">
+		                <!-- <button class="btn btn-primary" ui-sref="device.new" >
+		                    <span class="glyphicon glyphicon-plus"></span>
+		                    <span  data-translate="kanHomeApp.device.home.createLabel">
+		                        Create new Device
+		                    </span>
+		                </button> -->
+		            </div>
+		            <div class="col-xs-8 no-padding-left">
+		            	<div class="pull-right">
+			                <button class="btn btn-info" ng-click="vm.toogleSearch()" >
+			                    <span class="glyphicon glyphicon-resize-vertical"></span>
+			                    <span  data-translate="kanHomeApp.device.home.searchLabel">
+			                        Advance search
+			                    </span>
+			                </button>
+		                </div>
+		            </div>
+		        </div>
+		        <div class="row" ng-show="vm.isSearchShow">
+		        	<div class="search-layout">
+				      	<div layout-wrap layout-gt-sm="row" class="search-container">
+				      		<!-- Abbr Name  -->
+				        	<div flex-gt-sm="33" class="search-item">
+				        		<input type="text" class="form-control" id="abbrName" name="abbrName"
+				        			ng-keyup="$event.keyCode == 13 && vm.searchFilter()" 
+		                    		ng-model="vm.currentSearch.abbrName" placeholder="Tên thiết bị" />
+				        	</div>
+				      		<!-- Model -->
+							<div flex-gt-sm="33" class="search-item">
+				          		<select id="model" name="model" class="form-control" ng-model="vm.currentSearch.model"
+				          				ng-keyup="$event.keyCode == 13 && vm.searchFilter()"   
+				          				ng-options="model.model as model.model for model in vm.models">
+				            		<option value="" selected>Chọn loại thiết bị</option>
+				            	</select>
+				        	</div>
+				        	<!-- Country -->
+				        	<div flex-gt-sm="33" class="search-item">
+				          		<select id="country" name="country" class="form-control" ng-model="vm.currentSearch.countryCode"
+				          				ng-keyup="$event.keyCode == 13 && vm.searchFilter()"  
+				          				ng-options="country.countryCode as country.name for country in vm.countries">
+				            		<option value="" selected>Chọn quốc gia</option>
+				            	</select>
+				        	</div>
+				        	<!-- Status -->
+				        	<div flex-gt-sm="25" class="search-item">
+				          		<!-- <select id="status" name="status" class="form-control" ng-model="vm.currentSearch.model" ng-options="model.model as model.model for model in vm.models">
+				            		<option value="" selected>Chọn loại thiết bị</option>
+				            	</select> -->
+				        	</div>
+				        </div>
+				        <div class="search-btn-layout">
+				    	      <md-button class="md-icon-button" aria-label="More" ng-click="vm.searchFilter()">
+									<span class="glyphicon glyphicon-search"></span>
+						      </md-button>
+						      <md-button class="md-icon-button" aria-label="More" ng-click="vm.cleanSearch()">
+									<span class="glyphicon glyphicon-refresh"></span>
+						      </md-button>
+					    </div>
+					</div>
+		        </div>
+		    </div>
+		    <!-- <button type="submit"
+		                                    ui-sref="device.delete({id:device.id})"
+		                                    class="btn btn-danger btn-sm">
+		                                <span class="glyphicon glyphicon-remove-circle"></span>
+		                                <span class="hidden-sm-down" data-translate="entity.action.delete"></span>
+		                            </button> -->
+		    <div class="row">
+           		<div class="col-xs-4">
+			          <button type="submit" ng-disabled="vm.selectedItem.length == 0"
+			          			ui-sref="device.delete({abbrNames:vm.selectedItem})"
+                              	class="btn btn-danger btn-sm">
+                          <span class="glyphicon glyphicon-trash"></span>
+                          <span class="hidden-xs hidden-sm" data-translate="entity.action.delete"></span>
+                      </button>
+			      </div>
+           	</div>   
+		    <div class="table-responsive">
+		        <table class="jh-table table table-striped table-kanhome">
+		            <thead>
+		                <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
+		                	<th><input type="checkbox" id="chk-all" ng-click="vm.checkAll()"></th>
+		                	<th><span data-translate="kanHomeApp.device.stt">STT</span></th>
+		                    <!-- <th jh-sort-by="id"><span data-translate="global.field.id">ID</span> <span class="glyphicon glyphicon-sort"></span></th> -->
+		                    <th jh-sort-by="model"><span data-translate="kanHomeApp.device.model">Model</span> <span class="glyphicon glyphicon-sort"></span></th>
+		                    <th jh-sort-by="abbrName"><span data-translate="kanHomeApp.device.abbrName">Abbr Name</span> <span class="glyphicon glyphicon-sort"></span></th>
+		                    <!-- <th jh-sort-by="model"><span data-translate="kanHomeApp.device.model">Model</span> <span class="glyphicon glyphicon-sort"></span></th>
+		                    <th jh-sort-by="firmware"><span data-translate="kanHomeApp.device.firmware">Firmware</span> <span class="glyphicon glyphicon-sort"></span></th>
+		                    <th jh-sort-by="passcode"><span data-translate="kanHomeApp.device.passcode">Passcode</span> <span class="glyphicon glyphicon-sort"></span></th> -->
+		                    <th><span data-translate="kanHomeApp.device.user">User</span></th>
+		                    <th><span data-translate="kanHomeApp.device.status">Status code</span></th>
+		                    <th jh-sort-by="countryCode"><span data-translate="kanHomeApp.device.countryCode">Country Code</span> <span class="glyphicon glyphicon-sort"></span></th>
+		                    <!-- <th jh-sort-by="cityCode"><span data-translate="kanHomeApp.device.cityCode">City Code</span> <span class="glyphicon glyphicon-sort"></span></th>
+		                    <th jh-sort-by="wardCode"><span data-translate="kanHomeApp.device.wardCode">Ward Code</span> <span class="glyphicon glyphicon-sort"></span></th>
+		                    <th jh-sort-by="zipCode"><span data-translate="kanHomeApp.device.zipCode">Zip Code</span> <span class="glyphicon glyphicon-sort"></span></th>
+		                    <th jh-sort-by="gpsX"><span data-translate="kanHomeApp.device.gpsX">Gps X</span> <span class="glyphicon glyphicon-sort"></span></th>
+		                    <th jh-sort-by="gpsY"><span data-translate="kanHomeApp.device.gpsY">Gps Y</span> <span class="glyphicon glyphicon-sort"></span></th>
+		                    <th jh-sort-by="srvName"><span data-translate="kanHomeApp.device.srvName">Srv Name</span> <span class="glyphicon glyphicon-sort"></span></th>
+		                    <th jh-sort-by="srvPort"><span data-translate="kanHomeApp.device.srvPort">Srv Port</span> <span class="glyphicon glyphicon-sort"></span></th>
+		                    <th jh-sort-by="repotIntv"><span data-translate="kanHomeApp.device.repotIntv">Repot Intv</span> <span class="glyphicon glyphicon-sort"></span></th>
+		                    <th jh-sort-by="saveIntv"><span data-translate="kanHomeApp.device.saveIntv">Save Intv</span> <span class="glyphicon glyphicon-sort"></span></th>
+		                    <th jh-sort-by="keepalive"><span data-translate="kanHomeApp.device.keepalive">Keepalive</span> <span class="glyphicon glyphicon-sort"></span></th>
+		                    <th jh-sort-by="distCode"><span data-translate="kanHomeApp.device.distCode">Dist Code</span> <span class="glyphicon glyphicon-sort"></span></th>
+		                    <th jh-sort-by="cfgNum"><span data-translate="kanHomeApp.device.cfgNum">Cfg Num</span> <span class="glyphicon glyphicon-sort"></span></th> -->
+		                    <th></th>
+		                </tr>
+		            </thead>
+		            <tbody>
+		                <tr ng-repeat="device in vm.devices track by device.id">
+		                    <!-- <td><a ui-sref="device-detail({id:device.id})">{{device.id}}</a></td> -->
+		                    <td><input type="checkbox" id="chk-item-id-{{device.id}}" class="chk-item-id-{{device.id}}"
+			                	ng-click="vm.checkItem()" data="{{device.abbrName}}"></td>
+		                    <td>{{$index + 1 + ((vm.page -1) * vm.itemsPerPage) }}</td>
+		                    <td>{{device.model}}</td>
+		                    <td><a ui-sref="device-detail({id:device.id})">{{device.abbrName}}</a></td>
+		                    <!-- <td>{{device.model}}</td>
+		                    <td>{{device.firmware}}</td>
+		                    <td>{{device.passcode}}</td> -->
+		                    <td>
+		                    	<div>
+			                		<md-tooltip md-direction="left" class="tooltip-multiline">
+				                        <div ng-bind-html="vm.showAllUser(device.users)"></div>
+				                    </md-tooltip>
+				                    <div style="position: relative;margin-left: 15px;" ng-show="device.users.length">
+				                    	<img src="content/icon/account-plus.png" width="27px;"> 
+				                    	<span class="badge badge-info" style="position: absolute;left: -12px;background-color: red;">{{device.users.length}}</span></a><br>
+				                    </div>
+			                    </div>
+		                    </td>
+		                    <td><span class="label label-{{device.status|| 'default'}} ng-binding" data-translate="{{'kanHomeApp.device.device-status.' + device.status}}">{{device.status}} </span></td>
+		                    <td><img ng-src="/content/icon/flag-{{device.countryCode || 'Notfound'}}.png" width="25px;"></td>
+		                    <!-- <td>{{device.cityCode}}</td>
+		                    <td>{{device.wardCode}}</td>
+		                    <td>{{device.zipCode}}</td>
+		                    <td>{{device.gpsX}}</td>
+		                    <td>{{device.gpsY}}</td>
+		                    <td>{{device.srvName}}</td>
+		                    <td>{{device.srvPort}}</td>
+		                    <td>{{device.repotIntv}}</td>
+		                    <td>{{device.saveIntv}}</td>
+		                    <td>{{device.keepalive}}</td>
+		                    <td>{{device.distCode}}</td>
+		                    <td>{{device.cfgNum}}</td> -->
+		                    <td class="text-right">
+		                        <div class="btn-group flex-btn-group-container">
+		                            <button type="submit"
+		                                    ui-sref="device-detail({abbrName:device.abbrName})"
+		                                    class="btn btn-info btn-sm">
+		                                <span class="glyphicon glyphicon-eye-open"></span>
+		                                <span class="hidden-sm-down" data-translate="entity.action.view"></span>
+		                            </button>
+		                            <button type="submit"
+		                                    ui-sref="device.edit({abbrName:device.abbrName})"
+		                                    class="btn btn-primary btn-sm">
+		                                <span class="glyphicon glyphicon-pencil"></span>
+		                                <span class="hidden-sm-down" data-translate="entity.action.edit"></span>
+		                            </button>
+		                            <!-- <button type="submit"
+		                                    ui-sref="device.delete({id:device.id})"
+		                                    class="btn btn-danger btn-sm">
+		                                <span class="glyphicon glyphicon-remove-circle"></span>
+		                                <span class="hidden-sm-down" data-translate="entity.action.delete"></span>
+		                            </button> -->
+		                        </div>
+		                    </td>
+		                </tr>
+		            </tbody>
+		        </table>
+		    </div>
+		    <div class="text-center">
+		        <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
+		        <uib-pagination class="pagination-sm" total-items="vm.totalItems" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
+		    </div>
+		</div>
+	</div>
+	
+	<div class="footer" ng-cloak>
+        <div ng-include="'view/partial/footer.html'"></div>
+    </div>
+</div>

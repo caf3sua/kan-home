@@ -1,0 +1,25 @@
+{
+    "kanHomeApp": {
+        "deviceStat" : {
+            "home": {
+                "title": "Device Stats",
+                "createLabel": "Thêm mới một Device Stat",
+                "createOrEditLabel": "Thêm mới hoặc cập nhật Device Stat"
+            },
+            "created": "Một Device Stat mới được tạo với định danh {{ param }}",
+            "updated": "Một Device Stat cập nhật với định danh {{ param }}",
+            "deleted": "Một Device Stat đã xóa với định danh {{ param }}",
+            "delete": {
+                "question": "Bạn có chắc là muốn xóa Device Stat {{ id }}?"
+            },
+            "detail": {
+                "title": "Device Stat"
+            },
+            "type": "Type",
+            "clientid": "Clientid",
+            "time": "Time",
+            "u": "U",
+            "wQ": "W Q"
+        }
+    }
+}
