@@ -407,7 +407,9 @@ Fix error field display
     text-overflow: ellipsis;
 }
 
-.angular-google-map-container { height: 620px; }
+.angular-google-map-container { 
+	min-height: 400px; 
+}
 
 
 .tex-GRAY {

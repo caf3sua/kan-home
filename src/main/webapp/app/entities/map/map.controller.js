@@ -48,15 +48,40 @@
         vm.clickOnMarker = clickOnMarker;
         vm.toogleFullscreen = toogleFullscreen;
         
-        // Init
-        loadAllDevice();
-        loadAllCountry();
-        loadAllCity();
-        loadAllModelDevice();
+        (function initController() {
+        		// Init
+            loadAllDevice();
+            loadAllCountry();
+            loadAllCity();
+            loadAllModelDevice();
+        })();
         
         // Connect socket
         var stompClient = null;
         connect();
+
+        angular.element(document).ready(function () {
+        		setHeightMap()
+        });
+        
+        function setHeightMap() {
+        		var navHeight = $("#nav-bar-container").height();
+        		var winHeight = window.innerHeight;
+        		
+        		if (navHeight != undefined && navHeight > 0) {
+        			var mapHeight = winHeight - navHeight - 1;
+        			$(".angular-google-map-container").css({"height": mapHeight + "px"});
+        		}
+        }
+        
+        $(window).on("resize.doResize", function (){
+            console.log(window.innerHeight);
+
+            $scope.$apply(function() {
+                //do something to update current scope based on the new innerWidth and let angular update the view.
+            		setHeightMap();
+            });
+        });
         
         //======================
         function connect() {
@@ -266,9 +291,9 @@
 	            		        longitude: device.gpsY
 	            		    },
 	            		    options: {
-	            		        icon: {
-	            		            url: 'content/icon/iWater-GRAY.png'
-	            		        },
+//	            		        icon: {
+//	            		            url: 'content/icon/iWater-GRAY.png'
+//	            		        },
 	            		        extra: device
 	            		}
 	                };
@@ -304,9 +329,9 @@
             	angular.forEach(vm.map.markers, function (marker, key) {
         			angular.forEach(result, function (stat, keyStat) {
         				// wQ
-        				if (marker.id == stat.id) {
-        					marker.options.icon.url = 'content/icon/iWater-' + stat.wQ + '.png';
-        				}
+//        				if (marker.id == stat.id) {
+//        					marker.options.icon.url = 'content/icon/iWater-' + stat.wQ + '.png';
+//        				}
                     });
                 });
             	
@@ -346,9 +371,9 @@
 	            		        longitude: device.gpsY
 	            		    },
 	            		    options: {
-	            		        icon: {
-	            		            url: 'content/icon/iWater-GRAY.png'
-	            		        },
+//	            		        icon: {
+//	            		            url: 'content/icon/iWater-GRAY.png'
+//	            		        },
 	            		        extra: device
 	            		}
 	                };
