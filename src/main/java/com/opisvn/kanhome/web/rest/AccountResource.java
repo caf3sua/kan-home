@@ -1,3 +1,4 @@
+
 package com.opisvn.kanhome.web.rest;
 
 import java.net.URI;
@@ -71,7 +72,8 @@ public class AccountResource {
         produces={MediaType.APPLICATION_JSON_VALUE, MediaType.TEXT_PLAIN_VALUE})
     @Timed
     public ResponseEntity registerAccount(@Valid @RequestBody ManagedUserVM managedUserVM) {
-
+    		log.debug("REST request to registerAccount : {}", managedUserVM);
+    	
         HttpHeaders textPlainHeaders = new HttpHeaders();
         textPlainHeaders.setContentType(MediaType.TEXT_PLAIN);
 
@@ -127,6 +129,7 @@ public class AccountResource {
     @GetMapping("/account")
     @Timed
     public ResponseEntity<UserDTO> getAccount() {
+    	log.debug("REST request to get current Account");
         return Optional.ofNullable(userService.getUserWithAuthorities())
             .map(user -> new ResponseEntity<>(new UserDTO(user), HttpStatus.OK))
             .orElse(new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
@@ -141,6 +144,7 @@ public class AccountResource {
     @PostMapping("/account")
     @Timed
     public ResponseEntity saveAccount(@Valid @RequestBody UserDTO userDTO) {
+    		log.debug("REST request to saveAccount, {}", userDTO);
         final String userLogin = SecurityUtils.getCurrentUserLogin();
         Optional<User> existingUser = userRepository.findOneByEmail(userDTO.getEmail());
         if (existingUser.isPresent() && (!existingUser.get().getUsername().equalsIgnoreCase(userLogin))) {
@@ -166,14 +170,15 @@ public class AccountResource {
         produces = MediaType.TEXT_PLAIN_VALUE)
     @Timed
     public ResponseEntity changePassword(@RequestBody PasswordVM password) {
-    	// Check old pass
-    	Optional<User> optUser = userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin());
-    	User user = optUser.get();
-    	
-    	if (!StringUtils.equals(password.getOldPassword(), user.getPassword())) {
-    		return new ResponseEntity<>("Old password wrong", HttpStatus.FORBIDDEN);
-    	}
-    	
+	    	log.debug("REST request to changePassword, {}", password);
+	    	// Check old pass
+	    	Optional<User> optUser = userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin());
+	    	User user = optUser.get();
+	    	
+	    	if (!StringUtils.equals(password.getOldPassword(), user.getPassword())) {
+	    		return new ResponseEntity<>("Old password wrong", HttpStatus.FORBIDDEN);
+	    	}
+	    	
         if (!checkPasswordLength(password.getPassword())) {
             return new ResponseEntity<>("Incorrect password", HttpStatus.BAD_REQUEST);
         }
@@ -191,6 +196,7 @@ public class AccountResource {
         produces = MediaType.TEXT_PLAIN_VALUE)
     @Timed
     public ResponseEntity requestPasswordReset(@RequestBody String mail) {
+    		log.debug("REST request to requestPasswordReset, {}", mail);
         return userService.requestPasswordReset(mail)
             .map(user -> {
                 mailService.sendPasswordResetMail(user);
@@ -209,6 +215,7 @@ public class AccountResource {
         produces = MediaType.TEXT_PLAIN_VALUE)
     @Timed
     public ResponseEntity<String> finishPasswordReset(@RequestBody KeyAndPasswordVM keyAndPassword) {
+    		log.debug("REST request to finishPasswordReset, {}", keyAndPassword);
         if (!checkPasswordLength(keyAndPassword.getNewPassword())) {
             return new ResponseEntity<>("Incorrect password", HttpStatus.BAD_REQUEST);
         }
@@ -232,6 +239,7 @@ public class AccountResource {
     @GetMapping("/activate")
     @Timed
     public ResponseEntity<String> activateAccount(@RequestParam(value = "key") String key) {
+    		log.debug("REST request to activateAccount, {}", key);
         return userService.activateRegistration(key)
             .map(user -> new ResponseEntity<String>(HttpStatus.OK))
             .orElse(new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
@@ -248,6 +256,7 @@ public class AccountResource {
     @Timed
     public ResponseEntity<User> activateAccountBySmsCode(@RequestParam(value = "username", required=true) final String username
     		, @RequestParam(value = "sms", required=true) final String sms) throws URISyntaxException {
+    		log.debug("REST request to activateAccountBySmsCode, username : {}, sms : {}", username, sms);
     	
 		Optional<User> userOpt  = userService.getUserWithAuthoritiesByLogin(username);
 		if (userOpt.get() == null) {
