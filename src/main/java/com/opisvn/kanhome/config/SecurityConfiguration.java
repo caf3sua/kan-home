@@ -21,6 +21,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.data.repository.query.SecurityEvaluationContextExtension;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.filter.CorsFilter;
 
 import javax.annotation.PostConstruct;
@@ -99,16 +100,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         .and()
             .authorizeRequests()
             // Old version
+            .antMatchers("/api/v1/user/create").permitAll()
             .antMatchers("/api/v1/auth/login").permitAll()
             .antMatchers("/api/v1/account/activate").permitAll()
             .antMatchers("/api/v1/account/resend-sms").permitAll()
-            .antMatchers("/api/v1/user/create").permitAll()
             .antMatchers("/api/v1/user/forgetPwd").permitAll()
             .antMatchers("/api/v1/user/recoveryPwd").permitAll()
             // Old version
             .antMatchers("/api/register").permitAll()
-            .antMatchers("/api/activate").permitAll()
             .antMatchers("/api/authenticate").permitAll()
+            .antMatchers("/api/activate").permitAll()
             .antMatchers("/api/account/activate").permitAll()
             .antMatchers("/api/account/resend_sms").permitAll()
             .antMatchers("/api/account/reset_password/init").permitAll()

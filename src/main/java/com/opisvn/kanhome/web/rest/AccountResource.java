@@ -259,16 +259,16 @@ public class AccountResource {
     		log.debug("REST request to activateAccountBySmsCode, username : {}, sms : {}", username, sms);
     	
 		Optional<User> userOpt  = userService.getUserWithAuthoritiesByLogin(username);
-		if (userOpt.get() == null) {
-			return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("User", 
-					"idexists", "User not found")).body(null);
+		if (!userOpt.isPresent() || userOpt.get() == null) {
+			return ResponseEntity.notFound().headers(HeaderUtil.createFailureAlert("User", 
+					"usernotfound", "User " + username + " not found")).build();
 		}
 		
 		User user = userOpt.get();
 		// Compare sms code
 		if (!StringUtils.equalsIgnoreCase(sms, user.getActivationCode())) {
 			return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("User", 
-					"idexists", "Sms code is invalid")).body(null);
+					"smscodeinvalid", "Sms code is invalid")).body(null);
 		}
 		
 		// Update status and remove activation code
@@ -288,10 +288,10 @@ public class AccountResource {
     	
     	log.debug("Start method resendSmsCode, username: {}", username);
 		// Update user status = 0
-    	Optional<User> userOpt  = userService.getUserWithAuthoritiesByLogin(username);
-		if (userOpt.get() == null) {
-			return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("User", 
-					"idexists", "User not found")).body(null);
+    	Optional<User> userOpt  = userService.getUserWithAuthoritiesByLogin(StringUtils.lowerCase(username));
+		if (!userOpt.isPresent() || userOpt.get() == null) {
+			return ResponseEntity.notFound().headers(HeaderUtil.createFailureAlert("User", 
+					"usernotfound", "User " + username + " not found")).build();
 		}
 		
 		User user = userOpt.get();
