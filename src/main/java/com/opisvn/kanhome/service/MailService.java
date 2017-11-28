@@ -77,7 +77,15 @@ public class MailService {
 
     @Async
     public void sendEmailFromTemplate(User user, String templateName, String titleKey) {
-        Locale locale = Locale.forLanguageTag(user.getLangKey());
+    		// Get language key
+    		String langKey = user.getLangKey();
+    		Locale locale = null;
+    		if (StringUtils.isEmpty(langKey)) {
+    			locale = Locale.forLanguageTag("vi");
+    		} else {
+    			locale = Locale.forLanguageTag(user.getLangKey());
+    		}
+        
         Context context = new Context(locale);
         context.setVariable(USER, user);
         context.setVariable(BASE_URL, jHipsterProperties.getMail().getBaseUrl());
