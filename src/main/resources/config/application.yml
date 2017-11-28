@@ -65,6 +65,7 @@ spring:
         #password: MjVkNTVhZDI4M2FhNDAwYWY0NjRjNzZkNzEzYzA3YWQ=
     # Send SMS
     sms:
+        number-resend: 5
         provider:
             url: http://api.speedsms.vn/index.php
             accessToken: ScO07qUxyplqBe4XkrynfwVakk8CFawn
@@ -74,7 +75,6 @@ spring:
             service: kangaroo
             fromnumber: 8209
             message: Your KanHome Activation Code is %s
-
 security:
     basic:
         enabled: false

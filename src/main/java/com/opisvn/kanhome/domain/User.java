@@ -100,7 +100,10 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Field("phonenumber")
     private String phonenumber;
     
-    @Size(max = 256)
+    @Field("numberSendSms")
+	private Integer numberSendSms;
+
+	@Size(max = 256)
     @Field("address")
     private String address;
     
@@ -290,6 +293,14 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
 	public void setLatestNotificationId(Long latestNotificationId) {
 		this.latestNotificationId = latestNotificationId;
+	}
+
+    public Integer getNumberSendSms() {
+		return numberSendSms;
+	}
+
+	public void setNumberSendSms(Integer numberSendSms) {
+		this.numberSendSms = numberSendSms;
 	}
 
 	@Override

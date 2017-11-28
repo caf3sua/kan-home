@@ -3,6 +3,8 @@ package com.opisvn.kanhome.web.rest;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Date;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +13,9 @@ import javax.validation.Valid;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.actuate.audit.AuditEvent;
+import org.springframework.boot.actuate.audit.AuditEventRepository;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -52,14 +57,20 @@ public class AccountResource {
     private final MailService mailService;
     
     private final SmsService smsService;
+    
+    private final AuditEventRepository auditEventRepository;
+    
+    private final Environment env;
 
     public AccountResource(UserRepository userRepository, UserService userService,
-            MailService mailService, SmsService smsService) {
+            MailService mailService, SmsService smsService, AuditEventRepository auditEventRepository, Environment env) {
 
         this.userRepository = userRepository;
         this.userService = userService;
         this.mailService = mailService;
         this.smsService = smsService;
+        this.auditEventRepository = auditEventRepository;
+        this.env = env;
     }
 
     /**
@@ -196,12 +207,12 @@ public class AccountResource {
         produces = MediaType.TEXT_PLAIN_VALUE)
     @Timed
     public ResponseEntity requestPasswordReset(@RequestBody String mail) {
-    		log.debug("REST request to requestPasswordReset, {}", mail);
+    		log.debug("REST request to requestPasswordReset, email: {}", mail);
         return userService.requestPasswordReset(mail)
             .map(user -> {
                 mailService.sendPasswordResetMail(user);
                 return new ResponseEntity<>("email was sent", HttpStatus.OK);
-            }).orElse(new ResponseEntity<>("email address not registered", HttpStatus.BAD_REQUEST));
+            }).orElse(new ResponseEntity<>("email address not registered or account not yet actived", HttpStatus.BAD_REQUEST));
     }
 
     /**
@@ -258,6 +269,7 @@ public class AccountResource {
     		, @RequestParam(value = "sms", required=true) final String sms) throws URISyntaxException {
     		log.debug("REST request to activateAccountBySmsCode, username : {}, sms : {}", username, sms);
     	
+    		// Check user exist
 		Optional<User> userOpt  = userService.getUserWithAuthoritiesByLogin(username);
 		if (!userOpt.isPresent() || userOpt.get() == null) {
 			return ResponseEntity.notFound().headers(HeaderUtil.createFailureAlert("User", 
@@ -265,8 +277,20 @@ public class AccountResource {
 		}
 		
 		User user = userOpt.get();
+		// Check activated?
+		if (user.getActivated()) {
+			return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("User", 
+					"activated", "User " + username + " activated")).body(null);
+		}
+		
+		
 		// Compare sms code
 		if (!StringUtils.equalsIgnoreCase(sms, user.getActivationCode())) {
+			// Audit and log
+			String errorMsg = "message=sms code: " + sms + " but expect: " + user.getActivationCode();
+			AuditEvent event = new AuditEvent(username, "ACTIVATED_FAILED", errorMsg); 
+			auditEventRepository.add(event);
+			log.debug("Active account FAILED, username: {}, sms code: {} but expect {}", username, sms, user.getActivationCode());
 			return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("User", 
 					"smscodeinvalid", "Sms code is invalid")).body(null);
 		}
@@ -288,23 +312,42 @@ public class AccountResource {
     	
     	log.debug("Start method resendSmsCode, username: {}", username);
 		// Update user status = 0
-    	Optional<User> userOpt  = userService.getUserWithAuthoritiesByLogin(StringUtils.lowerCase(username));
+    		Optional<User> userOpt  = userService.getUserWithAuthoritiesByLogin(StringUtils.lowerCase(username));
 		if (!userOpt.isPresent() || userOpt.get() == null) {
 			return ResponseEntity.notFound().headers(HeaderUtil.createFailureAlert("User", 
 					"usernotfound", "User " + username + " not found")).build();
 		}
 		
 		User user = userOpt.get();
+		// Check activated?
+		if (user.getActivated()) {
+			return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("User", 
+					"activated", "User " + username + " activated")).body(null);
+		}
 		
-		// Send SMS
-		String smsCode = KanhomeUtil.generateSmsCode();
+		// Validate number of resend
+	       
+		int iResendSms = Integer.valueOf(env.getProperty("spring.sms.number-resend"));
+		if (user.getNumberSendSms() != null && user.getNumberSendSms() >= iResendSms) {
+			return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("User", 
+					"max-resend-sms", "User " + username + " has reached max resend sms code")).body(null);
+		}
+		
+		// Generate new SMS code
+		// String smsCode = KanhomeUtil.generateSmsCode();
 
 		// Send SMS
-		boolean result = smsService.sendSMS(user.getPhonenumber(), smsCode);
-		log.debug("Result send SMS: {}", result);
+		boolean result = smsService.sendSMS(user.getPhonenumber(), user.getActivationCode());
+		log.debug("Result re-send SMS: {} of user :{}, phonenumber: {}", result, username, user.getPhonenumber());
 
 		// Update status and add activation code
-		user.setActivationCode(smsCode);
+		// user.setActivationCode(smsCode);
+		if (user.getNumberSendSms() == null) {
+			user.setNumberSendSms(1);
+		} else {
+			user.setNumberSendSms(user.getNumberSendSms() + 1);
+		}
+		
 		
 		//  and Send mail
 		if (result) {
@@ -314,7 +357,7 @@ public class AccountResource {
 		// Update
 		User resultUser = userRepository.save(user);
 		
-		return ResponseEntity.created(new URI("/api/account/activate" + user.getId()))
+		return ResponseEntity.created(new URI("/api/v1/account/resend-sms" + user.getId()))
                 .headers(HeaderUtil.createEntityCreationAlert("User", user.getId().toString()))
                 .body(resultUser);
     }
