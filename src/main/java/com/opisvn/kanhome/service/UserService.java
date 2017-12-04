@@ -301,14 +301,14 @@ public class UserService {
      * This is scheduled to get fired everyday, at 01:00 (am).
      * </p>
      */
-    @Scheduled(cron = "0 0 1 * * ?")
-    public void removeNotActivatedUsers() {
-        List<User> users = userRepository.findAllByActivatedIsFalseAndCreatedDateBefore(Instant.now().minus(3, ChronoUnit.DAYS));
-        for (User user : users) {
-            log.debug("Deleting not activated user {}", user.getUsername());
-            userRepository.delete(user);
-        }
-    }
+//    @Scheduled(cron = "0 0 1 * * ?")
+//    public void removeNotActivatedUsers() {
+//        List<User> users = userRepository.findAllByActivatedIsFalseAndCreatedDateBefore(Instant.now().minus(3, ChronoUnit.DAYS));
+//        for (User user : users) {
+//            log.debug("Deleting not activated user {}", user.getUsername());
+//            userRepository.delete(user);
+//        }
+//    }
 
     /**
      * @return a list of all the authorities

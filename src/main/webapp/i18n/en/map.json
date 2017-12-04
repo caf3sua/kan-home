@@ -35,7 +35,7 @@
             	"time-label" : "Time working",
             	"time-unit-Hour" : "Hour",
             	"time-unit-OnOff" : "OnOff",
-            	"DRT" : "DRT",
+            	"DRT" : "Thời gian máy chạy",
             	"PRT" : "PRT",
             	"PST" : "PST",
             	"F1" : "Lõi lọc số 1",
@@ -47,7 +47,11 @@
             	"F7" : "Lõi lọc số 7",
             	"F8" : "Lõi lọc số 8",
             	"F9" : "Lõi lọc số 9",
-            	"RO" : "Màng lọc RO"
+            	"RO" : "Màng lọc RO",
+            	"HRT" : "Thời gian đun nước",
+            	"HST" : "Trạng thái máy nước",
+            	"T0" : "Nhiệt độ bình",
+            	"T1" : "Nhiệt độ thái dương năng"
             }
         }
     }
