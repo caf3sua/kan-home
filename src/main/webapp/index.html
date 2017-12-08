@@ -28,9 +28,14 @@
     <link rel="stylesheet" href="content/css/main.css">
     <link rel="stylesheet" href="content/css/footer.css">
     <!-- endbuild -->
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-  	<link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
-  	<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  	 <!-- for ios 7 style, multi-resolution icon of 152x152 -->
+  	<meta name="apple-mobile-web-app-capable" content="yes">
+  	<meta name="apple-mobile-web-app-status-barstyle" content="black-translucent">
+ 	 <link rel="apple-touch-icon" href="content/images/kanhome-logo.png">
+ 	 <meta name="apple-mobile-web-app-title" content="Flatkit">
+  	<!-- for Chrome on Android, multi-resolution icon of 196x196 -->
+  	<meta name="mobile-web-app-capable" content="yes">
+  	<link rel="shortcut icon" sizes="196x196" href="content/images/kanhome-logo.png">
 </head>
 <body ng-app="kanHomeApp" ng-strict-di>
     <!--[if lt IE 9]>

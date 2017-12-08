@@ -88,13 +88,13 @@ public class AccountResource {
         HttpHeaders textPlainHeaders = new HttpHeaders();
         textPlainHeaders.setContentType(MediaType.TEXT_PLAIN);
 
-        return userRepository.findOneByUsername(managedUserVM.getUsername().toLowerCase())
+        return userRepository.findOneByUsername(StringUtils.lowerCase(managedUserVM.getUsername()))
             .map(user -> new ResponseEntity<>("login already in use", textPlainHeaders, HttpStatus.BAD_REQUEST))
             .orElseGet(() -> userRepository.findOneByEmail(managedUserVM.getEmail())
                 .map(user -> new ResponseEntity<>("email address already in use", textPlainHeaders, HttpStatus.BAD_REQUEST))
                 .orElseGet(() -> {
                     User user = userService
-                        .createUser(managedUserVM.getUsername(), managedUserVM.getPassword(),
+                        .createUser(StringUtils.lowerCase(managedUserVM.getUsername()), managedUserVM.getPassword(),
                             managedUserVM.getPhonenumber(), managedUserVM.getEmail(),
                             managedUserVM.getLangKey());
 
@@ -156,7 +156,7 @@ public class AccountResource {
     @Timed
     public ResponseEntity saveAccount(@Valid @RequestBody UserDTO userDTO) {
     		log.debug("REST request to saveAccount, {}", userDTO);
-        final String userLogin = SecurityUtils.getCurrentUserLogin();
+        final String userLogin = StringUtils.lowerCase(SecurityUtils.getCurrentUserLogin());
         Optional<User> existingUser = userRepository.findOneByEmail(userDTO.getEmail());
         if (existingUser.isPresent() && (!existingUser.get().getUsername().equalsIgnoreCase(userLogin))) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("user-management", "emailexists", "Email already in use")).body(null);
@@ -183,7 +183,7 @@ public class AccountResource {
     public ResponseEntity changePassword(@RequestBody PasswordVM password) {
 	    	log.debug("REST request to changePassword, {}", password);
 	    	// Check old pass
-	    	Optional<User> optUser = userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin());
+	    	Optional<User> optUser = userService.getUserWithAuthoritiesByLogin(StringUtils.lowerCase(SecurityUtils.getCurrentUserLogin()));
 	    	User user = optUser.get();
 	    	
 	    	if (!StringUtils.equals(password.getOldPassword(), user.getPassword())) {
@@ -270,7 +270,7 @@ public class AccountResource {
     		log.debug("REST request to activateAccountBySmsCode, username : {}, sms : {}", username, sms);
     	
     		// Check user exist
-		Optional<User> userOpt  = userService.getUserWithAuthoritiesByLogin(username);
+		Optional<User> userOpt  = userService.getUserWithAuthoritiesByLogin(StringUtils.lowerCase(username));
 		if (!userOpt.isPresent() || userOpt.get() == null) {
 			return ResponseEntity.notFound().headers(HeaderUtil.createFailureAlert("User", 
 					"usernotfound", "User " + username + " not found")).build();
@@ -310,7 +310,7 @@ public class AccountResource {
     @Timed
     public ResponseEntity<User> resendSmsCode(@RequestParam(value = "username", required=true) final String username) throws URISyntaxException {
     	
-    	log.debug("Start method resendSmsCode, username: {}", username);
+    	log.debug("Start method resendSmsCode, username: {}", StringUtils.lowerCase(username));
 		// Update user status = 0
     		Optional<User> userOpt  = userService.getUserWithAuthoritiesByLogin(StringUtils.lowerCase(username));
 		if (!userOpt.isPresent() || userOpt.get() == null) {
