@@ -737,3 +737,7 @@ md-card .card-content-time {
     /* color: blue !important; */
     min-width: 50px;
 }
+
+.m-t-10 {
+	margin-top: 10px;
+}

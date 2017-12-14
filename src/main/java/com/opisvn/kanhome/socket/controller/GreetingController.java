@@ -37,8 +37,15 @@ public class GreetingController {
     
     @MessageMapping("/iWater")
     public void iWater(KanhomeMessage message) throws Exception {
-    	log.debug("MQTT request subscribe iWater, message {}", message);
-    	IMqttToken result = mqttAsyncClient.subscribe("iwater/" + message.getDeviceId(), 0);
-    	log.debug("MQTT request subscribe iWater result {}", result);
+	    	log.debug("MQTT request subscribe iWater, message {}", message);
+	    	IMqttToken result = mqttAsyncClient.subscribe("iwater/" + message.getDeviceId(), 0);
+	    	log.debug("MQTT request subscribe iWater result {}", result);
+    }
+    
+    @MessageMapping("/iheater")
+    public void iHeater(KanhomeMessage message) throws Exception {
+	    	log.debug("MQTT request subscribe iWater, message {}", message);
+	    	IMqttToken result = mqttAsyncClient.subscribe("iheater/" + message.getDeviceId(), 0);
+	    	log.debug("MQTT request subscribe iWater result {}", result);
     }
 }

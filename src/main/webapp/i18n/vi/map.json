@@ -51,7 +51,8 @@
             	"HRT" : "Thời gian đun nước",
             	"HST" : "Trạng thái máy nước",
             	"T0" : "Nhiệt độ bình",
-            	"T1" : "Nhiệt độ thái dương năng"
+            	"T1" : "Nhiệt độ thái dương năng",
+            	"time-unit-*C" : "*C"
             }
         }
     }

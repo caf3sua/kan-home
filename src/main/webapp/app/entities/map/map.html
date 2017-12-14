@@ -63,7 +63,10 @@
 								<ul class="list-group md-whiteframe-z0">
 								   <li ng-repeat="device in vm.devices" class="list-group-item" ng-click="vm.showDevice(device)">
 								   		<div class="m-t-5 m-b-5">
-										     <div class="pull-left m-r-10"><img src="content/icon/iWater40.png" width="32px" class="img-responsive img-circle"></div>
+										     <div class="pull-left m-r-10">
+										     	<img src="content/icon/iWater40.png" width="32px" class="img-responsive img-circle" ng-show="{{device.abbrName.indexOf('iwater') == 0}}">
+										     	<img src="content/icon/waterheater.png" width="32px" class="img-responsive img-circle m-t-10" ng-show="{{device.abbrName.indexOf('iheater') == 0}}">
+										     </div>
 										     <div class="pull-right m-t-10">
 										     	<span class="pull-right text-{{device.status}}"><i class="fa fa-circle text-xs"></i></span>
 										     </div>

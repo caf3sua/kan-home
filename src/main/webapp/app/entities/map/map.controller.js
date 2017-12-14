@@ -90,8 +90,12 @@
             stompClient.connect({}, function (frame) {
                 console.log('Connected: ' + frame);
                 stompClient.subscribe('/topic/iWater', function (message) {
-                	updateMqttMessage(message);
+                		updateMqttMessage(message);
                 });
+//                
+//                stompClient.subscribe('/topic/iheater', function (message) {
+//            			updateMqttMessage(message);
+//                });
             });
         }
 
@@ -103,8 +107,12 @@
         }
 
         function requestSubscribeTopic() {
-        	console.log('Request subscribe topic, device id:' + vm.selectedDevice.id);
-            stompClient.send("/app/iWater", {}, JSON.stringify({'deviceId': vm.selectedDevice.id}));
+        		console.log('Request subscribe topic, device id:' + vm.selectedDevice.id);
+        		if (vm.selectedDevice.name == "Water Heater") {
+        			stompClient.send("/app/iheater", {}, JSON.stringify({'deviceId': vm.selectedDevice.id}));
+        		} else {
+        			stompClient.send("/app/iWater", {}, JSON.stringify({'deviceId': vm.selectedDevice.id}));
+        		}
         }
         
         function updateMqttMessage(message) {
@@ -205,18 +213,18 @@
     				}
                 });
             	
-            	initDeviceParam(vm.selectedDevice);
-            	
-            	// Request scribe socket
-            	requestSubscribeTopic();
-            };
-
-            function onSaveError () {
-            }
-            
-            if (!$mdSidenav('right').isOpen()) {
-        		tooggleSelectedDevice();
-        	}
+	            	initDeviceParam(vm.selectedDevice);
+	            	
+	            	// Request scribe socket
+	            	requestSubscribeTopic();
+	            };
+	
+	            function onSaveError () {
+	            }
+	            
+	            if (!$mdSidenav('right').isOpen()) {
+	        		tooggleSelectedDevice();
+	        	}
         }
         
         function tooggleSelectedDevice() {
