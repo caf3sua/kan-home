@@ -2,6 +2,7 @@ package com.opisvn.kanhome.socket.controller;
 
 import org.eclipse.paho.client.mqttv3.IMqttToken;
 import org.eclipse.paho.client.mqttv3.MqttAsyncClient;
+import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -13,12 +14,12 @@ import com.opisvn.kanhome.socket.message.HelloMessage;
 import com.opisvn.kanhome.socket.message.KanhomeMessage;
 
 @Controller
-public class GreetingController {
-	private final Logger log = LoggerFactory.getLogger(GreetingController.class);
+public class KanhomeMqttController {
+	private final Logger log = LoggerFactory.getLogger(KanhomeMqttController.class);
 	
 	private MqttAsyncClient mqttAsyncClient;
 	
-	public GreetingController(MqttAsyncClient mqttAsyncClient) {
+	public KanhomeMqttController(MqttAsyncClient mqttAsyncClient) {
 		this.mqttAsyncClient = mqttAsyncClient;
 	}
 
@@ -40,6 +41,11 @@ public class GreetingController {
 	    	log.debug("MQTT request subscribe iWater, message {}", message);
 	    	IMqttToken result = mqttAsyncClient.subscribe("iwater/" + message.getDeviceId(), 0);
 	    	log.debug("MQTT request subscribe iWater result {}", result);
+	    	
+	    	// Publish iheater/jHXFos20/sub
+	    	if (result.isComplete()) {
+	    		mqttAsyncClient.publish("iheater/" + message.getDeviceId() + "/sub" , getPublishMessage());
+	    	}
     }
     
     @MessageMapping("/iheater")
@@ -47,5 +53,17 @@ public class GreetingController {
 	    	log.debug("MQTT request subscribe iWater, message {}", message);
 	    	IMqttToken result = mqttAsyncClient.subscribe("iheater/" + message.getDeviceId(), 0);
 	    	log.debug("MQTT request subscribe iWater result {}", result);
+	    	
+	    	// Publish iheater/jHXFos20/sub
+	    	if (result.isComplete()) {
+	    		mqttAsyncClient.publish("iheater/" + message.getDeviceId() + "/sub" , getPublishMessage());
+	    	}
+    }
+    
+    private MqttMessage getPublishMessage() {
+    	MqttMessage message = new MqttMessage();
+        message.setPayload("{\"type\":\"RDAT\",\"value\":1}".getBytes());
+        
+        return message;
     }
 }

@@ -1,25 +1,25 @@
 {
     "home": {
-        "title": "Chào mừng bạn đến với Kan Home!",
+        "title": "Chào mừng bạn đến với Kangaroo Home!",
         "subtitle": "Đây là trang chủ của bạn",
         "logged": {
             "message": "Bạn đang đăng nhập bằng tài khoản \"{{username}}\"."
         },
-        "question": "Vui lòng truy cập các chức năng KanHome:",
+        "question": "Vui lòng truy cập các chức năng Kangaroo Home:",
         "link": {
-            "homepage": "Trang chủ KanHome",
+            "homepage": "Trang chủ Kangaroo Home",
             "user": "Quản lý người dùng",
             "device": "Quản lý thiết bị",
             "deviceOnMap": "Bản đồ thiết bị",
             "notification": "Thông báo",
             "homepage": "Quản lý người dùng",
-            "stackoverflow": "KanHome trên Stack Overflow",
-            "bugtracker": "Theo dõi các lỗi KanHome",
-            "chat": "Phòng chat công cộng KanHome",
+            "stackoverflow": "Kangaroo Home trên Stack Overflow",
+            "bugtracker": "Theo dõi các lỗi Kangaroo Home",
+            "chat": "Phòng chat công cộng Kangaroo Home",
             "follow": "Theo dõi @java_hipster trên Twitter",
             "user-device": "Trạng thái thiết bị của người dùng"
         },
-        "like": "Cảm ơn bạn đã sủ dụng KanHome",
+        "like": "Cảm ơn bạn đã sủ dụng Kangaroo Home",
         "github": "GitHub",
         "user-label": "Người dùng",
         "admin-label": "Quản trị",

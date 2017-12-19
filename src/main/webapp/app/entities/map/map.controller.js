@@ -137,7 +137,7 @@
         			console.log("PA name:" + name + ", value:" + content.PA[name]);
         			val.value = content.PA[name];
         			val.unit = content.PA['u'];
-        			val.time = content.time;
+        			val.time = content.time * 1000;
         		}
             });
         	

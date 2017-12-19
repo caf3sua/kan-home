@@ -1,24 +1,24 @@
 {
     "home": {
-        "title": "Welcome, Kan Home!",
+        "title": "Welcome, Kangaroo Home!",
         "subtitle": "This is your homepage",
         "logged": {
             "message": "You are logged in as user \"{{username}}\"."
         },
-        "question": "Please use these functions of KanHome:",
+        "question": "Please use these functions of Kangaroo Home:",
         "link": {
-            "homepage": "KanHome homepage",
+            "homepage": "Kangaroo Home homepage",
             "user": "User management",
             "device": "Device management",
             "deviceOnMap": "Devices on Map",
             "notification": "Notification",
-            "stackoverflow": "KanHome on Stack Overflow",
-            "bugtracker": "KanHome bug tracker",
-            "chat": "KanHome public chat room",
+            "stackoverflow": "Kangaroo Home on Stack Overflow",
+            "bugtracker": "Kangaroo Home bug tracker",
+            "chat": "Kangaroo Home public chat room",
             "follow": "follow @java_hipster on Twitter",
             "user-device": "Device status of user"
         },
-        "like": "Thank you for use KanHome",
+        "like": "Thank you for use Kangaroo Home",
         "github": "GitHub",
         "user-label": "User",
         "admin-label": "Administrator",
