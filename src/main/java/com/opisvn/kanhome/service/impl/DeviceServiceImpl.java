@@ -1,27 +1,30 @@
 package com.opisvn.kanhome.service.impl;
 
-import com.opisvn.kanhome.service.DeviceService;
-import com.opisvn.kanhome.domain.Device;
-import com.opisvn.kanhome.repository.DeviceRepository;
-import com.opisvn.kanhome.repository.UserRepository;
-import com.opisvn.kanhome.service.dto.DeviceDTO;
-import com.opisvn.kanhome.service.dto.UserDTO;
-import com.opisvn.kanhome.service.mapper.DeviceMapper;
-import com.opisvn.kanhome.service.mapper.UserMapper;
-
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import com.opisvn.kanhome.domain.Device;
+import com.opisvn.kanhome.repository.DeviceRepository;
+import com.opisvn.kanhome.repository.UserRepository;
+import com.opisvn.kanhome.service.DeviceService;
+import com.opisvn.kanhome.service.dto.DeviceDTO;
+import com.opisvn.kanhome.service.dto.UserDTO;
+import com.opisvn.kanhome.service.mapper.DeviceMapper;
+import com.opisvn.kanhome.service.mapper.UserMapper;
 
 
 /**
  * Service Implementation for managing Device.
  */
 @Service
+@CacheConfig(cacheNames = "device")
 public class DeviceServiceImpl implements DeviceService{
 
     private final Logger log = LoggerFactory.getLogger(DeviceServiceImpl.class);
@@ -94,6 +97,7 @@ public class DeviceServiceImpl implements DeviceService{
     }
 
 	@Override
+	@Cacheable
 	public List<DeviceDTO> findAllWithSimpleData() {
 		log.debug("Request to findAllWithSimpleData");
         List<Device> lstDevices = deviceRepository.findAllWithSimpleData();
@@ -114,6 +118,7 @@ public class DeviceServiceImpl implements DeviceService{
 	}
 
 	@Override
+	@Cacheable
 	public List<DeviceDTO> findAllWithMapView() {
 		log.debug("Request to findAllWithMapView");
         List<Device> lstDevices = deviceRepository.findAllWithMapView();
