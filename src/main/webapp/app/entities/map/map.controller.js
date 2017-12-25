@@ -61,7 +61,9 @@
         connect();
 
         angular.element(document).ready(function () {
-        		setHeightMap()
+        		setHeightMap();
+        		angular.element('#id').focus();
+        		vm.tooggleDevices();
         });
         
         function setHeightMap() {
@@ -393,7 +395,8 @@
             	showMessage(message);
             	
             	// Load status
-            	loadAllStatus();
+            	// TODO: namnh 22/12/2017 commnet: 
+            	// loadAllStatus();
             };
 
             function onSaveError () {

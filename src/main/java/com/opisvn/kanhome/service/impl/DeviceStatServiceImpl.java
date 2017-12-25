@@ -10,6 +10,8 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,7 @@ import org.springframework.stereotype.Service;
  * Service Implementation for managing DeviceStat.
  */
 @Service
+@CacheConfig(cacheNames = "deviceStat")
 public class DeviceStatServiceImpl implements DeviceStatService{
 
     private final Logger log = LoggerFactory.getLogger(DeviceStatServiceImpl.class);
@@ -84,6 +87,7 @@ public class DeviceStatServiceImpl implements DeviceStatService{
     }
 
 	@Override
+	@Cacheable
 	public List<DeviceStatDTO> findByIds(List<DeviceStatDTO> deviceStats) {
 		log.debug("Request to findByIds : {}", deviceStats);
         return deviceStatMapper.toDto(deviceStatRepository.findByIds(deviceStats));

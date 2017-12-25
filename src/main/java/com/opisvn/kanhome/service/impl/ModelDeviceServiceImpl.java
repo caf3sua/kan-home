@@ -10,6 +10,8 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,7 @@ import org.springframework.stereotype.Service;
  * Service Implementation for managing ModelDevice.
  */
 @Service
+@CacheConfig(cacheNames = "model")
 public class ModelDeviceServiceImpl implements ModelDeviceService{
 
     private final Logger log = LoggerFactory.getLogger(ModelDeviceServiceImpl.class);
@@ -53,6 +56,7 @@ public class ModelDeviceServiceImpl implements ModelDeviceService{
      *  @return the list of entities
      */
     @Override
+    @Cacheable
     public Page<ModelDeviceDTO> findAll(Pageable pageable) {
         log.debug("Request to get all ModelDevices");
         return modelDeviceRepository.findAll(pageable)
@@ -84,6 +88,7 @@ public class ModelDeviceServiceImpl implements ModelDeviceService{
     }
 
 	@Override
+	@Cacheable
 	public List<ModelDeviceDTO> findAll() {
 		log.debug("Request to findAll");
         return modelDeviceMapper.toDto(modelDeviceRepository.findAll());

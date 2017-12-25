@@ -43,21 +43,22 @@ public class KanhomeMqttController {
 	    	log.debug("MQTT request subscribe iWater result {}", result);
 	    	
 	    	// Publish iheater/jHXFos20/sub
-	    	if (result.isComplete()) {
-	    		mqttAsyncClient.publish("iheater/" + message.getDeviceId() + "/sub" , getPublishMessage());
-	    	}
+//	    	if (result.isComplete()) {
+	    		mqttAsyncClient.publish("iwater/" + message.getDeviceId() + "/sub" , getPublishMessage());
+//	    	}
     }
     
     @MessageMapping("/iheater")
     public void iHeater(KanhomeMessage message) throws Exception {
-	    	log.debug("MQTT request subscribe iWater, message {}", message);
+	    	log.debug("MQTT request subscribe iheater, message {}", message);
 	    	IMqttToken result = mqttAsyncClient.subscribe("iheater/" + message.getDeviceId(), 0);
-	    	log.debug("MQTT request subscribe iWater result {}", result);
+	    	log.debug("MQTT request subscribe iheater result {}", result);
 	    	
 	    	// Publish iheater/jHXFos20/sub
-	    	if (result.isComplete()) {
+//	    	if (result.isComplete()) {
+	    		log.debug("MQTT request publish iheater, deviceid:" + message.getDeviceId());
 	    		mqttAsyncClient.publish("iheater/" + message.getDeviceId() + "/sub" , getPublishMessage());
-	    	}
+//	    	}
     }
     
     private MqttMessage getPublishMessage() {
