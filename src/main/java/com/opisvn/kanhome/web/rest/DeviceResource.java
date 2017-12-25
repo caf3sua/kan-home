@@ -270,10 +270,10 @@ public class DeviceResource {
 				// Get status
         		DeviceStatDTO stat = deviceStatService.findOne(deviceDTO.getId());
         		// More attribute
-        		if (stat == null || StringUtils.isEmpty(stat.getwQ())) {
+        		if (stat == null || StringUtils.isEmpty(stat.getDsts())) {
         			deviceDTO.setStatus("NO-STATUS");
         		} else {
-        			deviceDTO.setStatus(stat.getwQ());
+        			deviceDTO.setStatus(stat.getDsts());
         		}
 			}
         	

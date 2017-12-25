@@ -20,8 +20,18 @@ public class DeviceStatDTO implements Serializable {
     private String u;
 
     private String wQ;
+    
+    private String dsts;
 
-    public String getId() {
+    public String getDsts() {
+		return dsts;
+	}
+
+	public void setDsts(String dsts) {
+		this.dsts = dsts;
+	}
+
+	public String getId() {
         return id;
     }
 

@@ -29,6 +29,7 @@ public class DeviceStatMapperImpl implements DeviceStatMapper {
         deviceStat.setTime( dto.getTime() );
         deviceStat.setU( dto.getU() );
         deviceStat.setwQ( dto.getwQ() );
+        deviceStat.setDsts(dto.getDsts());
 
         return deviceStat;
     }
@@ -47,6 +48,7 @@ public class DeviceStatMapperImpl implements DeviceStatMapper {
         deviceStatDTO.setTime( entity.getTime() );
         deviceStatDTO.setU( entity.getU() );
         deviceStatDTO.setwQ( entity.getwQ() );
+        deviceStatDTO.setDsts(entity.getDsts());
 
         return deviceStatDTO;
     }

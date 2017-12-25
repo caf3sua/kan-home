@@ -34,6 +34,23 @@ public class DeviceStat implements Serializable {
     @Field("WQ")
     private String wQ;
 
+    @Field("dsts")
+    private String dsts;
+    
+    public String getDsts() {
+        return dsts;
+    }
+
+    public DeviceStat dsts(String dsts) {
+        this.dsts = dsts;
+        return this;
+    }
+
+    public void setDsts(String dsts) {
+        this.dsts = dsts;
+    }
+    
+    
     public String getId() {
         return id;
     }
