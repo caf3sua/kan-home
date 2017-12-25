@@ -26,6 +26,20 @@ public class DeviceRepositoryImpl implements DeviceRepositoryExtend {
 		return data;
 	}
 
+//	db.device.aggregate([{
+//	    $lookup: {
+//	            from: "deviceStat",
+//	            localField: "_id",
+//	            foreignField: "_id",
+//	            as: "status"
+//	        }
+//		},
+//      {
+//              $match: { "status": { $elemMatch: { dsts: 'BLUE' } } }
+//      }
+//	]);
+
+
 	private Criteria buildCriteria(DeviceDTO dto) {
 		Criteria criteria = null;
 		List<Criteria> criterias = new ArrayList<>();
