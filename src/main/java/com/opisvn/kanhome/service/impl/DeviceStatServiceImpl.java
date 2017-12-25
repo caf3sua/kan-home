@@ -69,6 +69,7 @@ public class DeviceStatServiceImpl implements DeviceStatService{
      *  @return the entity
      */
     @Override
+    @Cacheable
     public DeviceStatDTO findOne(String id) {
         log.debug("Request to get DeviceStat : {}", id);
         DeviceStat deviceStat = deviceStatRepository.findOne(id);

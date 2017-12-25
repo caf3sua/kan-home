@@ -13,7 +13,7 @@
             parent: 'management',
             url: '/user-device',
             data: {
-                authorities: ['ROLE_USER'],
+                authorities: ['ROLE_USER','ROLE_ADMIN'],
                 pageTitle: 'kanHomeApp.userDevice.home.title'
             },
             views: {

@@ -23,8 +23,8 @@
 -->
 	<appender name="FILE-AUDIT"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<!-- <file>/home/ubuntu/logs/kanhome.log</file> -->
-		<file>/Users/caf3sua/programme/project/kanhome.log</file>
+		<file>/home/ubuntu/logs/kanhome.log</file>
+		<!-- <file>/Users/caf3sua/programme/project/kanhome.log</file> -->
 		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
 			<Pattern>
 				%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{0} - %msg%n
