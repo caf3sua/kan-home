@@ -17,7 +17,9 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @JsonInclude(Include.NON_EMPTY)
 public class DeviceDTO implements Serializable {
 
-    private String id;
+	private static final long serialVersionUID = 3703986085908586373L;
+
+	private String id;
 
     private String name;
 

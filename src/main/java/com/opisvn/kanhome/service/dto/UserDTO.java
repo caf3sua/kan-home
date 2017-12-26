@@ -1,5 +1,6 @@
 package com.opisvn.kanhome.service.dto;
 
+import java.io.Serializable;
 import java.time.Instant;
 import java.util.Date;
 import java.util.List;
@@ -22,9 +23,11 @@ import com.opisvn.kanhome.domain.User;
  * A DTO representing a user, with his authorities.
  */
 @JsonInclude(Include.NON_EMPTY)
-public class UserDTO {
+public class UserDTO implements Serializable {
 
-    private String id;
+	private static final long serialVersionUID = 872876793432352578L;
+
+	private String id;
 
     @NotBlank
     @Pattern(regexp = Constants.LOGIN_REGEX)
