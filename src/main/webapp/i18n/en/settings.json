@@ -29,8 +29,7 @@
             	"phonenumber": {
                     "required": "Your phonenumber is required.",
                     "minlength": "Your phonenumber is required to be at least 9 character",
-                    "maxlength": "Your phonenumber cannot be longer than 13 characters",
-                    "maxlength": "Your phonenumber can only contains digits"
+                    "maxlength": "Your phonenumber cannot be longer than 13 characters"
                 },
                 "firstname": {
                     "required": "Your first name is required.",

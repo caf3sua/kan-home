@@ -79,6 +79,23 @@ public class Device implements Serializable {
     @Field("para")
     private Map<Integer, ParamDTO> para;
 
+    @Field("dsts")
+    private String dsts;
+    
+    public String getDsts() {
+        return dsts;
+    }
+
+    public Device dsts(String dsts) {
+        this.dsts = dsts;
+        return this;
+    }
+
+    public void setDsts(String dsts) {
+        this.dsts = dsts;
+    }
+    
+    
     public String getId() {
         return id;
     }

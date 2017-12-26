@@ -23,6 +23,9 @@ public class DeviceStatRepositoryImpl implements DeviceStatRepositoryExtend {
 		}
 
 		Query query = new Query();
+		query.fields().include("id");
+		query.fields().include("dsts");
+		
 		query.addCriteria(Criteria.where("_id").in(listOfIds));
 
 		List<DeviceStat> deviceStats = mongoTemplate.find(query, DeviceStat.class);

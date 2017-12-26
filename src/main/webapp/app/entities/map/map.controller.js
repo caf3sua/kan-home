@@ -286,36 +286,40 @@
         	loadAllDevice();
         }
         
+        $scope.$watch('vm.devices', function (newValue) {
+        	// publish data for selectedDevices
+        	angular.forEach(newValue, function (device, key) {
+        		var maker = {
+            		    id:device.id,
+            		    coords: {
+            		        latitude: device.gpsX,
+            		        longitude: device.gpsY
+            		    },
+            		    options: {
+//            		        icon: {
+//            		            url: 'content/icon/iWater-GRAY.png'
+//            		        },
+            		        extra: device
+            		}
+                };
+        		vm.map.markers.push(maker);
+        	});
+        });
+        
         function search() {
+        	vm.map.markers = [];
     		Device.searchWithMapData(vm.searchDevice, onSaveSuccess, onSaveError);
             
     		function onSaveSuccess (result) {
-    			vm.map.markers = [];
-            	vm.devices = result;
-            	// publish data for selectedDevices
-            	angular.forEach(vm.devices, function (device, key) {
-            		var maker = {
-	            		    id:device.id,
-	            		    coords: {
-	            		        latitude: device.gpsX,
-	            		        longitude: device.gpsY
-	            		    },
-	            		    options: {
-//	            		        icon: {
-//	            		            url: 'content/icon/iWater-GRAY.png'
-//	            		        },
-	            		        extra: device
-	            		}
-	                };
-            		vm.map.markers.push(maker);
-            	});
-            	//$scope.$apply();
-            	// Show message
+    			// Show message
             	var message = $translate.instant('kanHomeApp.map.found-device', { number: result.length });
             	showMessage(message);
             	
+            	vm.devices = result;
+            	//$scope.$apply();
+            	
             	// Load status
-            	loadAllStatus();
+//            	loadAllStatus();
             };
 
             function onSaveError () {
@@ -349,7 +353,7 @@
         			angular.forEach(result, function (stat, keyStat) {
         				// wQ
         				if (device.id == stat.id) {
-        					device.status = stat.wQ;
+        					device.status = stat.dsts;
         				}
                     });
                 });
@@ -368,31 +372,16 @@
         }
         
         function loadAllDevice () {
+        	vm.map.markers = [];
         	Device.queryWithMapData({}, onSaveSuccess, onSaveError);
             
             function onSaveSuccess (result) {
-            	vm.devices = result;
-            	// publish data for selectedDevices
-            	angular.forEach(vm.devices, function (device, key) {
-            		var maker = {
-	            		    id:device.id,
-	            		    coords: {
-	            		        latitude: device.gpsX,
-	            		        longitude: device.gpsY
-	            		    },
-	            		    options: {
-//	            		        icon: {
-//	            		            url: 'content/icon/iWater-GRAY.png'
-//	            		        },
-	            		        extra: device
-	            		}
-	                };
-            		vm.map.markers.push(maker);
-            	});
             	//$scope.$apply();
             	// Show message
             	var message = $translate.instant('kanHomeApp.map.found-device', { number: result.length });
             	showMessage(message);
+            	
+            	vm.devices = result;
             	
             	// Load status
             	// TODO: namnh 22/12/2017 commnet: 

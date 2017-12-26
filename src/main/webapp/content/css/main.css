@@ -741,3 +741,21 @@ md-card .card-content-time {
 .m-t-10 {
 	margin-top: 10px;
 }
+
+.device-icon {
+	min-width:32px;
+	max-width:32px;
+	height: 32px;
+	width: 32px;
+    margin-top: 4px;
+}
+
+.device-icon-iwater {
+	background-image: url("../../content/icon/iWater40.png");
+	background-size: cover;
+}
+
+.device-icon-iheater {
+	background-image: url("../../content/icon/waterheater.png");
+	background-size: cover;
+}

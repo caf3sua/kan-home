@@ -55,6 +55,8 @@ public class DeviceDTO implements Serializable {
 
     private Long cfgNum;
     
+    private String dsts;
+    
     private Map<Integer, ParamDTO> para;
     
     private List<UserDTO> users;
@@ -282,6 +284,14 @@ public class DeviceDTO implements Serializable {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public String getDsts() {
+		return dsts;
+	}
+
+	public void setDsts(String dsts) {
+		this.dsts = dsts;
 	}
 
 

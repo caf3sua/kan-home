@@ -105,6 +105,7 @@ public class DeviceServiceImpl implements DeviceService{
 	}
 
 	@Override
+	@Cacheable
 	public Page<DeviceDTO> findAllWithGridView(Pageable pageable) {
 		log.debug("Request to get all Devices for grid view");
         return deviceRepository.findAllWithGridView(pageable)
@@ -112,6 +113,7 @@ public class DeviceServiceImpl implements DeviceService{
 	}
 
 	@Override
+	@Cacheable
 	public List<UserDTO> findUserByDeviceId(String deviceId) {
 		log.debug("Request to findUserByDeviceId, deviceID : {}", deviceId);
         return userMapper.usersToUserDTOs(userRepository.findByDeviceId(deviceId));
@@ -126,6 +128,7 @@ public class DeviceServiceImpl implements DeviceService{
 	}
 
 	@Override
+	@Cacheable
 	public List<DeviceDTO> searchAllWithMapView(DeviceDTO deviceDTO) {
 		log.debug("Request to searchAllWithMapView, deviceDTO {}", deviceDTO);
 		List<Device> lstDevices = deviceRepository.searchAllWithMapView(deviceDTO);
@@ -133,6 +136,7 @@ public class DeviceServiceImpl implements DeviceService{
 	}
 
 	@Override
+	@Cacheable
 	public Page<DeviceDTO> searchAllWithGridView(Pageable pageable, DeviceDTO deviceDTO) {
 		log.debug("Request to get all Devices for grid view");
         return deviceRepository.searchAllWithGridView(pageable, deviceDTO)

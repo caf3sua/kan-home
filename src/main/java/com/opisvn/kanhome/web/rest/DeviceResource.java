@@ -267,19 +267,14 @@ public class DeviceResource {
         // Add status
         if (page != null && page.getContent() != null && page.getContent().size() != 0) {
         	for (DeviceDTO deviceDTO : page.getContent()) {
-				// Get status
-        		DeviceStatDTO stat = deviceStatService.findOne(deviceDTO.getId());
         		// More attribute
-        		if (stat == null || StringUtils.isEmpty(stat.getDsts())) {
+        		if (StringUtils.isEmpty(deviceDTO.getDsts())) {
         			deviceDTO.setStatus("NO-STATUS");
         		} else {
-        			deviceDTO.setStatus(stat.getDsts());
+        			deviceDTO.setStatus(deviceDTO.getDsts());
         		}
 			}
-        	
-        	// Sort
         }
-        
         
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/devices-search-on-grid");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
