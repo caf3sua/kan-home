@@ -42,7 +42,11 @@
     <div>
 	    <div id="map_canvas" style="position: relative;">
 		    <ui-gmap-google-map center="vm.map.center" zoom="vm.map.zoom" options="vm.map.options" pan="true">
-		        <ui-gmap-marker ng-repeat="m in vm.map.markers" coords="m.coords" idkey="m.id" options="m.options" click="vm.clickOnMarker(m)"></ui-gmap-marker>
+		        <!-- <ui-gmap-marker doCluster="true" ng-repeat="m in vm.createMakers" coords="m.coords" idkey="m.id" options="m.options" click="vm.clickOnMarker(m)"></ui-gmap-marker> -->
+		        
+		        <ui-gmap-markers models="vm.map.markers" coords="'coords'" clusterOptions="vm.map.clusterOptions"
+                         doCluster="true" options="'options'" icon="'icon'" idkey="'id'" click="vm.clickOnMarker">
+        		</ui-gmap-markers>
 		        <!-- <ui-gmap-map-control template="control-devices.tpl.html" position="top-right" controller="MapController as vm"></ui-gmap-map-control>
 		        <ui-gmap-map-control template="control-refresh.tpl.html" position="top-right" controller="MapController as vm"></ui-gmap-map-control>
 		        <ui-gmap-map-control template="control-search.tpl.html" position="top-right" controller="MapController as vm"></ui-gmap-map-control> -->

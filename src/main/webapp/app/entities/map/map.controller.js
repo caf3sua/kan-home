@@ -33,6 +33,9 @@
                 	fullscreenControlOptions: {
                         position: google.maps.ControlPosition.RIGHT_CENTER
                     },
+                },
+                clusterOptions : {
+                	maxZoom: 16
                 }
             };
 
@@ -165,19 +168,18 @@
         }
         
         // click on maker
-        function clickOnMarker(marker) {
+        function clickOnMarker(marker, eventName, model, eventArgs) {
             //marker.setAnimation(google.maps.Animation.BOUNCE);
-        	if (marker.options.animation == null) {
-        		marker.options.animation = google.maps.Animation.BOUNCE;
-        	} else {
-        		marker.options.animation = null;	
-        	}
+//        	if (marker.options.animation == null) {
+//        		marker.options.animation = google.maps.Animation.BOUNCE;
+//        	} else {
+//        		marker.options.animation = null;	
+//        	}
         	
         	// Open selected device
-        	$scope.$apply();
-        	
+//        	$scope.$apply();
         	// Show selected device
-        	showDevice(marker.options.extra);
+        	showDevice(marker.model.options.extra);
         }
         
         function showSideBar() {
@@ -196,6 +198,20 @@
         	
         	console.log(param);
         	device.mqttParam = param;
+        }
+        
+        function loadMoreDeviceInfo() {
+        	Country.getbyCountryCode({countryCode: vm.selectedDevice.countryCode}, function(result) {
+        		vm.selectedDevice.countryCodeObj = result;
+        	});
+        	
+        	ModelDevice.getByModel({model: vm.selectedDevice.model}, function(result) {
+        		vm.selectedDevice.modelObj = result;
+        	});
+        	
+        	City.get({id: vm.selectedDevice.cityCode}, function(result) {
+        		vm.selectedDevice.cityObj = result;
+        	});
         }
         
         function showDevice(device) {
@@ -219,6 +235,8 @@
 	            	
 	            	// Request scribe socket
 	            	requestSubscribeTopic();
+	            	
+	            	loadMoreDeviceInfo();
 	            };
 	
 	            function onSaveError () {
@@ -302,6 +320,7 @@
             		        extra: device
             		}
                 };
+
         		vm.map.markers.push(maker);
         	});
         });
