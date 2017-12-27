@@ -139,9 +139,9 @@ public class DeviceRepositoryImpl implements DeviceRepositoryExtend {
 		if (criteria != null) {
 			agg = newAggregation(
 					lookup("deviceStat", "_id", "_id", "status"),
+					match(criteria),
 					unwind("status", true),
-					project("_id", "abbrName", "gpsX", "gpsY").andExpression("status.dsts").as("dsts"),
-					match(criteria)
+					project("_id", "abbrName", "gpsX", "gpsY").andExpression("status.dsts").as("dsts")
 				);
 		} else {
 			agg = newAggregation(
@@ -177,12 +177,12 @@ public class DeviceRepositoryImpl implements DeviceRepositoryExtend {
 		if (criteria != null) {
 			agg = newAggregation(
 					lookup("deviceStat", "_id", "_id", "status"),
+					match(criteria),
 					unwind("status", true),
 					project("_id", "model", "abbrName", "countryCode").andExpression("status.dsts").as("dsts").andExpression("_id").as("id"),
 					sort(pageable.getSort()),
 					skip((long) (pageable.getPageNumber() * pageable.getPageSize())),
-					limit(pageable.getPageSize()),
-					match(criteria)
+					limit(pageable.getPageSize())					
 				);
 			// Search
 			query.addCriteria(criteria);
