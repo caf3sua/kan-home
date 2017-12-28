@@ -327,12 +327,21 @@
         
         function search() {
         	vm.map.markers = [];
+        	vm.devices = [];
+        	
     		Device.searchWithMapData(vm.searchDevice, onSaveSuccess, onSaveError);
             
     		function onSaveSuccess (result) {
     			// Show message
             	var message = $translate.instant('kanHomeApp.map.found-device', { number: result.length });
             	showMessage(message);
+            	
+            	// Move to marker on map
+            	if (result != null && result.size > 0) {
+            		var deviceTmp = result[0];
+            		vm.map.center.latitude = deviceTmp.gpsX;
+                	vm.map.center.longitude = deviceTmp.gpsY;
+            	}
             	
             	vm.devices = result;
             	//$scope.$apply();

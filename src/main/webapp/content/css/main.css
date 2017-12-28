@@ -477,7 +477,7 @@ md-tooltip ._md-content {
 	position: absolute;
     top: 0px;
     height: 100%;
-    width: 100%;
+    /* width: 100%; */
 }
 
 
@@ -563,11 +563,16 @@ md-tooltip ._md-content {
     padding-top: 2px;
     padding-left: 5px;
     font-size: 14px;
-	
+    width: 120px;
+    margin-left: 10px;
 }
 
 .side-bar-map {
 	width: 380px !important;
+}
+
+.side-bar-map-left {
+	width: 270px !important;
 }
 
 md-card .card-header {

@@ -1,31 +1,28 @@
 <div class="map-container" style="position: relative;">
     <jhi-alert></jhi-alert>
     <div style="position: fixed;top: 75px;z-index: 59;width:100%">
-        <div class="row" style="margin-top: -35px; margin-left: 0px;margin-right: 0px;">
-        	<div class="col-xs-3">
-            	<input type="text" class="form-control bg-input-map input-map" id="id" name="id"
-                    ng-model="vm.searchDevice.abbrName" placeholder="ID thiết bị" ng-keydown="$event.keyCode === 13 && vm.search()" />
-            </div>
-            <div class="col-xs-3">
-            	<select id="country" name="country" class="form-control bg-input-map input-map" ng-model="vm.searchDevice.countryCode" 
-            		ng-options="country.countryCode as country.name for country in vm.countries"  ng-keydown="$event.keyCode === 13 && vm.search()" >
-            		<option value="" selected>Chọn quốc gia</option>
-            	</select>
-            </div>
-            <div class="col-xs-2">
-            	<select id="city" name="city" class="form-control bg-input-map input-map" ng-model="vm.searchDevice.cityCode" 
-            	ng-options="city.id as city.name for city in vm.cities"  ng-keydown="$event.keyCode === 13 && vm.search()" >
-            		<option value="" selected>Chọn thành phố</option>
-            	</select>
-            </div>
-            <div class="col-xs-2">
-            	<select id="model" name="model" class="form-control bg-input-map input-map" ng-model="vm.searchDevice.model" 
+        <div class="row">
+        	<div class="col-xs-10">
+            	<select id="model" name="model" class=" bg-input-map input-map pull-right" ng-model="vm.searchDevice.model" 
             		ng-options="model.model as model.model for model in vm.models"  ng-keydown="$event.keyCode === 13 && vm.search()" >
             		<option value="" selected>Chọn loại thiết bị</option>
             	</select>
+            	
+            	<select id="city" name="city" class=" bg-input-map input-map pull-right" ng-model="vm.searchDevice.cityCode" 
+            	ng-options="city.id as city.name for city in vm.cities"  ng-keydown="$event.keyCode === 13 && vm.search()" >
+            		<option value="" selected>Chọn thành phố</option>
+            	</select>
+            	
+            	<select id="country" name="country" class=" bg-input-map input-map pull-right" ng-model="vm.searchDevice.countryCode" 
+            		ng-options="country.countryCode as country.name for country in vm.countries"  ng-keydown="$event.keyCode === 13 && vm.search()" >
+            		<option value="" selected>Chọn quốc gia</option>
+            	</select>
+            	
+            	<input type="text" class=" bg-input-map input-map pull-right" id="id" name="id"
+                    ng-model="vm.searchDevice.abbrName" placeholder="ID thiết bị" ng-keydown="$event.keyCode === 13 && vm.search()" />
             </div>
             <div class="col-xs-2">
-            	<div class = "row" style="margin-top: 17px;margin-left: auto;margin-right: auto;text-align: center;">
+            	<div class = "row" style="margin-top: -10px;margin-left: auto;margin-right: auto;text-align: center;">
             		<md-button class="md-fab btn-map" aria-label="Search" ng-click="vm.search()">
         				<span class="glyphicon glyphicon-search"></span>
       				</md-button>
@@ -57,9 +54,10 @@
 		        <div class="row">
 		        	<!-- md-is-locked-open="$mdMedia('gt-md')" -->
 		            <md-sidenav
-				        class="md-sidenav-left"
+				        class="md-sidenav-left side-bar-map-left"
 				        md-component-id="left"
-				        md-whiteframe="4">
+				        md-disable-backdrop
+				        md-whiteframe="3">
 						
 						<div id="header-sidebar">
 							<md-toolbar class="md-theme-indigo">
