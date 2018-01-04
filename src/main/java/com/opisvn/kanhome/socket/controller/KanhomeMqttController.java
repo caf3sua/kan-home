@@ -38,9 +38,16 @@ public class KanhomeMqttController {
     
     @MessageMapping("/iWater")
     public void iWater(KanhomeMessage message) throws Exception {
+    		if (!mqttAsyncClient.isConnected()) {
+    			log.debug("MQTT request to reconnect server");
+    			mqttAsyncClient.reconnect();
+    			Thread.sleep(1000);
+    		}
+    	
 	    	log.debug("MQTT request subscribe iWater, message {}", message);
 	    	IMqttToken result = mqttAsyncClient.subscribe("iwater/" + message.getDeviceId(), 0);
 	    	log.debug("MQTT request subscribe iWater result {}", result);
+	    		    	
 	    	
 	    	// Publish iheater/jHXFos20/sub
 //	    	if (result.isComplete()) {
@@ -50,6 +57,12 @@ public class KanhomeMqttController {
     
     @MessageMapping("/iheater")
     public void iHeater(KanhomeMessage message) throws Exception {
+    		if (!mqttAsyncClient.isConnected()) {
+    			log.debug("MQTT request to reconnect server");
+			mqttAsyncClient.reconnect();
+			Thread.sleep(1000);
+		}
+    	
 	    	log.debug("MQTT request subscribe iheater, message {}", message);
 	    	IMqttToken result = mqttAsyncClient.subscribe("iheater/" + message.getDeviceId(), 0);
 	    	log.debug("MQTT request subscribe iheater result {}", result);
