@@ -36,9 +36,9 @@
 		  };
 		});
 
-    UserManagementDeviceController.$inject = ['$scope', '$http', '$timeout', '$interval', '$uibModalInstance', 'user', 'User', 'Device'];
+    UserManagementDeviceController.$inject = ['$scope', '$http', '$timeout', '$interval', '$uibModalInstance', 'user', 'User', 'Device', '$localStorage'];
 
-    function UserManagementDeviceController ($scope, $http, $timeout, $interval, $uibModalInstance, user, User, Device) {
+    function UserManagementDeviceController ($scope, $http, $timeout, $interval, $uibModalInstance, user, User, Device, $localStorage) {
         var vm = this;
 
         vm.user = user;
@@ -48,35 +48,59 @@
         vm.devices = [];
         vm.selectedDevices = [];
         vm.disableBtn = true;
+        vm.addDevice = addDevice;
+        vm.removeDevice = removeDevice;
                
         // Init controller
 		(function initController() {
 	        // Init
 	        loadAddSimpleDevice();
 	    })();
-
-        
+		
+		function removeDevice(device) {
+			// Remove from selected and add to list parent again
+			var itemDel = [];
+    			itemDel.push(device);
+			removeEleFromArray(vm.selectedDevices, itemDel);
+			
+			vm.devices.push(device);
+		}
+		
         function loadAddSimpleDevice() {
-        	Device.queryWithSimpleData({}, onSaveSuccess, onSaveError);
-            
-            function onSaveSuccess (result) {
-            	vm.devices = result;
-            	// publish data for selectedDevices
-            	angular.forEach(vm.devices, function (device, key) {
-            		angular.forEach(vm.user.userDevices, function (ud, key) {
-            			if (device.id == ud.id) {
-            				vm.selectedDevices.push(device);
-            			}
-            		});
-                });
-            	
-            	vm.disableBtn = false;
-            }
-
-            function onSaveError () {
-            }
+        		// Load from local
+        		var devices = $localStorage.all_simple_devices || [];
+        		vm.devices = angular.copy(devices);
+        		
+    			// publish data for selectedDevices
+        		angular.forEach(vm.user.userDevices, function (ud, key) {
+        			angular.forEach(vm.devices, function (device, key) {
+	        			if (device.id === ud.id) {
+	        				console.log(device);
+	        				vm.selectedDevices.push(device);
+	        			}
+	        		});
+	        });
+        		debugger
+	        	vm.disableBtn = false;
+        		console.log('loadAddSimpleDevice');
+	        	removeEleFromArray(vm.devices, vm.selectedDevices);
+        }
+        
+        function addDevice(device) {
+        		vm.selectedDevices.push(device);
+        		var itemDel = [];
+        		itemDel.push(device);
+        		removeEleFromArray(vm.devices, itemDel);
         }
 
+        function removeEleFromArray(parentItems, delItems) {
+	        	angular.forEach(delItems, function (item, key) {
+	        		var index = parentItems.indexOf(item);
+	        		parentItems.splice(index, 1);
+	    		});
+        		
+        }
+        
         function clear () {
             $uibModalInstance.dismiss('cancel');
         }

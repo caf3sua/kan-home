@@ -17,7 +17,8 @@
         },
         "device": {
             "title": "Confirm Add/Remove device",
-            "question": "Add or remove device of user {{ login }}?"
+            "question": "Add or remove device of user {{ login }}?",
+            "current_device": "List current devices of user {{ login }}"
         },
         "reset-pass": {
             "title": "Confirm reset password",

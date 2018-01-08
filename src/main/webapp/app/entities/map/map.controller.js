@@ -50,6 +50,38 @@
         vm.showDevice = showDevice;
         vm.clickOnMarker = clickOnMarker;
         vm.toogleFullscreen = toogleFullscreen;
+        vm.isDeviceActive = isDeviceActive;
+        vm.isFilterActive = isFilterActive;
+        vm.changeFilter = changeFilter;
+        vm.devicesInfo = {
+        		num_gray: 0
+        		, num_green: 0
+        		, num_yellow: 0
+        		, num_red: 0
+        		, num_all: 0
+        };
+        vm.deviceFilterSelected = 0;
+        vm.statusFilter;
+        
+        function changeFilter(status) {
+        		if (status == 1) {
+        			vm.statusFilter = 'GRAY';
+        		} else if (status == 2) {
+        			vm.statusFilter = 'BLUE';
+			} else if (status == 3) {
+				vm.statusFilter = 'YELLOW';
+			} else if (status == 4) {
+				vm.statusFilter = 'RED';
+			} else {
+				vm.statusFilter = '';
+			}
+        		
+        		vm.deviceFilterSelected = status;
+        }
+        
+        function isFilterActive(position) {
+        		return vm.deviceFilterSelected === position;
+        }
         
         (function initController() {
         		// Init
@@ -87,6 +119,13 @@
             		setHeightMap();
             });
         });
+        
+        function isDeviceActive(device) {
+        		if (vm.selectedDevice == undefined || vm.selectedDevice == null) {
+        			return false;
+        		}
+        		return vm.selectedDevice.id === device.id;
+        }
         
         //======================
         function connect() {
@@ -305,8 +344,28 @@
         }
         
         $scope.$watch('vm.devices', function (newValue) {
+	        	// Reset
+	    		vm.devicesInfo = {
+	            		num_gray: 0
+	            		, num_green: 0
+	            		, num_yellow: 0
+	            		, num_red: 0
+	            		, num_all: 0
+	            };
+	    		vm.devicesInfo.num_all = vm.devices.length;
         	// publish data for selectedDevices
         	angular.forEach(newValue, function (device, key) {
+        		// Count status
+        		if (device.dsts == 'BLUE') {
+        			vm.devicesInfo.num_green++;
+        		} else if (device.dsts == 'YELLOW') {
+        			vm.devicesInfo.num_yellow++;
+        		} else if (device.dsts == 'RED') {
+        			vm.devicesInfo.num_red++;
+        		} else {
+        			vm.devicesInfo.num_gray++;
+        		}
+        		
         		var maker = {
             		    id:device.id,
             		    coords: {
@@ -364,40 +423,40 @@
         	);
         }
         
-        function loadAllStatus() {
-        	DeviceStat.queryByIds(vm.devices, onSaveSuccess, onSaveError);
-            
-            function onSaveSuccess (result) {
-            	angular.forEach(vm.map.markers, function (marker, key) {
-        			angular.forEach(result, function (stat, keyStat) {
-        				// wQ
-//        				if (marker.id == stat.id) {
-//        					marker.options.icon.url = 'content/icon/iWater-' + stat.wQ + '.png';
+//        function loadAllStatus() {
+//        	DeviceStat.queryByIds(vm.devices, onSaveSuccess, onSaveError);
+//            
+//            function onSaveSuccess (result) {
+//            	angular.forEach(vm.map.markers, function (marker, key) {
+//        			angular.forEach(result, function (stat, keyStat) {
+//        				// wQ
+////        				if (marker.id == stat.id) {
+////        					marker.options.icon.url = 'content/icon/iWater-' + stat.wQ + '.png';
+////        				}
+//                    });
+//                });
+//            	
+//            	angular.forEach(vm.devices, function (device, key) {
+//        			angular.forEach(result, function (stat, keyStat) {
+//        				// wQ
+//        				if (device.id == stat.id) {
+//        					device.status = stat.dsts;
 //        				}
-                    });
-                });
-            	
-            	angular.forEach(vm.devices, function (device, key) {
-        			angular.forEach(result, function (stat, keyStat) {
-        				// wQ
-        				if (device.id == stat.id) {
-        					device.status = stat.dsts;
-        				}
-                    });
-                });
-        		
-        		// No-status
-        		angular.forEach(vm.devices, function (device, key) {
-    				// wQ
-    				if (device.status == "" || device.status == undefined) {
-    					device.status = 'GRAY';
-    				}
-                });
-            };
-
-            function onSaveError () {
-            }
-        }
+//                    });
+//                });
+//        		
+//        		// No-status
+//        		angular.forEach(vm.devices, function (device, key) {
+//    				// wQ
+//    				if (device.status == "" || device.status == undefined) {
+//    					device.status = 'GRAY';
+//    				}
+//                });
+//            };
+//
+//            function onSaveError () {
+//            }
+//        }
         
         function loadAllDevice () {
         	vm.map.markers = [];

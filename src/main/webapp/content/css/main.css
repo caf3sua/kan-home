@@ -572,7 +572,7 @@ md-tooltip ._md-content {
 }
 
 .side-bar-map-left {
-	width: 270px !important;
+	width: 300px !important;
 }
 
 md-card .card-header {
@@ -763,4 +763,128 @@ md-card .card-content-time {
 .device-icon-iheater {
 	background-image: url("../../content/icon/waterheater.png");
 	background-size: cover;
+}
+
+.device-active {
+	background: #84ffff !important; /*TEA color */ 
+}
+
+.p-t-10 {
+	padding-top: 10px;
+}
+
+.p-b-10 {
+	padding-bottom: 10px;
+}
+
+li.list-group-item:hover {
+	background: #dbe0e0 !important; /*TEA color */
+}
+
+#num_box {
+    background: #fff none repeat scroll 0 0;
+    height: 45px;
+    padding: 5px 0 5px 3px;
+    width: 250px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.pushy .title {
+    background: #fff none repeat scroll 0 0;
+    border-bottom: 1px solid #0c5da3;
+    font-size: 20px;
+    height: 34px;
+    line-height: 26px;
+    padding: 5px 10px;
+    text-transform: uppercase;
+}
+#num_box > div{
+    display: block;
+    float: left;
+    height: 35px;
+    margin: 0 4px;
+    width: 40px;
+    cursor:pointer;
+}
+#num_box span{
+    display: block;
+    border-radius: 5px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    vertical-align: middle;
+    width: 40px;
+    font-size: 15px;
+    color: white;
+    font-weight: bold;
+}
+
+#num_box span.num-green-device{
+    background-color: #00d957;
+}
+#num_box span.num-yellow-device{
+    background-color: #ffcc00;
+}
+#num_box span.num-red-device{
+    background-color: #ff2b56;
+}
+#num_box span.num-gray-device{
+    background-color: #8e8e94;
+}
+#num_box span:hover{
+    background-color: #1367b0;
+}
+#num_box span.num-all-device{
+    background: url("../../content/images/GGRY.png");
+    background-size: contain;
+}
+#num_box > div:hover, #num_box > div.active{
+    border-bottom: 3px solid #1367b0;
+}
+.list-add-device {
+    max-height: 200px;
+    overflow: auto;
+}
+/*Chip*/
+.chip {
+    display: inline-block;
+    padding: 0 10px;
+    height: 30px;
+    font-size: 15px;
+    line-height: 30px;
+    border-radius: 25px;
+    background-color: #4d87f1;
+    color: white;
+    font-weight: bold;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+.chip img {
+    float: left;
+    margin: 0 10px 0 -25px;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+}
+
+.closebtn {
+    padding-left: 8px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 20px;
+    cursor: pointer;
+    margin-top: -4px;
+}
+
+.closebtn:hover {
+    color: #000;
+}
+.badge-device {
+	top: 0;
+}
+
+.input-device-filter {
+	margin: 0 !important;
 }

@@ -131,7 +131,7 @@ public class KanHomeApp {
     		log.info("MqttAsyncClient connected.");
     		client.subscribe("notification", 0);
         } else {
-        	log.warn("MqttAsyncClient connected.");
+        	log.warn("MqttAsyncClient not connected.");
         }
 		//client.subscribe("notification/1", 0);
     	return client;

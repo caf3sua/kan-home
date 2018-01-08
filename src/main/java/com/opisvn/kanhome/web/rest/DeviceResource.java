@@ -252,6 +252,15 @@ public class DeviceResource {
     public ResponseEntity<List<DeviceDTO>> getAllDevicesOnMap() {
     	log.debug("REST request to getAllDevicesOnMap");
         List<DeviceDTO> lstDevice = deviceService.findAllWithMapView();
+        // Add status
+        if (lstDevice != null && lstDevice.size() != 0) {
+	        	for (DeviceDTO deviceDTO : lstDevice) {
+	        		// More attribute
+	        		if (StringUtils.isEmpty(deviceDTO.getDsts())) {
+	        			deviceDTO.setDsts("GRAY");
+				}
+	        }
+        }
         return new ResponseEntity<>(lstDevice, null, HttpStatus.OK);
     }
     

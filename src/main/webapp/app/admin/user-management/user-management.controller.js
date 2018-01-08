@@ -5,9 +5,9 @@
         .module('kanHomeApp')
         .controller('UserManagementController', UserManagementController);
 
-    UserManagementController.$inject = ['$rootScope', 'Principal', 'User', 'ParseLinks', 'AlertService', '$state', 'pagingParams', 'paginationConstants', 'JhiLanguageService', '$translate'];
+    UserManagementController.$inject = ['$rootScope', 'Principal', 'User', 'ParseLinks', 'AlertService', '$state', 'pagingParams', 'paginationConstants', 'JhiLanguageService', '$translate', 'Device', '$localStorage'];
 
-    function UserManagementController($rootScope, Principal, User, ParseLinks, AlertService, $state, pagingParams, paginationConstants, JhiLanguageService, $translate) {
+    function UserManagementController($rootScope, Principal, User, ParseLinks, AlertService, $state, pagingParams, paginationConstants, JhiLanguageService, $translate, Device, $localStorage) {
         var vm = this;
 
         vm.authorities = ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_TECHNICAL', 'ROLE_SUPPORTOR'];
@@ -40,7 +40,6 @@
         vm.checkAll = checkAll;
         vm.checkItem = checkItem;
         
-        
         // Init controller
 		(function initController() {
 	        JhiLanguageService.getAll().then(function (languages) {
@@ -51,7 +50,20 @@
 	        });
 	        
 			vm.searchAll();
+			loadAllSimpleDevice();
 	    })();
+		
+		function loadAllSimpleDevice() {
+	    	
+	    		Device.queryWithSimpleData({}, onSaveSuccess, onSaveError);
+	        
+	        function onSaveSuccess (result) {
+	        		$localStorage.all_simple_devices = result;
+	        }
+	
+	        function onSaveError () {
+	        }
+	    }
         
 		function resetCheckbox() {
 			vm.selectedItem = [];

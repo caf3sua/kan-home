@@ -6,16 +6,41 @@
     </div>
     <div class="modal-body">
         <jhi-alert-error></jhi-alert-error>
-        <p data-translate="userManagement.device.question" translate-values="{login: '{{vm.user.username}}'}">Are you sure you want to delete this User?</p>
+        <p data-translate="userManagement.device.current_device" translate-values="{login: '{{vm.user.username}}'}">List current devices of user </p>
         
         <div class="form-group">
-          	<ui-select ng-model="vm.selectedDevices" multiple theme="selectize" title="Choose a device">
+        		<div class="chip" ng-repeat="selDevice in vm.selectedDevices" >
+			  {{selDevice.abbrName}}
+			  <span class="closebtn" ng-click="vm.removeDevice(selDevice)">&times;</span>
+			</div>
+      
+          	<!-- <ui-select ng-model="vm.selectedDevices" multiple theme="selectize" title="Choose a device">
 	            <ui-select-match placeholder="Select or search a device in the list...">{{$item.abbrName}}</ui-select-match>
 	            <ui-select-choices repeat="item in vm.devices | filter: $select.search">
 	              	<div ng-bind-html="item.abbrName | highlight: $select.search"></div>
-	              	<!-- <small ng-bind-html="item.abbrName | highlight: $select.search"></small> -->
 	            </ui-select-choices>
-          	</ui-select>
+          	</ui-select> -->
+          	
+          	<md-input-container md-no-float class="md-block input-device-filter">
+          		<input ng-model="vm.filterDevice" placeholder="Filter devices..">
+        		</md-input-container>
+          	
+          	<ul class="list-group md-whiteframe-z0 list-add-device">
+			   <li ng-repeat="device in vm.devices | filter:vm.filterDevice" class="list-group-item" ng-click="vm.addDevice(device)">
+			   		<div class="m-t-5 m-b-5">
+					     <div class="pull-left m-r-10">
+					     	<div class="img-responsive img-circle device-icon device-icon-{{device.abbrName.substring(0, device.abbrName.indexOf('_'))}}">&nbsp</div>
+					     </div>
+					     <div class="pull-right m-t-10">
+					     	<span class="pull-right text-{{device.dsts}}"><i class="fa fa-circle text-xs"></i></span>
+					     </div>
+					     <div class="clear">
+					       <span class="font-bold block"><div class="p-t-10 p-b-10">{{device.abbrName}}</div></span>
+					     </div>
+				     </div>
+				     <md-divider></md-divider>
+			   </li>
+			 </ul> 
       	</div>
     </div>
     <div class="modal-footer">

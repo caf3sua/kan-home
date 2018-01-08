@@ -18,7 +18,8 @@
         },
         "device": {
             "title": "Xác nhận thêm/xóa thiết bị",
-            "question": "Bạn muốn thêm hay xóa thiết bị của người dùng {{ login }}?"
+            "question": "Bạn muốn thêm hay xóa thiết bị của người dùng {{ login }}?",
+            "current_device": "Danh sách thiết bị hiện tại của người dùng {{ login }}"
         },
         "reset-pass": {
             "title": "Xác nhận tạo mới mật khẩu",

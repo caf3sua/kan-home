@@ -180,8 +180,11 @@
                     size: 'md',
                     resolve: {
                         user: ['User', function(User) {
-                            return User.get({login : $stateParams.login});
-                        }]
+                            return User.get({login : $stateParams.login}).$promise;
+                        }],
+//                        devices: ['Device', function(Device) {
+//                            return Device.queryWithSimpleData({}).$promise;
+//                        }]
                     }
                 }).result.then(function() {
                     $state.go('user-management', null, { reload: true });
