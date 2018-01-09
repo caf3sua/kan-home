@@ -3,8 +3,11 @@ package com.opisvn.kanhome.web.rest;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -199,6 +202,26 @@ public class DeviceResource {
     }
     
     /**
+     * GET  /devices : get all the devices with simple data.
+     *
+     * @return the ResponseEntity with status 200 (OK) and the list of devices in body
+     */
+    @GetMapping("/devices-simple-data-as-map")
+    @Timed
+    public ResponseEntity<Map<String, DeviceDTO>> getAllDevicesWithSimpleDataAsMap() {
+    	log.debug("REST request to get getAllDevicesWithSimpleData");
+    	Map<String, DeviceDTO> result = new HashMap<>();
+        List<DeviceDTO> lstDevice = deviceService.findAllWithSimpleData();
+        
+        // key = id, value - websites
+        if (lstDevice != null && lstDevice.size() > 0) {
+        	result = lstDevice.stream().collect(Collectors.toMap(choice -> choice.getId(),choice -> choice));
+        }
+        
+        return new ResponseEntity<>(result, null, HttpStatus.OK);
+    }
+    
+    /**
      * POST  /devices-users : get all the devices-users.
      *
      * @param pageable the pagination information
@@ -294,6 +317,15 @@ public class DeviceResource {
     public ResponseEntity<List<DeviceDTO>> searchAllDevicesOnMap(@RequestBody DeviceDTO deviceDTO) {
     	log.debug("REST request to searchAllDevicesOnMap");
         List<DeviceDTO> lstDevice = deviceService.searchAllWithMapView(deviceDTO);
+        // Add status
+        if (lstDevice != null && lstDevice.size() != 0) {
+	        	for (DeviceDTO item : lstDevice) {
+	        		// More attribute
+	        		if (StringUtils.isEmpty(item.getDsts())) {
+	        			item.setDsts("GRAY");
+				}
+	        }
+        }
         return new ResponseEntity<>(lstDevice, null, HttpStatus.OK);
     }
     

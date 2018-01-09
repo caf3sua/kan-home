@@ -15,6 +15,7 @@
         	'queryWithMapData': {url : 'api/devices-on-map', method: 'GET', isArray: true},
         	'queryWithUserData': {url : 'api/device-users', method: 'POST', isArray: true},
         	'queryWithSimpleData': {url : 'api/devices-simple-data', method: 'GET', isArray: true},
+        	'queryWithSimpleDataAsMap': {url : 'api/devices-simple-data-as-map', method: 'GET', isArray: false},
             'query': { method: 'GET', isArray: true},
             'get': {
                 method: 'GET',

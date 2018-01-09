@@ -33,6 +33,17 @@
                 	fullscreenControlOptions: {
                         position: google.maps.ControlPosition.RIGHT_CENTER
                     },
+                    styles: [
+                        {
+                            featureType: 'poi.business',
+                            stylers: [{visibility: 'off'}]
+                          },
+                          {
+                            featureType: 'transit',
+                            elementType: 'labels.icon',
+                            stylers: [{visibility: 'off'}]
+                          }
+                        ]
                 },
                 clusterOptions : {
                 	maxZoom: 16
@@ -63,11 +74,40 @@
         vm.deviceFilterSelected = 0;
         vm.statusFilter;
         
+        function reDrawMaker(status) {
+        	vm.map.markers = [];
+        	
+        	var isAlreadyMove = false;
+        	
+        	angular.forEach(vm.devices, function (device, key) {
+        		if (status == '' || device.dsts == status) {
+        			var maker = {
+                		    id:device.id,
+                		    coords: {
+                		        latitude: device.gpsX,
+                		        longitude: device.gpsY
+                		    },
+                		    options: {
+                		        extra: device
+                		}
+                    };
+        			vm.map.markers.push(maker);
+        		}
+        	});
+		
+        	// Move to marker on map
+        	if (vm.map.markers != null && vm.map.markers.length > 0) {
+        		var markerTmp = vm.map.markers[0];
+        		vm.map.center.latitude = markerTmp.coords.latitude;
+            	vm.map.center.longitude = markerTmp.coords.longitude;
+        	}
+        }
+        
         function changeFilter(status) {
-        		if (status == 1) {
-        			vm.statusFilter = 'GRAY';
-        		} else if (status == 2) {
-        			vm.statusFilter = 'BLUE';
+    		if (status == 1) {
+    			vm.statusFilter = 'GRAY';
+    		} else if (status == 2) {
+    			vm.statusFilter = 'BLUE';
 			} else if (status == 3) {
 				vm.statusFilter = 'YELLOW';
 			} else if (status == 4) {
@@ -76,7 +116,9 @@
 				vm.statusFilter = '';
 			}
         		
-        		vm.deviceFilterSelected = status;
+    		vm.deviceFilterSelected = status;
+    		// redraw maker
+    		reDrawMaker(vm.statusFilter);
         }
         
         function isFilterActive(position) {
@@ -180,7 +222,7 @@
         		if (content.PA[name] != null && content.PA[name] != undefined) {
         			console.log("PA name:" + name + ", value:" + content.PA[name]);
         			val.value = content.PA[name];
-        			val.unit = content.PA['u'];
+        			//val.unit = content.PA['u'];
         			val.time = content.time * 1000;
         		}
             });
@@ -208,15 +250,6 @@
         
         // click on maker
         function clickOnMarker(marker, eventName, model, eventArgs) {
-            //marker.setAnimation(google.maps.Animation.BOUNCE);
-//        	if (marker.options.animation == null) {
-//        		marker.options.animation = google.maps.Animation.BOUNCE;
-//        	} else {
-//        		marker.options.animation = null;	
-//        	}
-        	
-        	// Open selected device
-//        	$scope.$apply();
         	// Show selected device
         	showDevice(marker.model.options.extra);
         }
@@ -353,35 +386,8 @@
 	            		, num_all: 0
 	            };
 	    		vm.devicesInfo.num_all = vm.devices.length;
-        	// publish data for selectedDevices
-        	angular.forEach(newValue, function (device, key) {
-        		// Count status
-        		if (device.dsts == 'BLUE') {
-        			vm.devicesInfo.num_green++;
-        		} else if (device.dsts == 'YELLOW') {
-        			vm.devicesInfo.num_yellow++;
-        		} else if (device.dsts == 'RED') {
-        			vm.devicesInfo.num_red++;
-        		} else {
-        			vm.devicesInfo.num_gray++;
-        		}
-        		
-        		var maker = {
-            		    id:device.id,
-            		    coords: {
-            		        latitude: device.gpsX,
-            		        longitude: device.gpsY
-            		    },
-            		    options: {
-//            		        icon: {
-//            		            url: 'content/icon/iWater-GRAY.png'
-//            		        },
-            		        extra: device
-            		}
-                };
-
-        		vm.map.markers.push(maker);
-        	});
+        	
+	    		reDrawMaker('');
         });
         
         function search() {
@@ -394,13 +400,6 @@
     			// Show message
             	var message = $translate.instant('kanHomeApp.map.found-device', { number: result.length });
             	showMessage(message);
-            	
-            	// Move to marker on map
-            	if (result != null && result.size > 0) {
-            		var deviceTmp = result[0];
-            		vm.map.center.latitude = deviceTmp.gpsX;
-                	vm.map.center.longitude = deviceTmp.gpsY;
-            	}
             	
             	vm.devices = result;
             	//$scope.$apply();
@@ -423,41 +422,6 @@
         	);
         }
         
-//        function loadAllStatus() {
-//        	DeviceStat.queryByIds(vm.devices, onSaveSuccess, onSaveError);
-//            
-//            function onSaveSuccess (result) {
-//            	angular.forEach(vm.map.markers, function (marker, key) {
-//        			angular.forEach(result, function (stat, keyStat) {
-//        				// wQ
-////        				if (marker.id == stat.id) {
-////        					marker.options.icon.url = 'content/icon/iWater-' + stat.wQ + '.png';
-////        				}
-//                    });
-//                });
-//            	
-//            	angular.forEach(vm.devices, function (device, key) {
-//        			angular.forEach(result, function (stat, keyStat) {
-//        				// wQ
-//        				if (device.id == stat.id) {
-//        					device.status = stat.dsts;
-//        				}
-//                    });
-//                });
-//        		
-//        		// No-status
-//        		angular.forEach(vm.devices, function (device, key) {
-//    				// wQ
-//    				if (device.status == "" || device.status == undefined) {
-//    					device.status = 'GRAY';
-//    				}
-//                });
-//            };
-//
-//            function onSaveError () {
-//            }
-//        }
-        
         function loadAllDevice () {
         	vm.map.markers = [];
         	Device.queryWithMapData({}, onSaveSuccess, onSaveError);
@@ -469,10 +433,6 @@
             	showMessage(message);
             	
             	vm.devices = result;
-            	
-            	// Load status
-            	// TODO: namnh 22/12/2017 commnet: 
-            	// loadAllStatus();
             };
 
             function onSaveError () {

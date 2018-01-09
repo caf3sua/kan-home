@@ -54,8 +54,11 @@
         // Init controller
 		(function initController() {
 	        // Init
-	        loadAddSimpleDevice();
 	    })();
+		
+		angular.element(document).ready(function () {
+			loadAddSimpleDevice();
+		});
 		
 		function removeDevice(device) {
 			// Remove from selected and add to list parent again
@@ -80,7 +83,6 @@
 	        			}
 	        		});
 	        });
-        		debugger
 	        	vm.disableBtn = false;
         		console.log('loadAddSimpleDevice');
 	        	removeEleFromArray(vm.devices, vm.selectedDevices);
