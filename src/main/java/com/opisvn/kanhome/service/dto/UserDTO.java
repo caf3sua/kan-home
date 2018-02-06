@@ -29,9 +29,9 @@ public class UserDTO implements Serializable {
 
 	private String id;
 
-    @NotBlank
-    @Pattern(regexp = Constants.LOGIN_REGEX)
-    @Size(min = 1, max = 100)
+//    @NotBlank
+//    @Pattern(regexp = Constants.LOGIN_REGEX)
+//    @Size(min = 1, max = 100)
     private String username;
 
     @Size(max = 50)
@@ -64,6 +64,10 @@ public class UserDTO implements Serializable {
     
     private String fullname;
 	private Integer status;
+	
+	@NotBlank
+	@Pattern(regexp = Constants.PHONENUMBER_REGEX)
+	@Size(min = 1, max = 15)
     private String phonenumber;
     private String address;
     private Integer gender;

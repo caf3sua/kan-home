@@ -111,9 +111,11 @@ public class UserService {
             newUser.setActivationKey(RandomUtil.generateActivationKey());
             authorities.add(authority);
             newUser.setAuthorities(authorities);
-            // SMS code
-			String smsCode = KanhomeUtil.generateSmsCode();
-			newUser.setActivationCode(smsCode);
+            // SMS code exclude Myanmar
+            if (!KanhomeUtil.isMyanmarPhoneNumber(phonenumber)) {
+            	String smsCode = KanhomeUtil.generateSmsCode();
+    			newUser.setActivationCode(smsCode);
+            }
 			
             userRepository.save(newUser);
             log.debug("Created Information for User: {}", newUser);

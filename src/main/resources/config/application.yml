@@ -75,6 +75,9 @@ spring:
             service: kangaroo
             fromnumber: 8209
             message: Your KanHome Activation Code is %s
+        twilio-provider:
+            account-sid: AC32d59a8998c87586ea965c41e5138db5
+            auth-token: 2216b62e13097a758b20ee125feb7978
 security:
     basic:
         enabled: false

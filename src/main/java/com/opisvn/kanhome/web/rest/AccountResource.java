@@ -28,12 +28,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.codahale.metrics.annotation.Timed;
+import com.opisvn.kanhome.domain.ActiveCodes;
 import com.opisvn.kanhome.domain.User;
+import com.opisvn.kanhome.repository.ActiveCodesRepository;
 import com.opisvn.kanhome.repository.UserRepository;
 import com.opisvn.kanhome.security.SecurityUtils;
 import com.opisvn.kanhome.service.MailService;
 import com.opisvn.kanhome.service.SmsService;
 import com.opisvn.kanhome.service.UserService;
+import com.opisvn.kanhome.service.dto.ActivedUserDTO;
 import com.opisvn.kanhome.service.dto.UserDTO;
 import com.opisvn.kanhome.service.util.KanhomeUtil;
 import com.opisvn.kanhome.web.rest.util.HeaderUtil;
@@ -60,16 +63,20 @@ public class AccountResource {
     
     private final AuditEventRepository auditEventRepository;
     
+    private final ActiveCodesRepository activeCodesRepository;
+    
     private final Environment env;
 
     public AccountResource(UserRepository userRepository, UserService userService,
-            MailService mailService, SmsService smsService, AuditEventRepository auditEventRepository, Environment env) {
+            MailService mailService, SmsService smsService, AuditEventRepository auditEventRepository, ActiveCodesRepository activeCodesRepository
+            , Environment env) {
 
         this.userRepository = userRepository;
         this.userService = userService;
         this.mailService = mailService;
         this.smsService = smsService;
         this.auditEventRepository = auditEventRepository;
+        this.activeCodesRepository = activeCodesRepository;
         this.env = env;
     }
 
@@ -87,6 +94,13 @@ public class AccountResource {
     	
         HttpHeaders textPlainHeaders = new HttpHeaders();
         textPlainHeaders.setContentType(MediaType.TEXT_PLAIN);
+        
+        // NamNH : 6/2/2018 - Set username = phonenumber
+        if (org.apache.commons.lang3.StringUtils.isEmpty(managedUserVM.getUsername())) {
+        	// Format VN phonenumber
+        	String phonenumber = KanhomeUtil.formattVietnamPhoneNumber(managedUserVM.getPhonenumber());
+        	managedUserVM.setUsername(phonenumber);
+        }
 
         return userRepository.findOneByUsername(StringUtils.lowerCase(managedUserVM.getUsername()))
             .map(user -> new ResponseEntity<>("login already in use", textPlainHeaders, HttpStatus.BAD_REQUEST))
@@ -98,13 +112,18 @@ public class AccountResource {
                             managedUserVM.getPhonenumber(), managedUserVM.getEmail(),
                             managedUserVM.getLangKey());
 
-                    // Send SMS
-    				boolean result = smsService.sendSMS(user.getPhonenumber(), user.getActivationCode());
-    				log.debug("Result send SMS: {}", result);
-    				
-    				//  and Send mail
-					// Create sms code and send mail
-					mailService.sendActivationEmail(user);
+                    // Send SMS exclude Myanmar
+    				if (KanhomeUtil.isMyanmarPhoneNumber(user.getPhonenumber())) {
+    					log.debug("MYANMAR phone number {}, will not send SMS", user.getPhonenumber());
+    				} else {
+    					boolean result = smsService.sendSMS(user.getPhonenumber(), user.getActivationCode());
+        				log.debug("Result send SMS: {}", result);
+        				
+        				//  and Send mail
+    					// Create sms code and send mail
+    					mailService.sendActivationEmail(user);
+    				}
+					
                     return new ResponseEntity<>(HttpStatus.CREATED);
                 })
         );
@@ -265,11 +284,17 @@ public class AccountResource {
      */
     @GetMapping({"/account/activate", "/v1/account/activate"})
     @Timed
-    public ResponseEntity<User> activateAccountBySmsCode(@RequestParam(value = "username", required=true) final String username
+    public ResponseEntity<User> activateAccountBySmsCode(@RequestParam(value = "username", required=true) String username
     		, @RequestParam(value = "sms", required=true) final String sms) throws URISyntaxException {
     		log.debug("REST request to activateAccountBySmsCode, username : {}, sms : {}", username, sms);
     	
-    		// Check user exist
+		// NamNH : 6/2/2018 - format username/phonenumber
+        if (KanhomeUtil.isVietnamPhoneNumber(username)) {
+        	// Format VN phonenumber
+        	username = KanhomeUtil.formattVietnamPhoneNumber(username);
+        }
+            
+    	// Check user exist
 		Optional<User> userOpt  = userService.getUserWithAuthoritiesByLogin(StringUtils.lowerCase(username));
 		if (!userOpt.isPresent() || userOpt.get() == null) {
 			return ResponseEntity.notFound().headers(HeaderUtil.createFailureAlert("User", 
@@ -284,15 +309,39 @@ public class AccountResource {
 		}
 		
 		
-		// Compare sms code
-		if (!StringUtils.equalsIgnoreCase(sms, user.getActivationCode())) {
-			// Audit and log
-			String errorMsg = "message=sms code: " + sms + " but expect: " + user.getActivationCode();
-			AuditEvent event = new AuditEvent(username, "ACTIVATED_FAILED", errorMsg); 
-			auditEventRepository.add(event);
-			log.debug("Active account FAILED, username: {}, sms code: {} but expect {}", username, sms, user.getActivationCode());
-			return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("User", 
-					"smscodeinvalid", "Sms code is invalid")).body(null);
+		// Compare sms code if not Myanmar
+		if (KanhomeUtil.isMyanmarPhoneNumber(username)) {
+			// Validate Sms Code in collection activeCodes
+			ActiveCodes activeCode = activeCodesRepository.findOneByActiveCode(sms);
+			if (activeCode == null || activeCode.getRemain() == 0) {
+				// Audit and log
+				String errorMsg = "message=sms code: " + sms + "not found in ActiveCodes collection";
+				AuditEvent event = new AuditEvent(username, "ACTIVATED_FAILED", errorMsg); 
+				auditEventRepository.add(event);
+				log.debug("Active account FAILED, username: {}, sms code: {} not found", username, sms);
+				return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("User", 
+						"smscodeinvalid", "Sms code is not found")).body(null);
+			} else {
+				// Update information remain and user
+				int remain = activeCode.getRemain() - 1;
+				activeCode.setRemain(remain);
+				// Insert user active
+				ActivedUserDTO activeUser = new ActivedUserDTO();
+				activeUser.setUser(username);
+				activeUser.setCreated_date(new Date());
+				activeCode.getActivedUsers().add(activeUser);
+				activeCodesRepository.save(activeCode);
+			}
+		} else {
+			if (!StringUtils.equalsIgnoreCase(sms, user.getActivationCode())) {
+				// Audit and log
+				String errorMsg = "message=sms code: " + sms + " but expect: " + user.getActivationCode();
+				AuditEvent event = new AuditEvent(username, "ACTIVATED_FAILED", errorMsg); 
+				auditEventRepository.add(event);
+				log.debug("Active account FAILED, username: {}, sms code: {} but expect {}", username, sms, user.getActivationCode());
+				return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("User", 
+						"smscodeinvalid", "Sms code is invalid")).body(null);
+			}
 		}
 		
 		// Update status and remove activation code
@@ -311,6 +360,13 @@ public class AccountResource {
     public ResponseEntity<User> resendSmsCode(@RequestParam(value = "username", required=true) final String username) throws URISyntaxException {
     	
     	log.debug("Start method resendSmsCode, username: {}", StringUtils.lowerCase(username));
+    	
+    	// NamNH: 6/2/2018 - No send if Myanmar
+        if (KanhomeUtil.isMyanmarPhoneNumber(username)) {
+        	return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("User", 
+					"resend", "Username: " + username + " below Myanmar country")).body(null);
+        }
+    	
 		// Update user status = 0
     		Optional<User> userOpt  = userService.getUserWithAuthoritiesByLogin(StringUtils.lowerCase(username));
 		if (!userOpt.isPresent() || userOpt.get() == null) {

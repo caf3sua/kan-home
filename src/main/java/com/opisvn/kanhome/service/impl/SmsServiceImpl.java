@@ -11,7 +11,11 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 import com.opisvn.kanhome.service.SmsService;
+import com.opisvn.kanhome.service.util.KanhomeUtil;
 import com.opisvn.kanhome.service.util.SpeedSMSAPI;
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Message;
+import com.twilio.type.PhoneNumber;
 
 @Service
 public class SmsServiceImpl implements SmsService {
@@ -26,9 +30,25 @@ public class SmsServiceImpl implements SmsService {
 
 	@Override
 	public boolean sendSMS(String toNumber, String smsCode) {
+		// No send if Myanmar country
+		if (KanhomeUtil.isMyanmarPhoneNumber(toNumber)) {
+			log.debug("No sendSMS, toNumber {} smsCode {}, Myanmar country phone number", toNumber, smsCode);
+			return false;
+		}
+		
 		// Get properties value
 		log.debug("sendSMS, toNumber {}, smsCode {}", toNumber, smsCode);
-	    String accessToken = env.getProperty("spring.sms.provider.accessToken");
+		// SMS Vietnam
+		if (KanhomeUtil.isVietnamPhoneNumber(toNumber)) {
+			return sendVietnamSMS(toNumber, smsCode);
+		} else {
+			// International SMS
+			return sendInternationalSMS(toNumber, smsCode);
+		}
+	}
+	
+	private boolean sendVietnamSMS(String toNumber, String smsCode) {
+		String accessToken = env.getProperty("spring.sms.provider.accessToken");
 	    String message = env.getProperty("spring.sms.provider.message");
 		String sendMessage = String.format(message, smsCode);
 		
@@ -52,8 +72,29 @@ public class SmsServiceImpl implements SmsService {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	    
+		
 		return false;
+	}
+	
+	private boolean sendInternationalSMS(String toNumber, String smsCode) {
+		String ACCOUNT_SID = env.getProperty("spring.sms.twilio-provider.account-sid");
+		String AUTH_TOKEN = env.getProperty("spring.sms.twilio-provider.auth-token");
+
+		String content = env.getProperty("spring.sms.provider.message");
+		String sendMessage = String.format(content, smsCode);
+		
+		Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+
+	    Message message = Message
+	        .creator(new PhoneNumber(toNumber), "", sendMessage)
+	        .create();
+
+	    if (message.getErrorCode() == null) {
+	    	log.error("Send international SMS fail, {}", message);
+	    	return true;
+	    } else {
+	    	return false;
+	    }
 	}
    
 

@@ -13,6 +13,7 @@ import com.opisvn.kanhome.service.dto.DeviceDTO;
 import com.opisvn.kanhome.service.dto.UserDTO;
 import com.opisvn.kanhome.service.dto.UserDeviceDTO;
 import com.opisvn.kanhome.service.mapper.UserMapper;
+import com.opisvn.kanhome.service.util.KanhomeUtil;
 import com.opisvn.kanhome.web.rest.vm.DeviceVM;
 import com.opisvn.kanhome.web.rest.vm.ManagedUserVM;
 import com.opisvn.kanhome.web.rest.vm.UserSearchVM;
@@ -106,6 +107,13 @@ public class UserResource {
     public ResponseEntity createUser(@Valid @RequestBody ManagedUserVM managedUserVM) throws URISyntaxException {
         log.debug("REST request to save User : {}", managedUserVM);
 
+        // NamNH : 6/2/2018 - Set username = phonenumber
+        if (org.apache.commons.lang3.StringUtils.isEmpty(managedUserVM.getUsername())) {
+        	// Format VN phonenumber
+        	String phonenumber = KanhomeUtil.formattVietnamPhoneNumber(managedUserVM.getPhonenumber());
+        	managedUserVM.setUsername(phonenumber);
+        }
+        
         if (managedUserVM.getId() != null) {
             return ResponseEntity.badRequest()
                 .headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new user cannot already have an ID"))

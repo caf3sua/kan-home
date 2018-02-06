@@ -34,7 +34,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
     private String id;
 
     @NotNull
-    @Pattern(regexp = Constants.LOGIN_REGEX)
+//    @Pattern(regexp = Constants.LOGIN_REGEX)
     @Size(min = 1, max = 100)
     @Indexed
     private String username;
@@ -67,7 +67,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Field("image_url")
     private String imageUrl;
 
-    @Size(max = 20)
+//    @Size(max = 20)
     @Field("activation_key")
     @JsonIgnore
     private String activationKey;
