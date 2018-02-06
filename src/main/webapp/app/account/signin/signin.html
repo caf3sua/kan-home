@@ -6,7 +6,7 @@
 		        <form ng-show="!vm.success" name="form" role="form" ng-submit="vm.login()" show-validation class="form-signin">
 	                <div class="form-group">
 	                    <input type="text" class="form-control form-group-kanhome" id="username" name="username" placeholder="{{'global.form.username.placeholder' | translate}}"
-	                           ng-model="vm.username" ng-minlength=1 ng-maxlength=50 ng-pattern="/^[_'.@A-Za-z0-9-]*$/" required>
+	                           ng-model="vm.username" ng-minlength=1 ng-maxlength=50 ng-pattern="/^[_'.@A-Za-z0-9-+]*$/" required>
 	                    <div ng-show="form.username.$dirty && form.username.$invalid">
 	                        <p class="help-block"
 	                               ng-show="form.username.$error.required" novalidate data-translate="global.messages.validate.username.required">

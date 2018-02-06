@@ -40,7 +40,7 @@
 		        <div class="or-separator"> OR </div>
 		        
 		        <form ng-show="!vm.success" name="form" role="form" novalidate ng-submit="vm.register()" show-validation class="form-signin">
-	                <div class="form-group">
+	                <!-- <div class="form-group">
 	                    <input type="text" class="form-control form-group-kanhome" id="username" name="username" placeholder="{{'global.form.username.placeholder' | translate}}"
 	                           ng-model="vm.registerAccount.username" ng-minlength=1 ng-maxlength=50 ng-pattern="/^[_'.@A-Za-z0-9-]*$/" required>
 	                    <div ng-show="form.username.$dirty && form.username.$invalid">
@@ -48,10 +48,6 @@
 	                               ng-show="form.username.$error.required" novalidate data-translate="global.messages.validate.username.required">
 	                            Your username is required.
 	                        </p>
-	                        <!-- <p class="help-block"
-	                               ng-show="form.username.$error.minlength" data-translate="global.messages.validate.username.minlength">
-	                            Your username is required to be at least 1 character.
-	                        </p> -->
 	                        <p class="help-block"
 	                               ng-show="form.username.$error.maxlength" data-translate="global.messages.validate.username.maxlength">
 	                            Your username cannot be longer than 50 characters.
@@ -61,7 +57,7 @@
 	                            Your username can only contain lower-case letters and digits.
 	                    </p>
 	                    </div>
-	                </div>
+	                </div> -->
 	                <div class="form-group">
 	                    <input type="password" class="form-control form-group-kanhome" id="password" name="password" placeholder="{{'global.form.password.placeholder' | translate}}"
 	                           ng-model="vm.registerAccount.password" ng-minlength=1 ng-maxlength=50 required>

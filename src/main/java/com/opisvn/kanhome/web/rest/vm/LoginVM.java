@@ -10,7 +10,7 @@ import javax.validation.constraints.Size;
  */
 public class LoginVM {
 
-    @Pattern(regexp = Constants.LOGIN_REGEX)
+    //@Pattern(regexp = Constants.LOGIN_REGEX)
     @NotNull
     @Size(min = 1, max = 50)
     private String username;
