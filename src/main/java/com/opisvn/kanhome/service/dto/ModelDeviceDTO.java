@@ -2,6 +2,7 @@ package com.opisvn.kanhome.service.dto;
 
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -21,6 +22,8 @@ public class ModelDeviceDTO implements Serializable {
     private String imageUrl;
     
     private Map<Integer, FilterDTO> filters;
+    
+    private List<FilterDTO> lstFilters;
 
     public String getId() {
         return id;
@@ -100,5 +103,13 @@ public class ModelDeviceDTO implements Serializable {
 
 	public void setFilters(Map<Integer, FilterDTO> filters) {
 		this.filters = filters;
+	}
+
+	public List<FilterDTO> getLstFilters() {
+		return lstFilters;
+	}
+
+	public void setLstFilters(List<FilterDTO> lstFilters) {
+		this.lstFilters = lstFilters;
 	}
 }

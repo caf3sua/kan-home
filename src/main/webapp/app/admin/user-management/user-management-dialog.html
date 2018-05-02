@@ -15,41 +15,10 @@
         </div>
 
         <div class="form-group form-group-settings">
-            <label class="control-label" data-translate="userManagement.login">Username</label>
-            <input type="text" class="form-control" name="username" ng-readonly="vm.user.id != null"
-                   ng-model="vm.user.username" ng-required="vm.user.id == null" ng-minlength=1 ng-maxlength=50 ng-pattern="/^[_'.@A-Za-z0-9-]*$/">
-
-            <div ng-show="editForm.login.$invalid">
-                <p class="help-block"
-                   ng-show="editForm.login.$error.required" data-translate="entity.validation.required">
-                    This field is required.
-                </p>
-
-                <p class="help-block"
-                   ng-show="editForm.login.$error.maxlength" data-translate="entity.validation.maxlength"
-                   translate-value-max="50">
-                    This field cannot be longer than 50 characters.
-                </p>
-            </div>
-        </div>
-        <div class="form-group form-group-settings">
-            <label class="control-label" data-translate="userManagement.fullname">Full Name</label>
-            <input type="text" class="form-control" name="fullname"
-                   ng-model="vm.user.fullname" ng-maxlength="50">
-
-            <div ng-show="editForm.fullname.$invalid">
-                <p class="help-block"
-                   ng-show="editForm.fullname.$error.maxlength" data-translate="entity.validation.maxlength"
-                   translate-value-max="50">
-                    This field cannot be longer than 50 characters.
-                </p>
-            </div>
-        </div>
-        <div class="form-group form-group-settings">
             <label class="control-label" for="phonenumber" data-translate="global.form.phonenumber">Phone number</label>
             <input type="text" class="form-control" id="phonenumber" name="phonenumber" placeholder="{{'global.form.phonenumber.placeholder' | translate}}"
-                   ng-model="vm.user.phonenumber" ng-minlength=9 ng-maxlength=13 required ng-pattern="/^[_'.@0-9]*$/">
-            <div ng-show="editForm.user.$dirty && editForm.phonenumber.$invalid">
+                   ng-model="vm.user.phonenumber" ng-minlength=9 ng-maxlength=13 required  ng-pattern="/^[_'.@0-9]*$/">
+            <div ng-show="editForm.phonenumber.$dirty && editForm.phonenumber.$invalid">
                 <p class="help-block"
                        ng-show="editForm.phonenumber.$error.required" data-translate="global.messages.validate.phonenumber.required">
                     Your phonenumber is required.
@@ -62,26 +31,12 @@
                        ng-show="editForm.phonenumber.$error.maxlength" data-translate="global.messages.validate.phonenumber.maxlength">
                     Your phonenumber cannot be longer than 13 characters.
                 </p>
-                <p class="help-block"
-                      ng-show="editForm.phonenumber.$error.pattern" data-translate="global.messages.validate.phonenumber.pattern">
-                   	Your phonenumber can only contain digits.
             </div>
-        </div>
-        <div class="form-group form-group-settings">
-            <label class="control-label" for="address" data-translate="global.form.address">Address</label>
-            <input type="text" class="form-control" id="address" name="address" placeholder="{{'global.form.address' | translate}}"
-                   ng-model="vm.user.address">
-        </div>
-        <div class="form-group form-group-settings">
-            <label for="gender" data-translate="global.form.gender">Gender</label>
-            <select id="gender" name="gender" class="form-control m-t-8-r" ng-model="vm.user.gender" ng-options="gender.id as gender.name for gender in vm.genders">
-            	<option value="" selected>{{'global.form.gender' | translate}}</option>
-            </select>
         </div>
         
         <div class="form-group form-group-settings">
             <label class="control-label" data-translate="userManagement.email">Email</label>
-            <input type="email" class="form-control" name="email"
+            <input type="email" class="form-control" name="email"  placeholder="{{'global.form.email.placeholder' | translate}}"
                    ng-model="vm.user.email" required ng-maxlength="100">
 
             <div ng-show="editForm.email.$invalid">
@@ -101,19 +56,26 @@
                  </p>
             </div>
         </div>
+        
         <div class="form-group form-group-settings">
+            <label for="activated">
+                <span data-translate="userManagement.default-password">Default password</span> : kangiot
+            </label>
+        </div>
+        
+        <div class="form-group form-group-settings" ng-show="false">
             <label for="activated">
                 <input ng-disabled="vm.user.id === null" type="checkbox" id="activated" name="activated" ng-model="vm.user.activated">
                 <span data-translate="userManagement.activated">Activated</span>
             </label>
         </div>
 
-        <div class="form-group form-group-settings">
+        <!-- <div class="form-group form-group-settings">
             <label data-translate="userManagement.langKey">Lang Key</label>
             <select class="form-control m-t-8-r" name="langKey" ng-model="vm.user.langKey"
                     ng-options="language as language for language in vm.languages track by language">
             </select>
-        </div>
+        </div> -->
 
         <div class="form-group form-group-settings">
             <label data-translate="userManagement.profiles">Profiles</label>

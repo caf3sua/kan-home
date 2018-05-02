@@ -167,10 +167,11 @@ public class UserService {
             );
             user.setAuthorities(authorities);
         }
-        String encryptedPassword = passwordEncoder.encode(RandomUtil.generatePassword());
-        user.setPassword(encryptedPassword);
-        user.setResetKey(RandomUtil.generateResetKey());
-        user.setResetDate(Instant.now());
+//        String encryptedPassword = passwordEncoder.encode(RandomUtil.generatePassword());
+        user.setPassword(userDTO.getPassword());
+        user.setPhonenumber(userDTO.getPhonenumber());
+//        user.setResetKey(RandomUtil.generateResetKey());
+//        user.setResetDate(Instant.now());
         user.setActivated(true);
         userRepository.save(user);
         log.debug("Created Information for User: {}", user);
@@ -244,8 +245,8 @@ public class UserService {
             	user.setFullname(userDTO.getFullname());
 //                user.setFirstName(userDTO.getFirstName());
 //                user.setLastName(userDTO.getLastName());
-                user.setEmail(userDTO.getEmail());
-                user.setPhonenumber(userDTO.getPhonenumber());
+//                user.setEmail(userDTO.getEmail());
+//                user.setPhonenumber(userDTO.getPhonenumber());
                 user.setGender(userDTO.getGender());
                 user.setAddress(userDTO.getAddress());
                 user.setImageUrl(userDTO.getImageUrl());

@@ -49,6 +49,10 @@
             if (vm.user.id !== null) {
                 User.update(vm.user, onSaveSuccess, onSaveError);
             } else {
+                var passMd5 = $.md5("kangiot");
+            	var encryptPass = $.base64.btoa(passMd5);
+            	
+            	vm.user.password = encryptPass;
                 User.save(vm.user, onSaveSuccess, onSaveError);
             }
         }

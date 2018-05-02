@@ -26,7 +26,7 @@ public class KanhomeUtil {
 		}
 		
 		// trim space
-		if (StringUtils.trim(phonenumber).contains("+95")) {
+		if (StringUtils.trim(phonenumber).contains("+95") || phonenumber.indexOf("95") == 0) {
 			return true;
 		}
 		
@@ -39,7 +39,7 @@ public class KanhomeUtil {
 		}
 		
 		// trim space
-		if (StringUtils.trim(phonenumber).contains("+84") || phonenumber.indexOf("0") == 0) {
+		if (StringUtils.trim(phonenumber).contains("+84") || phonenumber.indexOf("0") == 0 || phonenumber.indexOf("84") == 0) {
 			return true;
 		}
 		

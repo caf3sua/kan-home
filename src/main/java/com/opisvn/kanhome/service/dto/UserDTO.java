@@ -13,6 +13,7 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.opisvn.kanhome.config.Constants;
@@ -69,8 +70,11 @@ public class UserDTO implements Serializable {
 	@Pattern(regexp = Constants.PHONENUMBER_REGEX)
 	@Size(min = 1, max = 15)
     private String phonenumber;
+	
     private String address;
     private Integer gender;
+    
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private Date birthday;
     private Long latestNotificationId;
     

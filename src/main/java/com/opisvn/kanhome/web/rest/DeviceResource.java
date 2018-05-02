@@ -47,6 +47,8 @@ import com.opisvn.kanhome.web.rest.vm.DeviceVM;
 
 import io.github.jhipster.web.util.ResponseUtil;
 import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 /**
  * REST controller for managing Device.
@@ -244,6 +246,10 @@ public class DeviceResource {
     
     @GetMapping({"/devices_all_by_current_user", "/v1/device/all-by-current-user"})
     @Timed
+    @ApiResponses( {
+        @ApiResponse( code = 400, message = "User not found" )
+        , @ApiResponse( code = 200, message = "Success" )
+    } )
     public ResponseEntity<List<UserDeviceDTO>> getAllDeviceByCurrentUser() {
     	log.debug("REST request to getAllDeviceByCurrentUser");
         

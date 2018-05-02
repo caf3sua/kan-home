@@ -4,7 +4,6 @@ package com.opisvn.kanhome.web.rest;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Date;
-import java.util.Map;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
@@ -43,6 +42,10 @@ import com.opisvn.kanhome.web.rest.util.HeaderUtil;
 import com.opisvn.kanhome.web.rest.vm.KeyAndPasswordVM;
 import com.opisvn.kanhome.web.rest.vm.ManagedUserVM;
 import com.opisvn.kanhome.web.rest.vm.PasswordVM;
+import com.opisvn.kanhome.web.rest.vm.RegisterUserVM;
+
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 /**
  * REST controller for managing the current user's account.
@@ -89,7 +92,10 @@ public class AccountResource {
     @PostMapping(path = {"/register", "/v1/user/create"},
         produces={MediaType.APPLICATION_JSON_VALUE, MediaType.TEXT_PLAIN_VALUE})
     @Timed
-    public ResponseEntity registerAccount(@Valid @RequestBody ManagedUserVM managedUserVM) {
+    @ApiResponses( {
+        @ApiResponse( code = 409, message = "phonenumber/email already in use" )
+    } )
+    public ResponseEntity registerAccount(@Valid @RequestBody RegisterUserVM managedUserVM) {
     		log.debug("REST request to registerAccount : {}", managedUserVM);
     	
         HttpHeaders textPlainHeaders = new HttpHeaders();
@@ -103,9 +109,9 @@ public class AccountResource {
         }
 
         return userRepository.findOneByUsername(StringUtils.lowerCase(managedUserVM.getUsername()))
-            .map(user -> new ResponseEntity<>("login already in use", textPlainHeaders, HttpStatus.BAD_REQUEST))
+            .map(user -> new ResponseEntity<>("login already in use", textPlainHeaders, HttpStatus.CONFLICT))
             .orElseGet(() -> userRepository.findOneByEmail(managedUserVM.getEmail())
-                .map(user -> new ResponseEntity<>("email address already in use", textPlainHeaders, HttpStatus.BAD_REQUEST))
+                .map(user -> new ResponseEntity<>("email address already in use", textPlainHeaders, HttpStatus.CONFLICT))
                 .orElseGet(() -> {
                     User user = userService
                         .createUser(StringUtils.lowerCase(managedUserVM.getUsername()), managedUserVM.getPassword(),
@@ -199,6 +205,11 @@ public class AccountResource {
     @PostMapping(path = {"/account/change_password", "/v1/user/changePwd"},
         produces = MediaType.TEXT_PLAIN_VALUE)
     @Timed
+    @ApiResponses( {
+        @ApiResponse( code = 403, message = "Forbidden - Old password wrong" )
+        , @ApiResponse( code = 400, message = "Bad request - Password is invalid" )
+        , @ApiResponse( code = 200, message = "Change password success" )
+    } )
     public ResponseEntity changePassword(@RequestBody PasswordVM password) {
 	    	log.debug("REST request to changePassword, {}", password);
 	    	// Check old pass
@@ -225,6 +236,10 @@ public class AccountResource {
     @PostMapping(path = {"/account/reset_password/init", "/v1/user/forgetPwd"},
         produces = MediaType.TEXT_PLAIN_VALUE)
     @Timed
+    @ApiResponses( {
+        @ApiResponse( code = 400, message = "Bad request - email address not registered or account not yet actived" )
+        , @ApiResponse( code = 200, message = "Success" )
+    } )
     public ResponseEntity requestPasswordReset(@RequestBody String mail) {
     		log.debug("REST request to requestPasswordReset, email: {}", mail);
         return userService.requestPasswordReset(mail)
@@ -244,6 +259,10 @@ public class AccountResource {
     @PostMapping(path = {"/account/reset_password/finish", "/v1/user/recoveryPwd"},
         produces = MediaType.TEXT_PLAIN_VALUE)
     @Timed
+    @ApiResponses( {
+        @ApiResponse( code = 400, message = "Bad request - password is invalid" )
+        , @ApiResponse( code = 200, message = "Success" )
+    } )
     public ResponseEntity<String> finishPasswordReset(@RequestBody KeyAndPasswordVM keyAndPassword) {
     		log.debug("REST request to finishPasswordReset, {}", keyAndPassword);
         if (!checkPasswordLength(keyAndPassword.getNewPassword())) {
@@ -284,6 +303,12 @@ public class AccountResource {
      */
     @GetMapping({"/account/activate", "/v1/account/activate"})
     @Timed
+    @ApiResponses( {
+        @ApiResponse( code = 404, message = "User not found" )
+        , @ApiResponse( code = 400, message = "Bad request - User activated" )
+        , @ApiResponse( code = 406, message = "Not Acceptable - Sms code is not found, activation fail" )
+        , @ApiResponse( code = 200, message = "Success" )
+    } )
     public ResponseEntity<User> activateAccountBySmsCode(@RequestParam(value = "username", required=true) String username
     		, @RequestParam(value = "sms", required=true) final String sms) throws URISyntaxException {
     		log.debug("REST request to activateAccountBySmsCode, username : {}, sms : {}", username, sms);
@@ -312,35 +337,36 @@ public class AccountResource {
 		// Compare sms code if not Myanmar
 		if (KanhomeUtil.isMyanmarPhoneNumber(username)) {
 			// Validate Sms Code in collection activeCodes
-			ActiveCodes activeCode = activeCodesRepository.findOneByActiveCode(sms);
-			if (activeCode == null || activeCode.getRemain() == 0) {
+			boolean checkActiveCode = checkSmsInActiveCode(sms, username);
+			if (checkActiveCode == false) {
 				// Audit and log
 				String errorMsg = "message=sms code: " + sms + "not found in ActiveCodes collection";
 				AuditEvent event = new AuditEvent(username, "ACTIVATED_FAILED", errorMsg); 
 				auditEventRepository.add(event);
 				log.debug("Active account FAILED, username: {}, sms code: {} not found", username, sms);
-				return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("User", 
-						"smscodeinvalid", "Sms code is not found")).body(null);
-			} else {
-				// Update information remain and user
-				int remain = activeCode.getRemain() - 1;
-				activeCode.setRemain(remain);
-				// Insert user active
-				ActivedUserDTO activeUser = new ActivedUserDTO();
-				activeUser.setUser(username);
-				activeUser.setCreated_date(new Date());
-				activeCode.getActivedUsers().add(activeUser);
-				activeCodesRepository.save(activeCode);
+//				return ResponseEntity. .badRequest().headers(HeaderUtil.createFailureAlert("User", 
+//						"smscodeinvalid", "Sms code is not found")).body(null);
+				return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE)
+						.headers(HeaderUtil.createFailureAlert("User", "smscodeinvalid", "Sms code is not found")).body(null);
 			}
 		} else {
+			// Check activation code
 			if (!StringUtils.equalsIgnoreCase(sms, user.getActivationCode())) {
-				// Audit and log
-				String errorMsg = "message=sms code: " + sms + " but expect: " + user.getActivationCode();
-				AuditEvent event = new AuditEvent(username, "ACTIVATED_FAILED", errorMsg); 
-				auditEventRepository.add(event);
-				log.debug("Active account FAILED, username: {}, sms code: {} but expect {}", username, sms, user.getActivationCode());
-				return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("User", 
-						"smscodeinvalid", "Sms code is invalid")).body(null);
+				// If false, check in activeCode
+				// Validate Sms Code in collection activeCodes
+				boolean checkActiveCode = checkSmsInActiveCode(sms, username);
+				
+				if (checkActiveCode == false) {
+					// Audit and log
+					String errorMsg = "message=sms code: " + sms +  " but expect: " + user.getActivationCode() + "and not found or remain = 0 in ActiveCodes collection";
+					AuditEvent event = new AuditEvent(username, "ACTIVATED_FAILED", errorMsg); 
+					auditEventRepository.add(event);
+					log.debug("Active account FAILED, username: {}, sms code: {} not found", username, sms);
+//					return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("User", 
+//							"smscodeinvalid", "Sms code is not found")).body(null);
+					return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE)
+							.headers(HeaderUtil.createFailureAlert("User", "smscodeinvalid", "Sms code is not found")).body(null);
+				}
 			}
 		}
 		
@@ -355,8 +381,33 @@ public class AccountResource {
                 .body(user);
     }
     
+    
+    private boolean checkSmsInActiveCode(String sms, String username) {
+    	ActiveCodes activeCode = activeCodesRepository.findOneByActiveCode(sms);
+		if (activeCode == null || activeCode.getRemain() == 0) {
+			return false;
+		} else {
+			// Update information remain and user
+			int remain = activeCode.getRemain() - 1;
+			activeCode.setRemain(remain);
+			// Insert user active
+			ActivedUserDTO activeUser = new ActivedUserDTO();
+			activeUser.setUser(username);
+			activeUser.setCreated_date(new Date());
+			activeCode.getActivedUsers().add(activeUser);
+			activeCodesRepository.save(activeCode);
+		}
+		
+		return true;
+    }
+    
     @GetMapping({"/account/resend_sms", "/v1/account/resend-sms"})
     @Timed
+    @ApiResponses( {
+        @ApiResponse( code = 404, message = "User not found" )
+        , @ApiResponse( code = 400, message = "Bad request - belong to Myanmar country" )
+        , @ApiResponse( code = 200, message = "Success" )
+    } )
     public ResponseEntity<User> resendSmsCode(@RequestParam(value = "username", required=true) final String username) throws URISyntaxException {
     	
     	log.debug("Start method resendSmsCode, username: {}", StringUtils.lowerCase(username));
@@ -364,7 +415,7 @@ public class AccountResource {
     	// NamNH: 6/2/2018 - No send if Myanmar
         if (KanhomeUtil.isMyanmarPhoneNumber(username)) {
         	return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("User", 
-					"resend", "Username: " + username + " below Myanmar country")).body(null);
+					"resend", "Username: " + username + " belong to Myanmar country")).body(null);
         }
     	
 		// Update user status = 0

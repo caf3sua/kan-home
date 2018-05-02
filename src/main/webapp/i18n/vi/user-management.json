@@ -48,7 +48,8 @@
         "address" : "Địa chỉ",
         "gender" : "Giới tính",
         "user-device" : "Thiết bị người dùng",
-        "stt" : "STT"
+        "stt" : "STT",
+        "default-password": "Mật khẩu mặc định"
     }
 }
 

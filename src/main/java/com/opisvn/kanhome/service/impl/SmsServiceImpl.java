@@ -30,20 +30,25 @@ public class SmsServiceImpl implements SmsService {
 
 	@Override
 	public boolean sendSMS(String toNumber, String smsCode) {
-		// No send if Myanmar country
-		if (KanhomeUtil.isMyanmarPhoneNumber(toNumber)) {
-			log.debug("No sendSMS, toNumber {} smsCode {}, Myanmar country phone number", toNumber, smsCode);
+		try {
+			// No send if Myanmar country
+			if (KanhomeUtil.isMyanmarPhoneNumber(toNumber)) {
+				log.debug("No sendSMS, toNumber {} smsCode {}, Myanmar country phone number", toNumber, smsCode);
+				return false;
+			}
+			
+			// Get properties value
+			log.debug("sendSMS, toNumber {}, smsCode {}", toNumber, smsCode);
+			// SMS Vietnam
+			if (KanhomeUtil.isVietnamPhoneNumber(toNumber)) {
+				return sendVietnamSMS(toNumber, smsCode);
+			} else {
+				// International SMS
+				return sendInternationalSMS(toNumber, smsCode);
+			}
+		} catch (Exception e) {
+			log.error("ERROR Send sms, " + e.getMessage(), e);
 			return false;
-		}
-		
-		// Get properties value
-		log.debug("sendSMS, toNumber {}, smsCode {}", toNumber, smsCode);
-		// SMS Vietnam
-		if (KanhomeUtil.isVietnamPhoneNumber(toNumber)) {
-			return sendVietnamSMS(toNumber, smsCode);
-		} else {
-			// International SMS
-			return sendInternationalSMS(toNumber, smsCode);
 		}
 	}
 	

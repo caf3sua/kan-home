@@ -7,6 +7,7 @@ import com.opisvn.kanhome.domain.User;
 import com.opisvn.kanhome.repository.UserRepository;
 import com.opisvn.kanhome.security.AuthoritiesConstants;
 import com.opisvn.kanhome.security.SecurityUtils;
+import com.opisvn.kanhome.service.DeviceService;
 import com.opisvn.kanhome.service.MailService;
 import com.opisvn.kanhome.service.UserService;
 import com.opisvn.kanhome.service.dto.DeviceDTO;
@@ -16,6 +17,7 @@ import com.opisvn.kanhome.service.mapper.UserMapper;
 import com.opisvn.kanhome.service.util.KanhomeUtil;
 import com.opisvn.kanhome.web.rest.vm.DeviceVM;
 import com.opisvn.kanhome.web.rest.vm.ManagedUserVM;
+import com.opisvn.kanhome.web.rest.vm.UpdatedUserVM;
 import com.opisvn.kanhome.web.rest.vm.UserSearchVM;
 import com.opisvn.kanhome.web.rest.util.HeaderUtil;
 import com.opisvn.kanhome.web.rest.util.PaginationUtil;
@@ -24,7 +26,7 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
-import org.apache.commons.codec.binary.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -80,13 +82,16 @@ public class UserResource {
     private final MailService mailService;
 
     private final UserService userService;
+    
+    private final DeviceService deviceService;
 
     public UserResource(UserRepository userRepository, MailService mailService,
-            UserService userService) {
+            UserService userService, DeviceService deviceService) {
 
         this.userRepository = userRepository;
         this.mailService = mailService;
         this.userService = userService;
+        this.deviceService = deviceService;
     }
 
     /**
@@ -175,7 +180,11 @@ public class UserResource {
      */
     @PostMapping("/v1/user/update")
     @Timed
-    public ResponseEntity<User> updateUserByUsername(@Valid @RequestBody ManagedUserVM managedUserVM) throws URISyntaxException {
+    @ApiResponses( {
+        @ApiResponse( code = 400, message = "Bad request - User not found" )
+        , @ApiResponse( code = 200, message = "Success" )
+    } )
+    public ResponseEntity<User> updateUserByUsername(@Valid @RequestBody UpdatedUserVM managedUserVM) throws URISyntaxException {
     	log.debug("REST request to update User : {}", managedUserVM);
         Optional<User> existingUser = userRepository.findOneByUsername(SecurityUtils.getCurrentUserLogin());
         if (!existingUser.isPresent()) {
@@ -186,26 +195,35 @@ public class UserResource {
         User user = existingUser.get();
         
         // Set data
-        user.setFullname(managedUserVM.getFullname());
-        user.setEmail(managedUserVM.getEmail());
-        user.setPhonenumber(managedUserVM.getPhonenumber());
-        user.setAddress(managedUserVM.getAddress());
-        user.setGender(managedUserVM.getGender());
-        user.setLangKey(managedUserVM.getLangKey());
+        if (StringUtils.isNotEmpty(managedUserVM.getFullname())) {
+        	user.setFullname(managedUserVM.getFullname());
+        }
+        
+        if (StringUtils.isNotEmpty(managedUserVM.getEmail())) {
+        	user.setEmail(managedUserVM.getEmail());
+        }
+        
+        if (StringUtils.isNotEmpty(managedUserVM.getPhonenumber())) {
+        	user.setPhonenumber(managedUserVM.getPhonenumber());
+        }
+        
+        if (StringUtils.isNotEmpty(managedUserVM.getAddress())) {
+        	user.setAddress(managedUserVM.getAddress());
+        }
+        
+        if (StringUtils.isNotEmpty(managedUserVM.getLangKey())) {
+        	user.setLangKey(managedUserVM.getLangKey());
+        }
+        
         if (managedUserVM.getBirthday() != null) {
         	user.setBirthday(managedUserVM.getBirthday());
         }
-        
+        user.setGender(managedUserVM.getGender());
         User updateUser = userRepository.save(user); 
-//        		
-//        		userService.updateUser(managedUserVM.getFullname(), user.getEmail()
-//        		, managedUserVM.getPhonenumber(), managedUserVM.getAddress(), managedUserVM.getGender(), managedUserVM.getBirthday(), user.getLangKey());
 
         return ResponseEntity.created(new URI("/api/users/" + updateUser.getUsername()))
                 .headers(HeaderUtil.createAlert( "userManagement.created", updateUser.getUsername()))
                 .body(updateUser);
-//        return ResponseUtil.wrapOrNotFound(existingUser,
-//            HeaderUtil.createAlert("userManagement.updated", managedUserVM.getUsername()));
     }
 
     /**
@@ -283,6 +301,15 @@ public class UserResource {
     }
     
     
+    private boolean isExistDevice(String id) {
+    	DeviceDTO device = deviceService.findOne(id);
+    	if (device != null) {
+    		return true;
+    	}
+    	
+    	return false;
+    }
+    
     /**
      * POST  /users_update_devices  : Update device into user
      * <p>
@@ -316,6 +343,19 @@ public class UserResource {
         
         // Set name
         List<UserDeviceDTO> lstUserDevices = userDTO.getUserDevices();
+        
+        // Check ID of device is valid or invalid?
+        if (user.getUserDevices() != null && user.getUserDevices().size() > 0) {
+        	for (UserDeviceDTO userDeviceDTO : user.getUserDevices()) {
+    			// Check exist
+        		boolean isExist = isExistDevice(userDeviceDTO.getId());
+        		if (isExist == false) {
+        			return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, 
+        					"idnotexists", "Device not found")).body(null);
+        		}
+    		}
+    	}
+        
         if (user.getUserDevices() != null && user.getUserDevices().size() > 0) {
         	for (UserDeviceDTO userDeviceDTO : lstUserDevices) {
     			for (UserDeviceDTO udEntity : user.getUserDevices()) {
@@ -337,6 +377,10 @@ public class UserResource {
     
     @PostMapping({"/users_change_device_name", "/v1/user/changeCustomeDeviceName"})
     @Timed
+    @ApiResponses( {
+        @ApiResponse( code = 400, message = "Bad request - User not found" )
+        , @ApiResponse( code = 200, message = "Success" )
+    } )
     public ResponseEntity changeUserDeviceName(@Valid @RequestBody UserDeviceDTO userDeviceDTO) throws URISyntaxException {
         log.debug("REST request to changeUserDeviceName UserDeviceDTO : {}", userDeviceDTO);
 
@@ -386,6 +430,10 @@ public class UserResource {
     
     @PostMapping({"/users_add_device", "/v1/user/addDevice"})
     @Timed
+    @ApiResponses( {
+        @ApiResponse( code = 400, message = "Bad request - User not found" )
+        , @ApiResponse( code = 200, message = "Success" )
+    } )
     public ResponseEntity addUserDevice(@Valid @RequestBody UserDeviceDTO userDeviceDTO) throws URISyntaxException {
         log.debug("REST request to addUserDevice, username: {}, UserDeviceDTO : {}", SecurityUtils.getCurrentUserLogin(), userDeviceDTO);
 
@@ -405,6 +453,18 @@ public class UserResource {
 		}
 		
         User user = userOpt.get();
+        
+        // Check ID of device is valid or invalid?
+        if (user.getUserDevices() != null && user.getUserDevices().size() > 0) {
+        	for (UserDeviceDTO item : user.getUserDevices()) {
+    			// Check exist
+        		boolean isExist = isExistDevice(item.getId());
+        		if (isExist == false) {
+        			return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, 
+        					"idnotexists", "Device not found")).body(null);
+        		}
+    		}
+    	}
         
         // Find duplicate
         List<UserDeviceDTO> lstUserDevices = user.getUserDevices();
@@ -434,6 +494,10 @@ public class UserResource {
     
     @PostMapping({"/users_remove_device", "/v1/user/removeDevice"})
     @Timed
+    @ApiResponses( {
+        @ApiResponse( code = 400, message = "Bad request - User not found" )
+        , @ApiResponse( code = 200, message = "Success" )
+    } )
     public ResponseEntity removeUserDevice(@Valid @RequestBody UserDeviceDTO userDeviceDTO) throws URISyntaxException {
         log.debug("REST request to removeUserDevice UserDeviceDTO : {}", userDeviceDTO);
 

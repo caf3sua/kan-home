@@ -9,6 +9,8 @@ import com.opisvn.kanhome.web.rest.util.HeaderUtil;
 import com.opisvn.kanhome.web.rest.util.PaginationUtil;
 import com.opisvn.kanhome.service.dto.NotificationDTO;
 import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import io.github.jhipster.web.util.ResponseUtil;
 
 import org.eclipse.paho.client.mqttv3.MqttAsyncClient;
@@ -162,6 +164,10 @@ public class NotificationResource {
     
     @GetMapping({"/notifications_latest", "/v1/notification/latest"})
     @Timed
+    @ApiResponses( {
+        @ApiResponse( code = 400, message = "User not found" )
+        , @ApiResponse( code = 200, message = "Success" )
+    } )
 	public ResponseEntity<List<NotificationDTO>> getLatestNotification(@RequestParam(value = "fromId", required=false) final String fromId) {
 		log.debug("REST request to getLatestNotification : {}", fromId);
 		
