@@ -479,6 +479,12 @@
                                         <exclude>**/*.yml</exclude>
                                     </excludes>
                                 </resource>
+                                <resource>
+						            <directory>src-kanhome</directory>
+						            <includes>
+						                <include>**/*.java</include>
+						            </includes>
+						        </resource>
                             </resources>
                         </configuration>
                     </execution>

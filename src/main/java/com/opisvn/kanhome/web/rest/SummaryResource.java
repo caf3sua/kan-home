@@ -56,7 +56,7 @@ public class SummaryResource {
      *
      * @return the ResponseEntity with status 200 (OK) and the appversion
      */
-    @GetMapping("/summary-data")
+    @GetMapping("/app-version")
     @Timed
     public ResponseEntity<AppVersionVM> getAppVersion() {
     	AppVersionVM result = new AppVersionVM();
